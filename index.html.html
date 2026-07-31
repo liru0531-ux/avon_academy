@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>雅芳學院｜線上教育平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* 雅芳品牌主色:洋紅 #E5004B / 桃紅 #ED008C —— 沿用 green-* 變數名以全站統一換色 */
+  --green-900:#A5003A; --green-700:#E5004B; --green-500:#ED008C; --green-100:#FCE4EE; --green-50:#FDF2F7;
+  /* 強調色:改用雅芳深青,取代原橘色 */
+  --orange:#007A90; --orange-deep:#005F71; --orange-100:#E2F1F4;
+  /* 美容軸:桃紅家族 */
+  --beauty:#ED008C; --beauty-100:#FCE4F1; --beauty-deep:#B00068;
+  /* 健康檢測:雅芳深青 */
+  --health:#005F71; --health-100:#E2F1F4; --health-deep:#004353;
+  /* 營養軸 badge 用黃綠(見下方 badge-n 覆寫) */
+  --ink:#1A1A1A; --ink-soft:#6B6B6B; --line:#EAE4E7;
+  --cream:#FAFAFB; --card:#FFFFFF;
+  --danger:#C62828; --danger-100:#FDECEA;
+  --olive:#6E7000; --olive-100:#F4F5DC;
+  --r:18px; --shadow:0 4px 16px rgba(229,0,75,.08);
+  --serif:'Noto Serif TC',serif; --sans:'Noto Sans TC',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--sans);background:#F0EEF0;color:var(--ink);line-height:1.65;font-size:16px}
+#app{max-width:430px;margin:0 auto;min-height:100vh;background:var(--cream);position:relative;
+  background-image:radial-gradient(circle at 85% -5%,rgba(229,0,75,.06),transparent 45%),
+  radial-gradient(circle at 0% 100%,rgba(237,0,140,.04),transparent 40%)}
+/* ── 頂部 ── */
+header{position:sticky;top:0;z-index:50;background:linear-gradient(135deg,var(--green-900),var(--green-700) 70%,#3d8b41);
+  color:#fff;padding:14px 18px 12px;box-shadow:0 2px 12px rgba(27,77,30,.25)}
+header .brand{display:flex;align-items:center;justify-content:space-between}
+header h1{font-family:var(--serif);font-weight:900;font-size:21px;letter-spacing:1px}
+header h1 small{display:block;font-family:var(--sans);font-weight:400;font-size:12px;opacity:.9;letter-spacing:2.5px;margin-top:1px}
+#certBadge{font-size:13px;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.6);
+  border-radius:99px;padding:4px 10px;font-weight:700}
+#certBadge.gold{background:linear-gradient(135deg,#ED008C,#E5004B);border-color:#F8A5D2}
+/* ── 內容 ── */
+main{padding:18px 16px 96px}
+.view{display:none;animation:fadeUp .35s ease}
+.view.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h2.sec{font-family:var(--serif);font-weight:900;font-size:19px;color:var(--green-900);
+  margin:22px 0 12px;display:flex;align-items:center;gap:8px}
+h2.sec::after{content:'';flex:1;height:1px;background:var(--line)}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-bottom:12px;
+  border:1px solid rgba(221,231,219,.6);transition:transform .15s}
+.card:active{transform:scale(.985)}
+.tap{cursor:pointer}
+/* 首頁 hero */
+.hero{background:var(--card);color:var(--ink);border:1px solid var(--line);border-top:4px solid var(--green-700);
+  position:relative;overflow:hidden;padding:20px 18px}
+.hero::before{content:'學 · 說 · 賣';position:absolute;right:-8px;top:-14px;font-family:var(--serif);
+  font-size:64px;font-weight:900;opacity:.05;letter-spacing:6px;white-space:nowrap;color:var(--green-700)}
+  .hero h3{font-family:var(--serif);font-size:20px;font-weight:900;margin-bottom:4px;color:var(--green-700)}
+.hero p{font-size:14px;color:var(--ink-soft)}
+.dualbar{margin-top:14px}
+.dualbar .row{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:14px}
+.dualbar .lbl{width:52px;font-weight:700}
+.bar{flex:1;height:9px;background:#EFEBEE;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;transition:width .6s ease}
+.bar.b i{background:linear-gradient(90deg,#F8A5D2,var(--beauty))}
+.bar.n i{background:linear-gradient(90deg,#C4C63A,#8A8C00)}
+.dualbar .pct{width:42px;text-align:right;font-weight:700;font-size:13px;color:var(--ink-soft)}
+/* 層級卡 */
+.tier{display:flex;gap:13px;align-items:flex-start}
+.tier .ico{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0}
+.tier.t1 .ico{background:var(--green-100)}
+.tier.t2 .ico{background:var(--olive-100)}
+.tier.t2b .ico{background:var(--orange-100)}
+.tier.t3 .ico{background:#FCE4EE}
+.tier h4{font-size:17px;font-weight:900;color:var(--green-900);font-family:var(--serif)}
+.tier p{font-size:14px;color:var(--ink-soft);margin-top:2px}
+.tier .meta{font-size:13px;margin-top:6px;font-weight:700;color:var(--green-700)}
+.lockmark{color:#B0B8AE;font-weight:700;font-size:13px}
+/* 課程列表 */
+.courseItem{display:flex;align-items:center;gap:12px;padding:14px 15px}
+.courseItem .dot{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0}
+.axis-b .dot{background:var(--beauty-100)}
+.axis-n .dot{background:var(--olive-100)}
+.axis-c .dot{background:var(--orange-100)}
+.axis-t .dot{background:#FCE4EE}
+.courseItem .tt{flex:1}
+.courseItem .tt b{font-size:16px;display:block}
+.courseItem .tt span{font-size:13px;color:var(--ink-soft)}
+.chip{font-size:12px;padding:2px 8px;border-radius:99px;font-weight:700;flex-shrink:0}
+.chip.done{background:var(--green-100);color:var(--green-700)}
+.chip.todo{background:#F0EEE6;color:#8B917F}
+.chip.must{background:var(--danger-100);color:var(--danger)}
+.chip.lock{background:#EEE;color:#999}
+/* 課程內文 */
+.lesson h3{font-family:var(--serif);font-weight:900;font-size:20px;color:var(--green-900);margin-bottom:2px}
+.lesson .sub{font-size:14px;color:var(--ink-soft);margin-bottom:14px}
+.blk{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-bottom:12px;font-size:15.5px}
+.blk h5{font-size:16px;font-weight:900;color:var(--green-700);margin-bottom:8px;display:flex;gap:6px;align-items:center}
+.blk.warn{border-left:4px solid var(--danger)}
+.blk.warn h5{color:var(--danger)}
+.blk.talk{border-left:4px solid var(--orange)}
+.blk.talk h5{color:var(--orange-deep)}
+.blk ul{padding-left:18px;margin:4px 0}
+.blk li{margin-bottom:5px}
+.blk table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
+.blk th{background:var(--green-50);color:var(--green-900);padding:6px;border:1px solid var(--line);text-align:left}
+.blk td{padding:6px;border:1px solid var(--line);vertical-align:top}
+.script{background:var(--orange-100);border-radius:12px;padding:12px 14px;font-size:15px;margin:8px 0;line-height:1.75}
+.script b{color:var(--orange-deep)}
+.no{background:var(--danger-100);border-radius:10px;padding:8px 12px;margin:6px 0;font-size:14.5px}
+.yes{background:var(--green-100);border-radius:10px;padding:8px 12px;margin:6px 0;font-size:14.5px}
+/* 按鈕 */
+.btn{display:block;width:100%;border:none;border-radius:14px;padding:14px;font-size:17px;font-weight:900;
+  font-family:var(--sans);cursor:pointer;transition:transform .12s,opacity .2s;letter-spacing:1px}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:linear-gradient(135deg,var(--green-700),var(--green-500));color:#fff;box-shadow:0 4px 14px rgba(229,0,75,.32)}
+.btn.orange{background:linear-gradient(135deg,var(--orange-deep),var(--orange));color:#fff;box-shadow:0 4px 14px rgba(0,95,113,.3)}
+.btn.blue{background:linear-gradient(135deg,var(--health-deep),var(--health));color:#fff;box-shadow:0 4px 14px rgba(0,95,113,.3)}
+.btn.ghost{background:transparent;border:1.5px solid var(--green-700);color:var(--green-700)}
+.btn:disabled{opacity:.4;pointer-events:none}
+.back{display:inline-flex;align-items:center;gap:5px;background:none;border:none;color:var(--green-700);
+  font-weight:900;font-size:15px;margin-bottom:12px;cursor:pointer;font-family:var(--sans)}
+/* 測驗 */
+.qz{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-bottom:12px}
+.qz .qt{font-weight:900;font-size:16px;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;background:var(--green-50);border:2px solid transparent;
+  border-radius:12px;padding:11px 13px;margin-bottom:8px;font-size:15.5px;cursor:pointer;font-family:var(--sans);transition:.15s}
+.opt.sel{border-color:var(--green-700);background:var(--green-100);font-weight:700}
+.opt.right{border-color:var(--green-700);background:var(--green-100)}
+.opt.wrong{border-color:var(--danger);background:var(--danger-100)}
+.result{border-radius:var(--r);padding:20px;text-align:center;margin-bottom:14px;color:#fff}
+.result.pass{background:linear-gradient(135deg,var(--green-700),var(--green-500))}
+.result.fail{background:linear-gradient(135deg,#8D6E63,#A1887F)}
+.result .big{font-size:38px}
+.result h4{font-family:var(--serif);font-size:20px;margin:6px 0 4px}
+.result p{font-size:14.5px;opacity:.9}
+/* 檢測共用 */
+.stq{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:18px;margin-bottom:12px}
+.stq .prog{font-size:13px;font-weight:900;letter-spacing:1px;margin-bottom:6px}
+.stq h4{font-size:18px;font-weight:900;margin-bottom:14px}
+.stOpt{display:block;width:100%;text-align:left;border:2px solid transparent;
+  border-radius:12px;padding:12px 14px;margin-bottom:9px;font-size:15.5px;cursor:pointer;font-family:var(--sans)}
+.stOpt.pink{background:var(--beauty-100)} .stOpt.pink:active{border-color:var(--beauty)}
+.stOpt.blue{background:var(--health-100)} .stOpt.blue:active{border-color:var(--health)}
+.bigResult{color:#fff;border-radius:var(--r);padding:22px 18px;text-align:center;margin-bottom:14px}
+.bigResult.pink{background:linear-gradient(140deg,var(--beauty-deep),var(--beauty))}
+.bigResult.blue{background:linear-gradient(140deg,var(--health-deep),var(--health))}
+.bigResult .em{font-size:44px}
+.bigResult h3{font-family:var(--serif);font-size:22px;font-weight:900;margin:6px 0 4px}
+.bigResult p{font-size:14.5px;opacity:.92}
+.tagRow{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px}
+.tagRow span{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);border-radius:99px;
+  padding:3px 11px;font-size:11.5px;font-weight:700}
+.areaCard{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:15px;margin-bottom:11px;font-size:15px}
+.areaCard h5{font-size:16px;font-weight:900;color:var(--health-deep);margin-bottom:5px;display:flex;justify-content:space-between}
+.areaCard .lv{font-size:11px;font-weight:900;border-radius:99px;padding:1px 9px}
+.lv.hi{background:var(--danger-100);color:var(--danger)}
+.lv.md{background:var(--orange-100);color:var(--orange-deep)}
+.areaCard p{color:var(--ink-soft);font-size:14px;margin:3px 0}
+.areaCard .nut{background:var(--green-50);border-radius:10px;padding:8px 11px;margin-top:7px;font-size:14px}
+/* 產品指南 */
+.serieCard{display:flex;align-items:center;gap:12px;padding:13px 15px}
+.serieCard .em{font-size:24px;width:40px;text-align:center}
+.serieCard b{font-size:16px;display:block}
+.serieCard span{font-size:13px;color:var(--ink-soft)}
+.prodRow{border-top:1px dashed var(--line);padding:10px 2px;font-size:14.5px}
+.prodRow2{border-top:1px dashed var(--line)}
+.prodHead{display:flex;align-items:center;gap:8px;padding:11px 2px}
+.pcard{background:var(--green-50);border-radius:12px;padding:12px 14px;margin:2px 0 10px}
+.pcard-sec{padding:6px 0;border-bottom:1px solid rgba(0,0,0,.05)}
+.pcard-sec:last-child{border-bottom:none}
+.pcard-sec h6{font-size:13px;font-weight:900;color:var(--green-700);margin-bottom:3px}
+.pcard-sec p{font-size:13.5px;color:var(--ink);line-height:1.6}
+.pcard-sec ul{margin:2px 0 0;padding-left:18px}
+.pcard-sec li{font-size:13.5px;color:var(--ink);line-height:1.6;margin-bottom:2px}
+.pcard-sec.hl{background:var(--olive-100);border-radius:8px;padding:8px 10px;border-bottom:none;margin:4px 0}
+.pcard-sec.hl h6{color:var(--olive)}
+.prodRow b{color:var(--green-900)}
+.prodRow .tg{color:var(--orange-deep);font-size:13.5px;font-weight:700}
+.prodRow p{color:var(--ink-soft);font-size:13.5px;margin-top:2px}
+.badge-b,.badge-n,.badge-m{font-size:10px;border-radius:99px;padding:1px 8px;font-weight:900;vertical-align:2px;margin-left:5px}
+.badge-b{background:var(--beauty-100);color:var(--beauty-deep)}
+.badge-n{background:var(--olive-100);color:var(--olive)}
+.badge-m{background:linear-gradient(135deg,#FCE4EE,#FAD1E2);color:var(--green-700);border:1px solid #F5B6D2}
+/* 底部導覽 */
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:60;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);
+  display:flex;padding:7px 4px calc(7px + env(safe-area-inset-bottom))}
+nav button{flex:1;background:none;border:none;font-family:var(--sans);font-size:12px;font-weight:700;
+  color:#9AA697;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0}
+nav button .i{font-size:20px;transition:transform .15s}
+nav button.on{color:var(--green-700)}
+nav button.on .i{transform:translateY(-2px) scale(1.12)}
+.note{font-size:13px;color:var(--ink-soft);background:#F3F1E9;border-radius:10px;padding:9px 12px;margin:10px 0;line-height:1.6}
+.footer-compliance{font-size:12.5px;color:#98A295;text-align:center;padding:18px 20px 4px;line-height:1.7}
+.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:var(--green-900);color:#fff;
+  padding:10px 20px;border-radius:99px;font-size:13px;font-weight:700;z-index:99;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+.toolCard{display:flex;gap:13px;align-items:center}
+.toolCard .ico{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.toolCard b{font-size:17px}
+.toolCard p{font-size:14px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand">
+      <h1>雅芳學院<small>AVON ACADEMY</small></h1>
+      <div id="certBadge">未認證</div>
+    </div>
+  </header>
+  <main id="main"></main>
+  <nav>
+    <button data-v="home" class="on"><span class="i">🏠</span>首頁</button>
+    <button data-v="courses"><span class="i">📚</span>課程</button>
+    <button data-v="assess"><span class="i">🩺</span>檢測工具</button>
+    <button data-v="guide"><span class="i">📋</span>產品指南</button>
+    <button data-v="tools"><span class="i">🧰</span>工具箱</button>
+  </nav>
+  <div class="toast" id="toast"></div>
+</div>
+<script>
+/* ============================================================
+   雅芳學院|線上教育平台
+   單一 HTML 檔|手機優先|可部署 GitHub Pages
+   ============================================================ */
+
+/* ---------- 進度儲存(localStorage,失敗時退回記憶體) ---------- */
+const store = {
+  mem:{},
+  get(k){ try{ const v = localStorage.getItem('ay_'+k); return v?JSON.parse(v):this.mem[k]||null }catch(e){ return this.mem[k]||null } },
+  set(k,v){ this.mem[k]=v; try{ localStorage.setItem('ay_'+k, JSON.stringify(v)) }catch(e){} }
+};
+let progress = store.get('progress') || {};
+function saveProgress(){ store.set('progress', progress); }
+
+/* ---------- 入門課程資料 ---------- */
+const COURSES = [
+{
+ id:'L1-0', axis:'c', icon:'⚠️', must:true,
+ title:'合規紅線必修課', sub:'會賣之前,先學會什麼不能說|測驗需 100% 通過',
+ goal:'守住紅線 = 保護你的專業信譽與長期客戶信任,也保護公司與你自己。',
+ content:[
+  {t:'warn', h:'🚫 保健食品:絕對禁止的宣稱', body:`
+   <p>保健食品只能使用「<b>功能訴求</b>」用語,任何疾病治療、療效宣稱都違法。</p>
+   <div class="no">❌ 「降血壓」「降膽固醇(除非為國家健康食品認證之特定品項,且僅能引用核可字句)」「抗癌」「預防失智」「治療失眠」「治好過敏」「減肥、瘦身」</div>
+   <div class="yes">✅ 改用:「支持能量代謝」「幫助免疫調節」「調整體質」「幫助入睡」「促進新陳代謝、幫助維持體態」</div>
+   <p style="margin-top:8px">💡 即使學術文獻有相關研究、即使內部教材有提到學理,<b>對客戶一律不可使用療效字眼</b>。內部知識 ≠ 對外話術。</p>`},
+  {t:'warn', h:'🚫 保養品:化粧品衛生安全管理法禁區', body:`
+   <p>化粧品不得宣稱醫療效能或誇大不實。</p>
+   <div class="no">❌ 「治療痘痘」「根治斑點」「換膚」「殺菌」「除皺」「回春」「醫美級」「等同醫美療程」</div>
+   <div class="yes">✅ 改用:「維持肌膚健康」「幫助保濕」「維持光澤」「調理肌膚紋理」「提升保養效率」</div>`},
+  {t:'norm', h:'🏥 三種情況,一律建議諮詢醫師', body:`
+   <ul>
+    <li>客戶<b>正在服藥</b>(尤其抗凝血劑)</li>
+    <li>客戶有<b>重大疾病</b>(如癌症——改用免疫調節、機能維持語言,不碰治療)</li>
+    <li><b>孕婦、哺乳期</b>詢問特定成分</li>
+   </ul>
+   <div class="script">💬 標準話術:「你有在服藥的話,我會建議先跟醫師確認一下喔!這是我們對專業的堅持,確認沒問題之後,我再幫你規劃最適合的保養方案 😊」</div>
+   <p>💡 建議就醫是<b>展現專業高度</b>的做法,不是能力不足——客戶會因此更信任你。</p>`},
+  {t:'norm', h:'📐 記住這個判斷口訣', body:`
+   <p style="font-size:15px;text-align:center;font-weight:900;color:var(--green-900);padding:8px 0">
+   「維持、幫助、調整、支持」可以說<br>「治療、根治、預防疾病」不能說</p>
+   <p>不確定的時候,寧可保守,回來查平台的產品指南合規話術。</p>`}
+ ],
+ quiz:[
+  {q:'客戶問:「這個益生菌可以治好我的過敏嗎?」正確回應是?',
+   o:['「可以,很多人吃了過敏都好了」','「它能調整體質、幫助維持防護力,若有過敏症狀建議先諮詢醫師」','「保證有效,沒效退費」','「它等於過敏藥」'], a:1},
+  {q:'介紹保養品時,下列哪句話「違法」?',
+   o:['幫助肌膚保濕','維持肌膚光澤','這罐可以換膚、殺菌、根治痘痘','調理肌膚紋理'], a:2},
+  {q:'介紹美白保養品時,下列哪句話「違法」?',
+   o:['幫助改善暗沉、亮白肌膚','均勻膚色、呈現透亮光澤','這罐能瞬間白三個色階、徹底消除斑點','幫助維持膚色明亮均勻'], a:2},
+  {q:'關於癌症客戶的溝通,正確的是?',
+   o:['說產品能抗癌','說產品能縮小腫瘤','使用免疫調節、機能維持語言,並建議與醫療團隊配合','避而不談直接推銷'], a:2},
+  {q:'保健食品可以使用的用語是?',
+   o:['降血壓','預防失智','治療失眠','幫助入睡、調整體質'], a:3}
+ ], passAll:true
+},
+{
+ id:'L1-1', axis:'b', icon:'🧴',
+ title:'肌膚結構與美容基礎觀念', sub:'30 秒講清楚「為什麼要保養」',
+ goal:'能對客戶清楚說明肌膚的基本結構與老化原因,自然開啟美容話題。',
+ content:[
+  {t:'norm', h:'🔬 肌膚的三層結構', body:`
+   <table><tr><th>結構</th><th>角色</th><th>保養重點</th></tr>
+   <tr><td><b>表皮層</b></td><td>最外層防線,角質層+皮脂膜形成「肌膚屏障」</td><td>溫和清潔、保濕,不過度去角質</td></tr>
+   <tr><td><b>真皮層</b></td><td>膠原蛋白與彈力纖維所在,決定彈性與紋路</td><td>防曬+內外補充膠原相關營養</td></tr>
+   <tr><td><b>皮下組織</b></td><td>脂肪層,支撐與保暖</td><td>整體健康與體態管理</td></tr></table>`},
+  {t:'norm', h:'⏳ 老化四大因子(記住口訣:乾、曬、糖、氧)', body:`
+   <ul>
+    <li><b>乾燥</b>——含水量下降,細紋首先出現</li>
+    <li><b>光老化(曬)</b>——紫外線是外因性老化最大元凶,防曬是最便宜的保養</li>
+    <li><b>糖化</b>——過多糖分使膠原蛋白變硬變黃,膚色暗沉</li>
+    <li><b>氧化</b>——自由基攻擊細胞,壓力、熬夜、污染都會加速</li>
+   </ul>`},
+  {t:'norm', h:'🧭 保養基礎順序(所有推薦的地圖)', body:`
+   <p style="text-align:center;font-weight:900;color:var(--green-900);padding:6px 0;font-size:14px">
+   清潔 → 化妝水 → 精華 → 乳霜 → 防護(日間)</p>
+   <p>先學會順序,之後每一個產品在客戶保養流程中「站哪個位置」,你都說得出來。</p>`},
+  {t:'talk', h:'💬 開場話術:30 秒美容觀念', body:`
+   <div class="script">「其實皮膚變乾、變暗沉,常常不是保養品不好,而是<b>四個老化因子</b>——乾燥、日曬、糖化、氧化——在偷偷累積。保養要有感,就是外面把屏障顧好,裡面把原料補足。我先幫你做個一分鐘膚質檢測,看看你的肌膚現在最需要哪一塊好嗎?😊」</div>
+   <p>💡 這段話的目的:建立專業感 → 自然銜接膚質檢測 → 進入推薦情境。</p>`}
+ ],
+ quiz:[
+  {q:'決定肌膚彈性、膠原蛋白所在的是哪一層?',o:['表皮層','真皮層','皮下組織','角質層'],a:1},
+  {q:'外因性老化最大的元凶是?',o:['熬夜','紫外線','吃甜食','吹冷氣'],a:1},
+  {q:'日間保養的正確基礎順序是?',o:['乳霜→清潔→化妝水','清潔→化妝水→精華→乳霜→防護','精華→清潔→防護','化妝水→清潔→乳霜'],a:1},
+  {q:'「糖化」對肌膚的影響是?',o:['讓膠原蛋白變硬、膚色暗沉','增加保濕','促進膠原生成','沒有影響'],a:0}
+ ]
+},
+{
+ id:'L1-2', axis:'b', icon:'🧖‍♀️',
+ title:'膚質檢測與判讀', sub:'最自然的破冰銷售工具',
+ goal:'熟悉五大膚質特徵,會操作膚質檢測工具並判讀結果、給出保養方向。',
+ content:[
+  {t:'norm', h:'🌸 五大膚質速記', body:`
+   <table><tr><th>膚質</th><th>典型特徵</th><th>保養方向</th></tr>
+   <tr><td><b>中性</b></td><td>不油不乾、少有不適</td><td>維持型保養+防曬</td></tr>
+   <tr><td><b>乾性</b></td><td>洗臉後緊繃、易有乾紋脫屑</td><td>加強保濕鎖水,內外補水</td></tr>
+   <tr><td><b>油性</b></td><td>全臉出油、毛孔明顯、易長粉刺</td><td>溫和清潔+清爽保濕(油肌也要保濕!)</td></tr>
+   <tr><td><b>混合</b></td><td>T 字油、兩頰乾</td><td>分區保養</td></tr>
+   <tr><td><b>敏感</b></td><td>換季泛紅、刺癢、對成分敏感</td><td>精簡保養、修護屏障;不適時建議諮詢皮膚科醫師</td></tr></table>`},
+  {t:'talk', h:'💬 檢測工具就是你的開場白', body:`
+   <div class="script">「我這邊有一個<b>一分鐘膚質檢測</b>,測完會告訴你膚質類型跟保養方向,免費的,你要不要玩玩看?」</div>
+   <p>檢測結果頁會直接給出保養方向與內外搭配建議——<b>測完即進入推薦情境</b>,零推銷壓力。</p>
+   <p style="margin-top:6px">⚠️ 合規提醒:檢測結果只談「保養建議」,不做任何診斷;客戶若有明顯皮膚異常(濕疹、感染、嚴重敏感),一律建議先看皮膚科醫師。</p>`},
+  {t:'norm', h:'🛠 實作練習', body:`<p>請點下方按鈕,親自完成一次膚質檢測,體驗客戶會看到的完整流程,再回來作答測驗。</p>
+   <button class="btn ghost" style="margin-top:8px" onclick="go('assess')">🩺 前往檢測工具</button>`}
+ ],
+ quiz:[
+  {q:'客戶說「洗完臉很緊繃,冬天還會脫屑」,最可能的膚質是?',o:['油性','乾性','中性','都不是'],a:1},
+  {q:'「T 字容易出油、兩頰偏乾」是哪種膚質?',o:['敏感','油性','混合性','乾性'],a:2},
+  {q:'油性肌膚的正確觀念是?',o:['完全不需要保濕','要用力搓洗去油','溫和清潔+清爽保濕','一天洗臉五次'],a:2},
+  {q:'客戶臉上有疑似濕疹的紅腫脫屑,正確做法是?',o:['推薦保養品改善','建議先諮詢皮膚科醫師','說產品可以治療濕疹','請他多敷面膜'],a:1}
+ ]
+},
+{
+ id:'L1-3', axis:'n', icon:'🥗',
+ title:'營養學基礎觀念', sub:'講清楚「為什麼要補、要補多久」',
+ goal:'掌握六大營養素與「補充週期」觀念,為之後的產品課與成組銷售打底。',
+ content:[
+  {t:'norm', h:'🍱 六大營養素一張表', body:`
+   <table><tr><th>營養素</th><th>主要角色</th></tr>
+   <tr><td>醣類</td><td>身體主要能量來源</td></tr>
+   <tr><td>蛋白質</td><td>肌肉、酵素、免疫與膠原的「原料」</td></tr>
+   <tr><td>脂質</td><td>細胞膜、荷爾蒙原料(好油如 Omega-3)</td></tr>
+   <tr><td>維生素</td><td>代謝反應的「鑰匙」(如 B 群參與能量代謝)</td></tr>
+   <tr><td>礦物質</td><td>骨骼、神經、生理平衡(如鈣、鋅、硒)</td></tr>
+   <tr><td>水</td><td>所有代謝的載體</td></tr></table>
+   <p>💡 保健食品的角色:<b>補足日常飲食吃不夠的缺口</b>,不是取代飲食,更不是藥。</p>`},
+  {t:'norm', h:'🔄 補充週期:有感的關鍵', body:`
+   <ul>
+    <li>身體細胞有代謝週期——皮膚約 28 天、腸道好菌定殖需 2–4 週以上</li>
+    <li>「吃一週沒感覺就停」是客戶最常見的中斷原因</li>
+    <li>正確期待:<b>至少一個完整週期(約 1–3 個月)</b>持續補充,搭配作息與飲食</li>
+   </ul>
+   <div class="script">💬 週期話術:「營養補充就像存錢,不是投一枚硬幣就變有錢~給身體一個完整的三個月,你才看得到累積的改變 😊」</div>
+   <p>💡 這個觀念,就是之後「買 3(完整週期)、買 6(全家共享)」引導的科學基礎。</p>`},
+  {t:'norm', h:'🧭 身體 9 大系統思維', body:`
+   <p>保健建議以「身體系統 × 困擾 × 營養素」對照:神經、呼吸、皮膚、內分泌、免疫、心血管、消化、泌尿、骨關節。</p>
+   <p>先問客戶「最近最困擾的是哪一塊?」→ 對到系統 → 對到營養素 → 對到產品。這個順序讓推薦有邏輯、有專業感。</p>`}
+ ],
+ quiz:[
+  {q:'保健食品的正確定位是?',o:['取代三餐','是藥品可治病','補足日常飲食缺口的營養支持','吃越多越好'],a:2},
+  {q:'腸道好菌穩定定殖大約需要?',o:['一天','2–4 週以上','半天','不需要時間'],a:1},
+  {q:'客戶說「吃一週沒感覺」,最好的回應方向是?',o:['叫他加倍吃','解釋補充週期觀念,鼓勵完成完整週期','說他體質有問題','馬上退貨'],a:1},
+  {q:'B 群在身體中主要參與?',o:['能量代謝','骨骼構成','儲存脂肪','沒有作用'],a:0}
+ ]
+},
+{
+ id:'L1-4', axis:'n', icon:'🔍',
+ title:'健康需求判讀', sub:'用 10 題測評打開營養話題',
+ goal:'會用健康檢測工具找出客戶的優先需求,對應 9 大系統給出方向。',
+ content:[
+  {t:'norm', h:'📋 10 大測評面向', body:`
+   <p>平台內建 10 題健康自評:睡眠、腸胃、免疫、骨關節、眼睛、心血管、腦力、皮膚頭髮、體力、體重管理。</p>
+   <p>每題 4 級量表,測完自動排序「最需要關注的面向」並對應建議營養素與產品方向。</p>`},
+  {t:'talk', h:'💬 測評開場話術', body:`
+   <div class="script">「與其我一直介紹,不如先了解你的身體~這個<b>一分鐘健康小測驗</b>做完,會幫你排出現在最需要照顧的前三名,我再針對結果給你建議,好嗎?😊」</div>
+   <p>💡 原則:<b>先測評、後推薦</b>。客戶自己看到結果,推薦就變成「回應需求」而不是「推銷」。</p>`},
+  {t:'norm', h:'🛠 實作練習', body:`<p>請親自完成一次健康檢測,體驗客戶會看到的完整流程,再回來作答測驗。</p>
+   <button class="btn ghost" style="margin-top:8px" onclick="go('assess')">🩺 前往檢測工具</button>`},
+  {t:'warn', h:'⚠️ 判讀的合規界線', body:`
+   <p>測評結果=「保健方向參考」,不是診斷。客戶提到明確疾病、正在治療或服藥 → 回到必修課原則:<b>建議諮詢醫師</b>,再談日常保養。</p>`}
+ ],
+ quiz:[
+  {q:'健康測評在銷售流程中的正確角色是?',o:['診斷疾病','先了解需求,讓推薦回應需求','拖延時間','取代醫師'],a:1},
+  {q:'客戶測評後「睡眠」分數最差,下一步是?',o:['直接推銷全系列','針對睡眠面向說明營養素方向,再帶到對應產品','告訴他有失眠症','不理會結果'],a:1},
+  {q:'客戶測評時提到正在化療,正確做法?',o:['推薦抗癌產品','使用免疫調節語言並建議與醫療團隊討論後再補充','保證產品能治療','叫他停止治療'],a:1}
+ ]
+},
+{
+ id:'L1-5', axis:'c', icon:'💬',
+ title:'銷售對話基本功', sub:'你的第一套萬用話術',
+ goal:'掌握「傾聽→提問→確認→推薦」四步驟與三段式話術結構,敢開口、說得順。',
+ content:[
+  {t:'norm', h:'🪜 銷售對話四步驟', body:`
+   <table><tr><th>步驟</th><th>做什麼</th><th>例句</th></tr>
+   <tr><td>1 傾聽</td><td>讓客戶先說,不急著介紹</td><td>「最近身體或皮膚有什麼讓你困擾的嗎?」</td></tr>
+   <tr><td>2 提問</td><td>用檢測/測評工具聚焦需求</td><td>「我幫你做個一分鐘小檢測好嗎?」</td></tr>
+   <tr><td>3 確認</td><td>複述需求,讓客戶點頭</td><td>「所以你最想改善的是容易累跟皮膚乾,對嗎?」</td></tr>
+   <tr><td>4 推薦</td><td>用三段式話術帶一個明確方案</td><td>(見下方)</td></tr></table>`},
+  {t:'talk', h:'🎯 三段式話術結構(全平台通用)', body:`
+   <p><b>開場引入 → 產品亮點 → 結語推薦</b>,每個產品模組的話術都是這個結構。</p>
+   <div class="script"><b>①開場引入:</b>「我很懂這種感覺~其實(說出原因機制)…」<br>
+   <b>②產品亮點:</b>「這款的重點是(1–2 個規格亮點+合規功效)…」<br>
+   <b>③結語推薦:</b>「每天(用法)當作日常保養,(給一個開始的理由)😊」</div>
+   <p>💡 練習方法:對著鏡子或家人,用這個結構講你最熟的一個產品,講到 60 秒內說完為止。</p>`},
+  {t:'norm', h:'🌉 內外雙軸思維(進階課預告)', body:`
+   <p>同一個需求,常常可以同時給「外用保養+內在營養」的完整方案——例如肌膚乾燥:保濕保養+膠原蛋白/玻尿酸內服。這是「美容 × 營養」雙軸平台最大的優勢,進階課會完整教學。</p>`}
+ ],
+ quiz:[
+  {q:'銷售對話的第一步是?',o:['馬上介紹產品','傾聽客戶的困擾','報價','要求成交'],a:1},
+  {q:'三段式話術的正確順序是?',o:['結語→亮點→開場','開場引入→產品亮點→結語推薦','亮點→亮點→亮點','價格→贈品→成交'],a:1},
+  {q:'「確認」步驟的目的為何?',o:['拖時間','複述需求讓客戶點頭,推薦才會精準','炫耀專業','轉移話題'],a:1}
+ ]
+}
+];
+
+/* ---------- 進階層(主力產品模組) ---------- */
+const ADV = [
+ {id:'P-SOD', icon:'🛡️', title:'SOD 極緻青春飲系列', sub:'主力必修|全系列三活性分級', ready:true, axis:'n'},
+ {id:'P-LUT', icon:'👀', title:'葉黃素系列', sub:'主力必修|葉黃素飲×膠囊雙品項分工', ready:true, axis:'n'},
+ {id:'P-PRO', icon:'🦠', title:'五合一高機能益生菌(莓果)', sub:'主力必修|2000億×15菌×5大機能', ready:true, axis:'n'},
+ {id:'P-FISH', icon:'🐟', title:'高濃度魚油沙棘Plus', sub:'主力必修|85%高濃度×rTG×IFOS五星', ready:true, axis:'n'},
+ {id:'P-RED', icon:'🔴', title:'紅麴膠囊', sub:'主力必修|小綠人健康食品認證', ready:true, axis:'n'},
+ {id:'P-ANT', icon:'🍄', title:'牛樟芝系列', sub:'主力必修|精華飲主打×膠囊替代', ready:true, axis:'n'},
+ {id:'P-GIN', icon:'🌿', title:'頂級活人蔘精華飲EX', sub:'主力必修|三蔘合一×50mg人蔘皂苷', ready:true, axis:'n'},
+ {id:'B-SEA', icon:'🌊', title:'海洋元素系列', sub:'主力美容|入門抗老・玻提諾', ready:true, axis:'b'},
+ {id:'B-CRM', icon:'💗', title:'超能穩膚系列', sub:'主力美容|玻提諾10倍', ready:true, axis:'b'},
+ {id:'B-WHT', icon:'🤍', title:'極耀美白系列', sub:'主力美容|祛黑美白科技', ready:true, axis:'b'},
+ {id:'S2-3', icon:'🌉', title:'內外雙軸銷售法', sub:'情境銷售|招牌課・雙軸完整方案', ready:true, axis:'c'},
+ {id:'S2-4', icon:'📦', title:'成組購買引導(買3買6)', sub:'情境銷售|週期思維×全家思維', ready:true, axis:'c'},
+ {id:'T3-1', icon:'🎤', title:'講師表達與教案運用', sub:'講師培訓|把模組講給團隊聽', ready:true, axis:'t'},
+ {id:'T3-2', icon:'💛', title:'黃金72小時顧客關懷與跟進', sub:'講師培訓|1-3-7-10 天跟進節奏', ready:true, axis:'t'},
+ {id:'T3-3', icon:'🌱', title:'新人帶訓 SOP', sub:'講師培訓|標準化帶新人流程', ready:true, axis:'t'},
+ {id:'T3-4', icon:'🎭', title:'話術演練評核', sub:'講師培訓|角色扮演與評分標準', ready:true, axis:'t'}
+];
+
+/* ---------- 益生菌完整模組(九大區塊) ---------- */
+const PROBIOTIC = {
+ icon:'🦠', axis:'n',
+ title:'五合一高機能益生菌(莓果口味)', sub:'進階產品模組|九大區塊標準架構',
+ content:[
+  {t:'norm', h:'① 模組基本資訊', body:`<ul><li><b>系列:</b>🌿 消化・腸道|<b>葷素:</b>奶素可食</li>
+   <li><b>規格:</b>3g × 30包/盒,一天一包</li>
+   <li><b>定位:</b>15 種菌株 × 2000 億菌數 × 5 大機能一次滿足</li>
+   <li><b>實績:</b>2024 上市當月熱銷 16,000 盒,購買人數全年 NO.1</li></ul>`},
+  {t:'norm', h:'② 核心成分與作用機轉', body:`
+   <table><tr><th>機能</th><th>代表菌株</th><th>方向</th></tr>
+   <tr><td>順暢</td><td>發酵乳桿菌</td><td>促進腸道蠕動、維持消化道機能</td></tr>
+   <tr><td>防禦</td><td>專利母乳益生菌</td><td>調整體質、維持防護力</td></tr>
+   <tr><td>美型</td><td>胚芽乳酸菌</td><td>促進新陳代謝、維持體態</td></tr>
+   <tr><td>精力</td><td>凝結魏茨曼氏桿菌</td><td>幫助代謝負擔、維持體力</td></tr>
+   <tr><td>好眠</td><td>短乳桿菌</td><td>幫助好眠因子表現、放鬆心情</td></tr></table>
+   <p><b>3 大創新技術:</b>三層包覆(耐胃酸)× 益生方舟運送 × Pro 6X 益生質(提升定殖率)。</p>
+   <p>💡 三個記憶點:<b>2000 億、15 種菌、定殖率是有感關鍵</b>。</p>`},
+  {t:'norm', h:'③ 功能訴求(合規版)+ ④ 適用對象', body:`
+   <ul><li>幫助排便順暢、維持消化道機能</li><li>調整體質、幫助維持防護力</li>
+   <li>促進新陳代謝、幫助維持體態</li><li>幫助維持體力精神與好眠品質</li></ul>
+   <p><b>適用:</b>外食族/換季防護/應酬多/壓力大睡不安穩/全家日常保養(莓果口味適口性佳)。</p>`},
+  {t:'talk', h:'⑥ 合規銷售話術(三段式)', body:`
+   <div class="script"><b>情境:腸道卡卡</b><br>「其實腸道好不好,跟體內好菌夠不夠很有關,好菌會隨年齡變少。這款一包 2000 億、15 種菌,順暢配方研究上約一週有感。重點是專利三層包覆+益生方舟能幫好菌順利定殖,不會白吃 😊 每天一包當日常保養剛剛好。」</div>
+   <div class="script"><b>情境:已在吃別牌</b><br>「很好耶,代表你有在照顧腸道!差別在『菌數、菌種、定殖率』三件事。我們一包 2000 億、15 種菌,一次照顧五個面向。你現在最想加強哪一塊?我幫你看適不適合。」</div>`},
+  {t:'warn', h:'⑦ 合規紅線', body:`
+   <div class="no">❌ 「治療便祕」「治好過敏」「降血壓」「預防失智」「減肥瘦身」</div>
+   <div class="yes">✅ 「幫助排便順暢」「調整體質」「促進新陳代謝、維持體態」</div>
+   <p>服藥(尤其抗凝血劑)、重大疾病、孕哺 → 一律建議先諮詢醫師。</p>`},
+  {t:'norm', h:'⑨ 成組購買邏輯', body:`
+   <p><b>買 3(週期思維):</b>好菌需 2–4 週以上穩定定殖,3 盒=完整 3 個月調整週期,避免中斷。</p>
+   <p><b>買 6(全家思維):</b>莓果口味全家可食,自己 3 盒+家人 3 盒;或搭配綜合維生素、SOD、膠原成組。優惠依當月公告,話術聚焦真實需求不綁折扣。</p>`}
+ ],
+ quiz:[
+  {q:'一包的菌數與菌種數為?',o:['100億/3種','1000億/10種','2000億/15種','500億/5種'],a:2},
+  {q:'負責提升消化道定殖率的技術是?',o:['三層包覆','益生方舟運送','Pro 6X 益生質','低溫萃取'],a:2},
+  {q:'哪句話違反合規紅線?',o:['幫助排便順暢','調整體質','補充益生菌可降血壓、預防失智','促進新陳代謝'],a:2},
+  {q:'客戶服用抗凝血劑詢問補充,正確做法?',o:['直接推薦','建議先諮詢醫師再評估','保證安全','自行決定'],a:1},
+  {q:'買 3 盒的核心引導理由是?',o:['折扣最多','完整補充週期讓好菌穩定定殖','庫存壓力','沒有理由'],a:1}
+ ], passAll:true
+};
+
+/* ---------- 魚油完整模組(九大區塊) ---------- */
+const FISHOIL = {
+ icon:'🐟', axis:'n',
+ title:'高濃度魚油沙棘Plus', sub:'進階產品模組|九大區塊標準架構',
+ content:[
+  {t:'norm', h:'① 模組基本資訊', body:`<ul><li><b>系列:</b>🔄 循環保健|<b>葷素:</b>葷食</li>
+   <li><b>規格:</b>60 顆/瓶,每日 2 顆,飯後食用</li>
+   <li><b>定位:</b>⭐主力必修|高濃度 85% × rTG 型 × IFOS 五星認證</li></ul>`},
+  {t:'norm', h:'② 核心成分與作用機轉', body:`
+   <table><tr><th>核心規格</th><th>作用機轉(原理)</th></tr>
+   <tr><td><b>85% 高濃度</b><br>2顆=969mg Omega-3</td><td>達衛福部每日建議量;EPA:DHA=3:2 黃金比例,循環與腦部保養兼顧</td></tr>
+   <tr><td><b>rTG 型</b><br>SPD低溫短程蒸餾</td><td>高濃度+高吸收,最接近天然;低溫保留活性、幾乎無腥味(原廠SGS純度94.84%)</td></tr>
+   <tr><td><b>沙棘果油</b></td><td>植物油中最高比例 Omega-7,補足 3・6・7・9 完整脂肪酸</td></tr>
+   <tr><td><b>IFOS 五星</b><br>+4大永續認證</td><td>國際最權威第三方檢測:實含量、重金屬、氧化度、污染物批批把關</td></tr>
+   <tr><td><b>1.5cm 小顆</b></td><td>市售多為 2cm 以上,長輩好吞</td></tr></table>
+   <p><b>魚油型式比較:</b>TG 型(天然但濃度低 30–44%)/EE 型(高濃度但吸收差、腥味)/<b>rTG 型=高濃度+高吸收 ✅</b></p>
+   <p>💡 三個記憶點:<b>85% 高濃度、rTG 高吸收、IFOS 五星</b>。先講需求(衛福部建議每日至少 1000mg ≈ 每天一條秋刀魚),再帶出「2 顆 969mg 輕鬆達標」。</p>`},
+  {t:'norm', h:'③ 功能訴求(合規版)+ ④ 適用對象', body:`
+   <ul><li>幫助循環順暢、調理體內環保</li><li>補充腦部所需 DHA,維持思緒清晰</li>
+   <li>有助情緒平穩、維持好心情</li><li>幫助關節靈活、促進新陳代謝</li></ul>
+   <p><b>適用:</b>外食重口味族/銀髮族(循環、關節、思緒)/壓力大的職業媽媽/孕哺期補充 DHA/3C 族/運動族。</p>`},
+  {t:'norm', h:'⑤ 使用方式', body:`
+   <ul><li><b>建議量:</b>每日 2 顆(969mg,達衛福部建議量)</li>
+   <li><b>時機:</b>飯後,搭配食物油脂吸收更好;固定同一餐最易養成習慣</li>
+   <li><b>注意:</b>避免空腹(易有腥味)、不配熱水;開封後建議冷藏</li></ul>`},
+  {t:'talk', h:'⑥ 合規銷售話術(三段式)', body:`
+   <div class="script"><b>情境:外食族,自覺飲食油膩</b><br>「我很懂~外食其實不是油吃太多,是『好油』吃太少。衛福部建議每天至少 1000 毫克 Omega-3,等於每天吃一條秋刀魚,很難對吧?這款是 85% 高濃度 rTG 型,2 顆就有 969 毫克,IFOS 五星認證、重金屬批批把關。每天飯後 2 顆,幫循環做日常保養 😊」</div>
+   <div class="script"><b>情境:「我有在吃魚,還需要魚油嗎?」</b><br>「吃魚很棒,要繼續!不過每種魚的 Omega-3 差很多,很難天天吃足,大型魚還有重金屬疑慮。魚油的好處是『劑量精準+批批檢驗』。吃魚加魚油雙管齊下最安心 💪」</div>
+   <div class="script"><b>情境:銀髮長輩循環關節保養</b><br>「上了年紀,循環跟關節的保養特別重要~這款是 85% 高濃度 rTG 型魚油,好吸收、幾乎無腥味,膠囊只有 1.5 公分長輩也好吞。每天飯後 2 顆,幫爸媽把循環、關節、思緒都顧起來,是很實用的日常孝親保養 😊」</div>`},
+  {t:'warn', h:'⑦ 合規紅線', body:`
+   <div class="no">❌ 「降三酸甘油酯」「降血脂」「降血壓」「預防心臟病/中風」「抗發炎」「治療關節炎」「預防失智」</div>
+   <div class="yes">✅ 「幫助循環順暢」「維持思緒清晰」「有助情緒平穩」「幫助關節靈活」「促進新陳代謝」</div>
+   <p>⚠️ 內部教材的學理說明(如抗發炎、降三酸甘油酯等)僅供內部理解,不等於可對客戶宣稱。對外一律使用上方合規功能訴求用語。</p>`},
+  {t:'norm', h:'⑧ 常見客戶問答', body:`
+   <p><b>Q:IFOS 認證重要嗎?</b><br>A:全球最權威的第三方魚油檢測,把關實含量、重金屬、氧化度與污染物,五星是最高等級——選魚油先看這個。</p>
+   <p><b>Q:我平常就常吃魚,還需要補魚油嗎?</b><br>A:常吃魚很好,要繼續!但每種魚的 Omega-3 差很多、很難天天吃足,大型魚還有重金屬疑慮。魚油的好處是「劑量精準+批批檢驗」,IFOS 五星就是在把關重金屬與含量。不是取代吃魚,而是常吃魚加魚油,雙管齊下最安心 😊</p>
+   <p><b>Q:可以跟其他保健品一起吃嗎?</b><br>A:相容性很高:搭維生素 D 一起吸收更好、搭葉黃素是晶亮雙效、搭鈣與益生菌都沒衝突。</p>
+   <p><b>Q:膠囊會很大顆嗎?</b><br>A:只有 1.5 公分,比市售常見 2 公分以上小很多,長輩也好入口。</p>`},
+  {t:'norm', h:'⑨ 成組購買邏輯', body:`
+   <table><tr><th>搭配情境</th><th>建議搭配(營養素)</th></tr>
+   <tr><td>晶亮保養</td><td>葉黃素+玉米黃素(護眼經典組合)</td></tr>
+   <tr><td>骨骼行動力</td><td>鈣+維生素 D3(脂溶性一起吸收更好)</td></tr>
+   <tr><td>腦力專注</td><td>B 群、核桃肽</td></tr></table>
+   <p><b>買 3(週期思維):</b>Omega-3 是累積型營養,建議連續 1–3 個月;1 瓶約一個月,3 瓶=完整一季保養。</p>
+   <p><b>買 6(全家思維):</b>長輩(循環關節)、孩子(3C 護眼)、媽媽自己(情緒體力)全家都用得上;優惠依當月公告,話術聚焦真實需求。</p>`}
+ ],
+ quiz:[
+  {q:'每日 2 顆的 Omega-3 含量與濃度為?',o:['500mg/50%','969mg/85%','750mg/60%','1200mg/95%'],a:1},
+  {q:'本產品魚油型式的優勢為?',o:['TG 型,濃度最高','EE 型,吸收最好','rTG 型,高濃度+高吸收','型式不影響吸收'],a:2},
+  {q:'IFOS 五星認證把關項目「不包含」?',o:['重金屬殘留','Omega-3 實際含量','氧化程度','產品售價'],a:3},
+  {q:'哪句話違反合規紅線?',o:['幫助循環順暢','維持思緒清晰','吃這個可以降血脂、預防中風','有助情緒平穩'],a:2},
+  {q:'客戶說「我平常就常吃魚,還需要補魚油嗎?」正確回應方向?',o:['不用,吃魚就夠了','每種魚含量差很多難天天吃足、大型魚有重金屬疑慮,魚油劑量精準又批批檢驗,雙管齊下最安心','魚油可完全取代吃魚','叫客戶天天吃生魚片'],a:1}
+ ], passAll:true
+};
+
+/* ---------- SOD 系列完整模組(九大區塊) ---------- */
+const SOD = {
+ icon:'🛡️', axis:'n',
+ title:'SOD 極緻青春飲系列', sub:'進階系列模組|全系列三活性分級推薦',
+ content:[
+  {t:'norm', h:'① 系列基本資訊', body:`<ul><li><b>系列:</b>🛡️ SOD 防禦|<b>葷素:</b>全素(三版本皆是)</li>
+   <li><b>定位:</b>⭐主力系列|抗氧化打底、調整體質、加強防禦</li>
+   <li><b>特色:</b>全系列同一核心分三個活性等級,依需求強度分級推薦</li></ul>
+   <table><tr><th>版本</th><th>活性</th><th>時機</th><th>定位</th></tr>
+   <tr><td>200萬 EX減糖</td><td>200萬</td><td>早晨空腹1瓶</td><td>高規防禦・青春再現</td></tr>
+   <tr><td>150萬 EX御守版</td><td>150萬</td><td>早晨空腹1包</td><td>調整體質・加強防禦</td></tr>
+   <tr><td>100萬</td><td>100萬</td><td>早晨空腹1包</td><td>守護青春・奠定根基</td></tr></table>`},
+  {t:'norm', h:'② 什麼是 SOD?+ 三版本差異', body:`
+   <p><b>SOD(超氧化物歧化酶)</b>是人體本來就有的「抗氧化酵素」,幫助對抗自由基、維持細胞正常機能。它會隨年齡、壓力、作息、環境污染而不足,這時「SODlike 活性」用九種菌菇等植物來源補充類 SOD 抗氧化力,由內調整體質。</p>
+   <table><tr><th>版本</th><th>核心成分</th><th>加分成分</th></tr>
+   <tr><td><b>200萬</b></td><td>九種菌菇(白樺、繡球、靈芝、冬蟲夏草、姬松茸、雲芝、猴頭菇、舞茸、桑黃)</td><td>專利双營技術(微米級)+沙棘</td></tr>
+   <tr><td><b>150萬御守</b></td><td>同九種菌菇</td><td>接骨木莓+刺梨+沙棘(強化防禦)</td></tr>
+   <tr><td><b>100萬</b></td><td>白樺、雲芝菌菇</td><td>破壁萃取+紅石榴苷(舒緩緊繃精神)</td></tr></table>
+   <p>💡 先用「SOD 是身體自帶、會隨年齡不足」建立需求,再帶「活性數字=防禦強度」的分級概念。全版本批批安全檢測。</p>`},
+  {t:'norm', h:'③ 功能訴求(合規版)+ ④ 適用對象', body:`
+   <ul><li>幫助抗氧化、對抗自由基</li><li>調整體質、維持好體質</li>
+   <li>幫助維持防禦力、調節生理機能</li><li>維持青春活力與精神體力</li></ul>
+   <table><tr><th>版本</th><th>最適客群</th></tr>
+   <tr><td>200萬</td><td>需快速回復活力、壓力大、作息不正常、環境污染嚴重、體質虛弱者</td></tr>
+   <tr><td>150萬御守</td><td>三明治族群、常接觸人群、忙碌作息不正常、壓力大者</td></tr>
+   <tr><td>100萬</td><td>希望精神旺盛、日常調理體質、拚課業/事業、高競爭環境者</td></tr></table>`},
+  {t:'norm', h:'⑤ 使用方式', body:`
+   <ul><li><b>共通時機:</b>早晨空腹飲用(吸收最佳、最易養成習慣)</li>
+   <li><b>建議量:</b>200萬每日 1 瓶;150萬、100萬每日 1 包</li>
+   <li><b>搭配:</b>規律作息與均衡飲食;可與魚油、益生菌搭配打底</li></ul>`},
+  {t:'talk', h:'⑥ 合規銷售話術(三段式)', body:`
+   <div class="script"><b>情境:分級推薦(客戶不知選哪個)</b><br>「差別在『防禦強度』,就像防曬係數。作息正常、想日常打底 → 100萬;蠟燭兩頭燒的三明治族、常接觸人群 → 150萬御守版有接骨木莓加強;最近特別累、想快點回復活力 → 業界最高 200萬。你最近比較接近哪一種?😊」</div>
+   <div class="script"><b>情境:「SOD 是什麼?」</b><br>「SOD 是我們身體本來就有的抗氧化酵素,負責對抗自由基、保護細胞,可是會隨年齡、壓力、熬夜慢慢不夠用。這款用九種菌菇補充類 SOD 抗氧化力,幫你從細胞開始調整體質、養好底子 💪」</div>
+   <div class="script"><b>情境:忙碌職業媽媽(御守版)</b><br>「我懂那種顧長輩又顧小孩還要上班的累~御守版 150萬特別加了接骨木莓幫忙加強防禦,很適合常接觸人群、需要撐住體質的你。早上空腹一包,顧好底子才有力氣照顧全家 😊」</div>`},
+  {t:'warn', h:'⑦ 合規紅線', body:`
+   <div class="no">❌ 「抗癌」「治療過敏」「治療自體免疫疾病」「抗發炎」「調節甲狀腺」「減緩腫瘤」「增強免疫力」「預防疾病」</div>
+   <div class="yes">✅ 「幫助抗氧化」「對抗自由基」「調整體質」「幫助維持防禦力」</div>
+   <p>⚠️ <b>重大疾病鐵則:</b>客戶主動提及癌症、自體免疫疾病、正在治療或服藥 → 一律改用「調整體質、維持機能」的日常保養語言,絕不暗示能治療或取代醫療。內部對照表的疾病學理僅供理解客群,不可對外宣稱。</p>`},
+  {t:'norm', h:'⑧ 常見客戶問答', body:`
+   <p><b>Q:三個版本要選哪個?</b><br>A:用「防禦強度」想——日常打底 100萬、三明治族/常接觸人群 150萬御守、想快速回復活力 200萬。</p>
+   <p><b>Q:SOD 跟一般抗氧化保健品差在哪?</b><br>A:SOD 是身體本有的抗氧化酵素,這系列用九種菌菇補充類 SOD 活性,從細胞層級打底,活性越高防禦支持越強。</p>
+   <p><b>Q:為什麼要空腹喝?</b><br>A:早晨空腹吸收最好,也最容易養成固定習慣。</p>
+   <p><b>Q:全素可以喝嗎?</b><br>A:三版本都是全素,可安心飲用。</p>`},
+  {t:'norm', h:'⑨ 成組購買邏輯', body:`
+   <table><tr><th>搭配情境</th><th>建議搭配(營養素)</th></tr>
+   <tr><td>抗氧化+循環</td><td>Omega-3 魚油</td></tr>
+   <tr><td>體質+腸道防護</td><td>益生菌</td></tr>
+   <tr><td>抗氧化+美容</td><td>膠原蛋白</td></tr></table>
+   <p><b>系列獨有・升降級引導:</b>狀況改善可從 200萬 調整為 150/100萬 維持;換季、壓力高峰可短期升級。「依狀況調整活性」的專業建議是長期回購關鍵。</p>
+   <p><b>買 3(週期):</b>調整體質累積型,建議連續 1–3 個月,3 盒=完整一季防禦週期。</p>
+   <p><b>買 6(全家):</b>長輩、子女、自己依活性分級各取所需(長輩100萬打底、自己150萬御守),或搭魚油、益生菌成組。優惠依當月公告。</p>`}
+ ],
+ quiz:[
+  {q:'SOD 是什麼?',o:['一種維生素','人體本來就有、幫助對抗自由基的抗氧化酵素','一種礦物質','一種益生菌'],a:1},
+  {q:'極緻青春飲三個版本的主要差異是?',o:['口味','SODlike 活性等級(防禦強度)','葷素別','顏色'],a:1},
+  {q:'「三明治族群、常接觸人群、希望加強防禦」最適合哪個版本?',o:['100萬','150萬御守版(含接骨木莓)','都不適合','需搭配藥物'],a:1},
+  {q:'哪句話違反合規紅線?',o:['幫助抗氧化、對抗自由基','調整體質、維持好體質','這個可以抗癌、治療過敏','幫助維持防禦力'],a:2},
+  {q:'客戶說「我常熬夜、抽菸,喝 SOD 就可以降低風險了嗎?」正確回應方向?',o:['對,喝了就沒事','SOD 是抗氧化的日常保養,幫助調整體質,但不能取代戒菸、正常作息等根本改善,兩者要並行','抽菸沒關係','保證能抵消傷害'],a:1}
+ ], passAll:true
+};
+
+/* ---------- 葉黃素系列完整模組(九大區塊) ---------- */
+const LUTEIN = {
+ icon:'👀', axis:'n',
+ title:'葉黃素系列(晶采明亮)', sub:'進階系列模組|葉黃素飲 × 膠囊雙品項分工',
+ content:[
+  {t:'norm', h:'① 系列基本資訊', body:`<ul><li><b>系列:</b>👀 晶采明亮|<b>葷素:</b>全素(兩品項皆是)</li>
+   <li><b>定位:</b>⭐主力系列|3C 護眼、水潤晶亮</li></ul>
+   <table><tr><th>品項</th><th>主打</th><th>劑量</th><th>時機</th></tr>
+   <tr><td>葉黃素飲</td><td>水亮潤澤+好入口</td><td>葉黃素20mg+玉米黃素4mg</td><td>每日1包飯後</td></tr>
+   <tr><td>膠囊</td><td>最高劑量+配方完整</td><td>葉黃素30mg(最高劑量)</td><td>每日2顆飯後</td></tr></table>`},
+  {t:'norm', h:'② 核心成分與作用機轉', body:`
+   <p><b>共通核心:</b>葉黃素、玉米黃素是眼睛黃斑部重要營養,人體無法自行合成;「游離型」不需分解即可吸收,效率優於酯化型;3C 用眼消耗快,需每日補充。</p>
+   <p><b>🌊 葉黃素飲・水亮潤澤(3C 重度用眼首選)</b></p>
+   <table><tr><th>成分</th><th>含量</th></tr>
+   <tr><td>游離型葉黃素+玉米黃素</td><td>20mg+4mg(NIH 5:1 黃金比例)</td></tr>
+   <tr><td><b>蝦紅素</b></td><td>6mg(紅藻萃取日本專利,幫助用眼舒適)</td></tr>
+   <tr><td><b>高純度玻尿酸</b></td><td>10mg(潤澤補水,水亮關鍵)</td></tr>
+   <tr><td>黑醋栗+黑豆皮萃取</td><td>雙重花青素幫助循環</td></tr></table>
+   <p>💡 亮點:<b>蝦紅素 6mg+玻尿酸 10mg</b>,適合長時間用電腦手機、近距離讀書的 3C 族;飲品好入口不用吞膠囊。</p>
+   <p><b>💊 膠囊・最高劑量(配方完整)</b></p>
+   <table><tr><th>成分</th><th>含量</th></tr>
+   <tr><td><b>游離型葉黃素</b></td><td>30mg(2顆達衛福部最高劑量,吸收率+23%)</td></tr>
+   <tr><td>黑醋栗萃取</td><td>每300公斤僅萃1公斤花青素,珍稀</td></tr>
+   <tr><td><b>7 大優勢複方</b></td><td>山桑子、小米草、枸杞、Vit.C、Vit.E、硒、鋅</td></tr></table>
+   <p>💡 亮點:<b>達最高劑量 30mg+7 大複方配方完整</b>,適合加強保養、要求配方完整度者。</p>`},
+  {t:'norm', h:'③ 功能訴求(合規版)+ ④ 適用對象', body:`
+   <ul><li>補充眼睛所需葉黃素、玉米黃素</li><li>幫助維持晶亮、用眼舒適</li>
+   <li>玻尿酸幫助潤澤補水(葉黃素飲)</li><li>花青素幫助維持循環</li></ul>
+   <table><tr><th>品項</th><th>最適客群</th></tr>
+   <tr><td>葉黃素飲</td><td>重度 3C 用眼(電腦/手機/近距離讀書)、愛飲品不愛吞膠囊、在意水潤感、通勤低頭族</td></tr>
+   <tr><td>膠囊</td><td>想加強保養、要求最高劑量與配方完整、銀髮族、長期 K 書學生</td></tr></table>`},
+  {t:'norm', h:'⑤ 使用方式', body:`
+   <ul><li><b>葉黃素飲:</b>每日 1 包,飯後,撕開直接飲用</li>
+   <li><b>膠囊:</b>每日 2 顆,飯後</li>
+   <li><b>共通:</b>葉黃素脂溶性,飯後(有油脂)吸收更好;晶亮保養重在持續</li>
+   <li><b>搭配:</b>可與魚油(DHA 護眼)搭配,晶亮雙效</li></ul>`},
+  {t:'talk', h:'⑥ 合規銷售話術(三段式)', body:`
+   <div class="script"><b>情境:雙品項分工推薦</b><br>「兩款都護眼,差別在需求:整天盯電腦滑手機、近距離看書的重度用眼,推薦葉黃素飲——多了蝦紅素跟玻尿酸,用眼舒適又水亮,還是飲品好入口。想要最高劑量、配方最完整的加強保養,就選膠囊——葉黃素達衛福部最高 30 毫克,還有 7 大複方。你平常用眼比較接近哪一種?😊」</div>
+   <div class="script"><b>情境:3C 重度族(葉黃素飲)</b><br>「你這種一天十幾小時離不開螢幕的,眼睛真的辛苦~葉黃素飲加了 6 毫克蝦紅素跟玻尿酸,一個幫用眼舒適、一個幫水亮潤澤,對長時間看電腦手機很剛好,而且撕開就喝不用吞膠囊 😊」</div>
+   <div class="script"><b>情境:要求高劑量與完整配方(膠囊)</b><br>「想保養到位的話,這款膠囊是游離型葉黃素 30 毫克,達衛福部最高劑量,吸收率還提升 23%。還搭配山桑子、小米草、枸杞加上 C、E、硒、鋅共 7 大複方,配方很完整。每天 2 顆飯後,加強保養一次到位 💪」</div>`},
+  {t:'warn', h:'⑦ 合規紅線', body:`
+   <div class="no">❌ 「治療白內障」「預防黃斑部病變」「改善近視/老花」「治療乾眼症」「恢復視力」「保護視網膜(暗示醫療)」</div>
+   <div class="yes">✅ 「幫助維持晶亮」「用眼舒適」「眼睛日常保養」「幫助潤澤補水」</div>
+   <p>⚠️ 客戶若有明確眼睛疾病(白內障、黃斑部病變、青光眼)或正在治療,一律建議諮詢眼科醫師。葉黃素定位為日常營養保養,不可暗示治療或取代醫療。</p>`},
+  {t:'norm', h:'⑧ 常見客戶問答', body:`
+   <p><b>Q:葉黃素飲和膠囊選哪個?</b><br>A:重度 3C 用眼、喜歡飲品、在意水潤 → 葉黃素飲(蝦紅素+玻尿酸);想要最高劑量、配方最完整 → 膠囊(30mg+7 大複方)。</p>
+   <p><b>Q:游離型葉黃素差在哪?</b><br>A:不需消化分解就能吸收,效率比酯化型好。</p>
+   <p><b>Q:為什麼飯後吃?</b><br>A:葉黃素脂溶性,飯後有油脂幫助吸收。</p>
+   <p><b>Q:兩款可以一起吃嗎?</b><br>A:日常保養擇一即可;有特殊加強需求,建議依總攝取量規劃,可幫你評估。</p>`},
+  {t:'norm', h:'⑨ 成組購買邏輯', body:`
+   <table><tr><th>搭配情境</th><th>建議搭配(營養素)</th></tr>
+   <tr><td>護眼雙效</td><td>Omega-3 魚油(DHA)——護眼經典組合</td></tr>
+   <tr><td>3C 族全面</td><td>B 群(用眼+提神)</td></tr>
+   <tr><td>抗氧化打底</td><td>SOD</td></tr></table>
+   <p><b>雙品項分工加購:</b>平日葉黃素飲、密集用眼期加膠囊;家庭情境長輩用膠囊加強、年輕 3C 族用葉黃素飲。</p>
+   <p><b>買 3(週期):</b>晶亮營養持續消耗,建議連續 2–3 個月;1 盒約一個月,3 盒=完整週期。</p>
+   <p><b>買 6(全家):</b>3C 族、K 書學生、銀髮長輩都有護眼需求,依品項分工各取所需,或搭魚油成組。優惠依當月公告。</p>`}
+ ],
+ quiz:[
+  {q:'葉黃素葉黃素飲的主打差異化成分是?',o:['只有葉黃素','蝦紅素6mg+玻尿酸(水潤晶亮,適合3C重度族)','紅麴','益生菌'],a:1},
+  {q:'葉黃素膠囊的葉黃素劑量特色是?',o:['10mg','20mg','30mg,達衛福部公告最高劑量+7大複方','沒有葉黃素'],a:2},
+  {q:'「整天盯電腦手機、喜歡飲品不愛吞膠囊」最適合推薦?',o:['膠囊','葉黃素飲','都不適合','只能吃魚油'],a:1},
+  {q:'哪句話違反合規紅線?',o:['幫助維持晶亮','用眼舒適','這個可以治療白內障、恢復視力','補充眼睛所需葉黃素'],a:2},
+  {q:'游離型葉黃素相較於酯化型的優勢是?',o:['需要更多消化步驟','不需經消化分解即可吸收,吸收效率較好','完全不能吸收','只能素食者吃'],a:1}
+ ], passAll:true
+};
+
+/* ---------- 紅麴膠囊完整模組(九大區塊,健康食品嚴格合規) ---------- */
+const REDYEAST = {
+ icon:'🔴', axis:'n',
+ title:'紅麴膠囊', sub:'進階產品模組|國家健康食品認證・合規最嚴格',
+ content:[
+  {t:'norm', h:'① 模組基本資訊', body:`<ul><li><b>系列:</b>🔄 循環保健|<b>葷素:</b>葷食</li>
+   <li><b>規格:</b>60 顆/瓶,一天一顆,午/晚餐後</li>
+   <li><b>定位:</b>⭐主力必修|國家健康食品認證,血脂日常保養</li></ul>
+   <div class="note">🏅 <b>重要認證字號(對外文案務必正確標示):</b><br>健康食品:衛署健食規字第 000010 號｜SNQ 國家品質標章:國品字第 B00691 號</div>`},
+  {t:'norm', h:'② 核心成分與作用機轉', body:`
+   <table><tr><th>成分</th><th>作用機轉</th></tr>
+   <tr><td><b>Monacolin-K 5.25mg/顆</b></td><td>天然發酵紅麴菌種產生,是紅麴調節血脂的關鍵活性</td></tr>
+   <tr><td>台灣本土優質紅麴</td><td>不含麴毒素(citrinin),安全把關</td></tr>
+   <tr><td>雙認證</td><td>健康食品經衛福部審核核可保健功效;SNQ 代表安全與品質</td></tr></table>
+   <p><b>品質背書:</b>SNQ 國家品質標章(2004 起,產官學專家科學驗證多層審查)、SGS 每批 320 項以上檢驗合格。</p>
+   <p>💡 紅麴是全系列唯一「健康食品(小綠人)」,是最大賣點,但話術受最嚴格規範——只能引用核可原文。</p>`},
+  {t:'warn', h:'③ 功能訴求(合規版)⚠️ 須用核可原文', body:`
+   <p><b>✅ 唯一可用的核可保健功效敘述(請一字不差引用):</b></p>
+   <div class="yes">「保健功效敘述:本產品可能有助於降低血中總膽固醇,其功效由學理得知,非由實驗確認。」</div>
+   <p>提及「降膽固醇」時務必完整呈現上述原文(含「可能有助於」「非由實驗確認」),不可省略或誇大。其他一般用語:「幫助循環代謝保養」「精緻飲食、應酬族的日常保養」。</p>`},
+  {t:'norm', h:'④ 適用對象 + ⑤ 使用方式', body:`
+   <p><b>適用:</b>喜愛精緻美食者/經常應酬大吃大喝者/想提升循環代謝、做血脂保養者/外食缺運動擔心堆積者。</p>
+   <ul><li><b>建議量:</b>每日 1 顆</li><li><b>時機:</b>午餐或晚餐後</li><li><b>搭配:</b>均衡飲食與規律運動,保養更完整</li></ul>`},
+  {t:'talk', h:'⑥ 合規銷售話術(三段式)⚠️ 嚴格版', body:`
+   <div class="script"><b>情境:應酬族、精緻美食愛好者</b><br>「現代人外食多、又缺乏運動,久了容易有堆積困擾。這款紅麴是通過國家審查的『健康食品』,核可的保健功效敘述是『本產品可能有助於降低血中總膽固醇,其功效由學理得知,非由實驗確認』。每顆 5.25 毫克 Monacolin-K,不含麴毒素、通過 SGS 檢驗,一天一顆飯後做日常保養很安心 😊」</div>
+   <div class="script"><b>情境:「跟一般紅麴差在哪?」</b><br>「最大差別是有『小綠人』健康食品認證,衛署健食規字第 000010 號,通過國家審查;還有 SNQ 國家品質標章。安全性跟保健功效都經國家把關,不是自己說有效 💪」</div>
+   <div class="script"><b>情境:重視認證安心感的客戶</b><br>「現在保健品這麼多,怎麼選才安心?最簡單的方法就是看有沒有國家認證。這款有『小綠人』健康食品認證,還有 SNQ 國家品質標章、SGS 每批檢驗,等於安全跟保健功效都有國家幫你把關,買得安心、吃得放心 😊」</div>`},
+  {t:'warn', h:'⑦ 合規紅線 ⚠️ 本產品最需謹慎', body:`
+   <div class="no">❌ 「治療高血脂/高膽固醇」「降血壓」「預防心臟病/中風/動脈硬化」;❌ 把核可原文簡化為斷言「降膽固醇」而省略「可能有助於…非由實驗確認」;❌「取代降血脂藥」「可以不用吃藥」;❌「保證有效」</div>
+   <div class="yes">✅ 引用完整核可原文;✅「幫助循環代謝保養」「日常血脂保養」</div>
+   <p>⚠️ 重點:本產品雖有健康食品認證,仍不可把核可原文簡化為斷言式的「降膽固醇」,務必完整引用核可敘述(含「可能有助於」「非由實驗確認」),這是健康食品最容易踩的線。</p>`},
+  {t:'norm', h:'⑧ 常見客戶問答', body:`
+   <p><b>Q:會有麴毒素疑慮嗎?</b><br>A:台灣本土優質紅麴,不含麴毒素(citrinin),每批 SGS 檢驗(320 項以上),可安心。</p>
+   <p><b>Q:「健康食品」跟一般保健食品差在哪?</b><br>A:「健康食品」是法律名詞,要通過衛福部審查取得小綠人才能叫。這款有衛署健食規字第 000010 號,保健功效與安全性經國家審核。</p>
+   <p><b>Q:我自己常吃紅麴醬、紅糟,效果一樣嗎?</b><br>A:紅麴入菜是很棒的飲食文化,但料理紅麴的 Monacolin-K 含量不固定又低、烹調還會流失,很難達到穩定保養量。這款是標準化健康食品,每顆固定 5.25 毫克、通過國家審查,保養才有明確依據。享受紅麴料理之餘,搭配標準化膠囊做保養,定位不同 😊</p>
+   <p><b>Q:紅麴需要每天吃嗎?</b><br>A:血脂保養是長期累積的,建議每天 1 顆、午或晚餐後固定補充,搭配均衡飲食與規律運動,保養才完整。</p>`},
+  {t:'norm', h:'⑨ 成組購買邏輯', body:`
+   <table><tr><th>搭配情境</th><th>建議搭配(營養素)</th></tr>
+   <tr><td>循環全面保養</td><td>Omega-3 魚油</td></tr>
+   <tr><td>體內淨化</td><td>納豆激酶</td></tr>
+   <tr><td>肝臟代謝支持</td><td>牛樟芝(應酬族代謝加分)</td></tr></table>
+   <p><b>買 3(週期):</b>血脂保養長期累積,建議連續 3 個月以上;1 瓶約兩個月,3 瓶=完整半年。</p>
+   <p><b>買 6(全家):</b>應酬族、精緻美食愛好者、長輩循環保養都適用,或搭魚油、納豆成組。優惠依當月公告。</p>`}
+ ],
+ quiz:[
+  {q:'紅麴膠囊每顆的 Monacolin-K 含量為?',o:['1mg','5.25mg','10mg','沒有'],a:1},
+  {q:'紅麴膠囊的關鍵活性成分 Monacolin-K 來自?',o:['人工合成','天然發酵紅麴菌種','葡萄','海藻'],a:1},
+  {q:'客戶說「我自己常吃紅麴醬,效果一樣嗎?」正確回應方向?',o:['完全一樣,不用買','料理紅麴含量不固定又低、烹調會流失,標準化膠囊才有明確保養量','紅麴醬更有效','叫客戶多吃紅糟肉就好'],a:1},
+  {q:'哪句話違反合規紅線?',o:['引用完整核可原文','幫助循環代謝保養','這個保證有效、可以不用吃藥了','有國家健康食品認證'],a:2},
+  {q:'紅麴膠囊在品質安全上的特色是?',o:['沒有任何認證','台灣本土優質紅麴、不含麴毒素,且每批通過 SGS 檢驗','只在國外生產','未經檢驗'],a:1}
+ ], passAll:true
+};
+
+/* ---------- 牛樟芝系列完整模組(九大區塊) ---------- */
+const ANTRODIA = {
+ icon:'🍄', axis:'n',
+ title:'牛樟芝系列(滋補強身)', sub:'進階系列模組|精華飲主打 × 膠囊替代選擇',
+ content:[
+  {t:'norm', h:'① 系列基本資訊', body:`<ul><li><b>系列:</b>🍄 滋補強身草本|<b>葷素:</b>全素(兩品項皆是)</li>
+   <li><b>定位:</b>⭐主力系列|滋補強身、抗勞累,應酬熬夜族日常調理</li></ul>
+   <table><tr><th>品項</th><th>定位</th><th>時機</th></tr>
+   <tr><td>頂級牛樟芝精華飲 ⭐主打</td><td>業界飲品最高量、完整精粹</td><td>早餐後1包(加強早午各1包)</td></tr>
+   <tr><td>樟芝靈芝王膠囊</td><td>不愛飲品者的替代選擇</td><td>早餐後2顆(加強早午各2顆)</td></tr></table>`},
+  {t:'norm', h:'② 核心成分與作用機轉', body:`
+   <p><b>共通核心:</b>牛樟芝是台灣特有的珍貴真菌,關鍵活性是「多醣體」與「三萜類」,是滋補強身、調理體質的核心;「雙相萃取(子實體+菌絲體)」能更完整取得活性。</p>
+   <p><b>⭐ 精華飲(主打・完整精粹)</b></p>
+   <table><tr><th>成分</th><th>含量</th></tr>
+   <tr><td><b>頂級牛樟芝</b></td><td>多醣體25%(104.7mg)+三萜類12%(50.2mg),業界飲品最高量,雙相萃取</td></tr>
+   <tr><td>蛹蟲草(含蟲草素)+五味子</td><td>協同調理、幫助維持精神</td></tr>
+   <tr><td>多重複方</td><td>牛磺酸、D-核糖、枸杞、黃耆,補氣養身</td></tr></table>
+   <p>💡 主打亮點:<b>業界飲品最高量+雙相萃取完整精粹</b>,飲品好吸收方便,滋補首選。</p>
+   <p><b>💊 膠囊(替代・不愛飲品者)</b></p>
+   <table><tr><th>成分</th><th>含量</th></tr>
+   <tr><td>高含量樟芝菌絲體</td><td>300mg/顆(多醣體、三萜類)</td></tr>
+   <tr><td>嚴選赤芝靈芝菌絲體</td><td>低溫凍乾,10%多醣體(樟芝+靈芝雙芝)</td></tr>
+   <tr><td><b>五味子+複合 B 群</b></td><td>B1、B2、B6 維持能量代謝</td></tr></table>
+   <p>💡 膠囊定位:給不習慣喝飲品、偏好膠囊攜帶方便者;多了 B 群支持能量代謝,每天 4 顆達有效劑量。</p>`},
+  {t:'norm', h:'③ 功能訴求(合規版)+ ④ 適用對象', body:`
+   <ul><li>滋補強身、調養體質</li><li>幫助維持體力與精神</li>
+   <li>幫助新陳代謝、應酬熬夜後的日常調理</li><li>(膠囊)B 群幫助能量代謝</li></ul>
+   <table><tr><th>品項</th><th>最適客群</th></tr>
+   <tr><td>精華飲(主打)</td><td>工作家庭兩頭燒、過度勞累、常熬夜、勞累指數高族;喜歡即開即飲者</td></tr>
+   <tr><td>膠囊(替代)</td><td>勞力密集一線人員、常感勞累、加班熬夜壓力大者;不愛飲品、偏好膠囊者</td></tr></table>`},
+  {t:'norm', h:'⑤ 使用方式', body:`
+   <ul><li><b>精華飲:</b>一般早餐後 1 包;加強早、午餐後各 1 包</li>
+   <li><b>膠囊:</b>一般早餐後 2 顆;加強早、午餐後各 2 顆(每天 4 顆達有效劑量)</li>
+   <li><b>搭配:</b>滋補重在持續,搭配規律作息;應酬熬夜前後補充做日常保養</li></ul>`},
+  {t:'talk', h:'⑥ 合規銷售話術(三段式)', body:`
+   <div class="script"><b>情境:精華飲主打(應酬熬夜、兩頭燒族)</b><br>「我完全懂那種工作家庭兩頭燒、又常熬夜的累~牛樟芝是台灣特有的珍貴滋補素材,這款精華飲是業界飲品最高量,多醣體加三萜類雙相萃取完整取出,還加了蟲草、五味子、黃耆補氣複方。累的時候早餐後來一包,幫自己滋補強身、把體力顧起來 😊」</div>
+   <div class="script"><b>情境:客戶不愛喝飲品(帶到膠囊)</b><br>「如果你不太習慣喝飲品,我們有膠囊版的樟芝靈芝王——一樣滋補強身,是樟芝加靈芝雙芝,還多了 B 群幫助能量代謝,攜帶也方便。每天 4 顆一樣顧好體力活力。你比較喜歡喝的還是吞膠囊的?😊」</div>
+   <div class="script"><b>情境:「牛樟芝這麼貴,值得嗎?」</b><br>「牛樟芝是台灣特有、很珍稀的滋補素材,價值就在稀有跟活性成分。這款業界飲品最高量、雙相萃取完整精粹,一包就補得紮實。對常熬夜、勞累指數高的人,當作給自己的日常滋補投資,很值得 💪」</div>`},
+  {t:'warn', h:'⑦ 合規紅線 ⚠️ 本系列最易踩線', body:`
+   <div class="no">❌ 「護肝」「保肝」「顧肝」「解酒」「醒酒」「抗癌」「防癌」「化療輔助」「治療肝病/肝炎/肝硬化」「增強免疫力(涉療效)」——牛樟芝、靈芝最常被過度宣稱,一律禁止</div>
+   <div class="yes">✅ 「滋補強身」「調養體質」「幫助維持體力與精神」「應酬熬夜後的調理」「幫助新陳代謝」(膠囊 B 群「幫助能量代謝」)</div>
+   <p>⚠️ 內部對照表的「肝臟代謝、護肝」學理僅供理解客群,絕不可對外。客戶主動提及重大疾病(肝病、癌症)→ 一律改用滋補調理、維持體力的日常保養語言,絕不暗示治療或療效。</p>`},
+  {t:'norm', h:'⑧ 常見客戶問答', body:`
+   <p><b>Q:牛樟芝為什麼這麼珍貴?</b><br>A:台灣特有的珍貴真菌,關鍵在多醣體和三萜類活性成分,加上生長稀有,所以珍貴。</p>
+   <p><b>Q:精華飲和膠囊選哪個?</b><br>A:喜歡即開即飲、想要業界最高量完整精粹 → 精華飲(主打);不愛飲品、偏好膠囊攜帶、想要樟芝加靈芝加 B 群 → 膠囊。選你能持續吃的最重要。</p>
+   <p><b>Q:我三餐都有吃菇類,還需要補牛樟芝嗎?</b><br>A:一般食用菇跟牛樟芝不同~牛樟芝是台灣特有珍稀真菌,活性成分的種類濃度跟香菇金針菇差很多,日常吃菇很好,但要達滋補量還是需要專門的牛樟芝精華 😊</p>
+   <p><b>Q:全素可以吃嗎?</b><br>A:兩款都是全素,可安心。</p>`},
+  {t:'norm', h:'⑨ 成組購買邏輯', body:`
+   <table><tr><th>搭配情境</th><th>建議搭配(營養素)</th></tr>
+   <tr><td>熬夜勞累加強</td><td>B 群</td></tr>
+   <tr><td>應酬循環保養</td><td>紅麴、Omega-3 魚油</td></tr>
+   <tr><td>補氣提升活力</td><td>人蔘</td></tr></table>
+   <p><b>雙品項分工加購:</b>在家喝精華飲、外出帶膠囊,滋補不中斷;家人各依偏好選劑型。</p>
+   <p><b>買 3(週期):</b>滋補調理累積型,建議連續 1–3 個月;精華飲 1 盒約一個月,3 盒=完整一季。</p>
+   <p><b>買 6(全家):</b>勞累上班族、常熬夜者、需滋補長輩都適用,依劑型偏好各取所需,或搭 B 群、人蔘成組。優惠依當月公告。</p>`}
+ ],
+ quiz:[
+  {q:'頂級牛樟芝精華飲的技術亮點是?',o:['只有單一萃取','業界飲品最高量+雙相萃取(子實體+菌絲體)完整精粹','沒有活性成分','只有維生素'],a:1},
+  {q:'樟芝靈芝王膠囊比精華飲多了什麼特色成分?',o:['什麼都沒多','靈芝雙芝合璧+複合B群(維持能量代謝)','只有糖','咖啡因'],a:1},
+  {q:'哪句話違反合規紅線?',o:['滋補強身、調養體質','幫助維持體力與精神','這個可以護肝、解酒、抗癌','應酬熬夜後的調理'],a:2},
+  {q:'客戶不愛喝飲品,想滋補強身,正確推薦?',o:['硬要他喝精華飲','推薦樟芝靈芝王膠囊(一樣滋補,膠囊方便,含雙芝+B群)','叫他別買','說膠囊沒效'],a:1},
+  {q:'客戶主動提到有肝臟疾病,詢問牛樟芝,正確做法?',o:['說能治療肝病','說能護肝解毒','改用滋補調理、維持體力的日常保養語言,絕不暗示治療或療效','保證有效'],a:2}
+ ], passAll:true
+};
+
+/* ---------- 活人蔘精華飲完整模組(九大區塊) ---------- */
+const GINSENG = {
+ icon:'🌿', axis:'n',
+ title:'頂級活人蔘精華飲EX', sub:'進階產品模組|三蔘合一・益氣強身',
+ content:[
+  {t:'norm', h:'① 模組基本資訊', body:`<ul><li><b>系列:</b>🍄 滋補強身草本|<b>葷素:</b>全素</li>
+   <li><b>規格:</b>50ml × 30 包/盒</li>
+   <li><b>時機:</b>一般早餐後 1 包;加強早、午餐後各 1 包</li>
+   <li><b>定位:</b>⭐主力必修|三蔘合一,益氣強身、氣順舒心</li></ul>`},
+  {t:'norm', h:'② 核心成分與作用機轉', body:`
+   <table><tr><th>成分</th><th>作用機轉</th></tr>
+   <tr><td><b>人蔘皂苷 50mg</b><br>(韓國高麗紅蔘+長白山6年鮮人蔘,專利萃取)</td><td>人蔘核心活性,益氣固本、幫助維持體力精神</td></tr>
+   <tr><td>丹蔘(真空減壓萃取)+5大益氣草本</td><td>協同調理、溫和滋養</td></tr>
+   <tr><td><b>三蔘合一</b></td><td>紅蔘、白蔘、丹蔘協同,益氣補養更全面</td></tr></table>
+   <p>💡 三個記憶點:<b>三蔘合一、50mg 人蔘皂苷、全素好吸收</b>。人蔘皂苷是人蔘價值的關鍵指標,先講這個,客戶就懂為什麼選高規。</p>`},
+  {t:'norm', h:'③ 功能訴求(合規版)+ ④ 適用對象', body:`
+   <ul><li>益氣補養、滋補強身</li><li>幫助維持體力與精神</li>
+   <li>調養體質、溫和滋養</li><li>幫助維持中氣、元氣飽滿</li></ul>
+   <p><b>適用:</b>體質不佳氣虛不順、覺得中氣不足者/容易疲累想回復精神者/想滋補強身維持健康者/忙碌職業媽媽的日常補養。</p>`},
+  {t:'norm', h:'⑤ 使用方式', body:`
+   <ul><li><b>一般保養:</b>早餐後 1 包</li><li><b>加強保養:</b>早、午餐後各 1 包</li>
+   <li><b>時機:</b>早晨飲用,幫一天補氣打底</li>
+   <li><b>搭配:</b>滋補重在持續;可與牛樟芝、B 群搭配,勞累族全面補養</li></ul>`},
+  {t:'talk', h:'⑥ 合規銷售話術(三段式)', body:`
+   <div class="script"><b>情境:氣虛易累、中氣不足</b><br>「你說的那種明明沒做什麼卻很累、講話有氣無力,很多人都有~人蔘是傳統上經典的益氣補養素材。這款三蔘合一,紅蔘、白蔘、丹蔘協同,人蔘皂苷 50 毫克含量很足。早餐後一包,幫自己益氣強身、把元氣補起來 😊」</div>
+   <div class="script"><b>情境:「人蔘會不會很燥、上火?」</b><br>「這是很多人的疑慮!這款三蔘合一還加了丹蔘跟益氣草本協同,做的是溫和滋養的方向,不是一味大補,又是減糖全素,喝起來比較舒服。會擔心的話,可以先從一天一包的一般保養開始 😊」</div>
+   <div class="script"><b>情境:忙碌職業媽媽自我補養</b><br>「當媽媽又要上班,常常累到連喝水都忘記~給自己一點補養不是奢侈,是必要的。這款早上一包,用三蔘幫你益氣、把精神顧起來,才有力氣照顧全家。當作每天早上給自己的元氣儀式 💪」</div>`},
+  {t:'warn', h:'⑦ 合規紅線', body:`
+   <div class="no">❌ 「補血」「治療貧血」「治療氣虛(當疾病)」「壯陽」「增強性功能」「治療更年期」「抗癌」「增強免疫力(涉療效)」</div>
+   <div class="yes">✅ 「益氣補養」「幫助維持中氣」「幫助維持體力與精神」「滋補強身」「溫和滋養、調養體質」</div>
+   <p>⚠️ 人蔘是傳統補養素材,對外聚焦「益氣滋補、維持體力」的功能訴求,不涉及任何疾病治療或誇大宣稱。</p>`},
+  {t:'norm', h:'⑧ 常見客戶問答', body:`
+   <p><b>Q:三蔘合一是哪三蔘?</b><br>A:紅蔘、白蔘、丹蔘。紅白蔘益氣補養,丹蔘協同調理,三蔘一起做的是更全面、溫和的滋養。</p>
+   <p><b>Q:人蔘會太燥、上火嗎?</b><br>A:三蔘合一加丹蔘與益氣草本協同,走溫和滋養路線,又減糖全素,一般人喝起來比較舒服。偏燥體質可從一天一包開始。</p>
+   <p><b>Q:我自己會燉人蔘雞湯,還需要喝這個嗎?</b><br>A:燉補很好~但家裡燉的皂苷含量不固定、也非天天有空。這款專利萃取、人蔘皂苷 50 毫克含量明確,即開即飲天天補得穩,兩者可互相搭配 😊</p>
+   <p><b>Q:全素可以喝嗎?</b><br>A:是全素,可安心飲用。</p>`},
+  {t:'norm', h:'⑨ 成組購買邏輯', body:`
+   <table><tr><th>搭配情境</th><th>建議搭配(營養素)</th></tr>
+   <tr><td>勞累熬夜全面補養</td><td>牛樟芝(益氣+滋補雙重調理)</td></tr>
+   <tr><td>能量代謝加強</td><td>B 群</td></tr>
+   <tr><td>循環保養</td><td>Omega-3 魚油</td></tr></table>
+   <p><b>買 3(週期):</b>益氣補養累積型,建議連續 1–3 個月;1 盒約一個月,3 盒=完整一季。</p>
+   <p><b>買 6(全家):</b>氣虛易累上班族、需補養長輩、忙碌媽媽都適用,或搭牛樟芝、B 群成組。優惠依當月公告。</p>`}
+ ],
+ quiz:[
+  {q:'「三蔘合一」是哪三蔘?',o:['紅蔘、白蔘、丹蔘','紅蔘、西洋蔘、黨蔘','沒有三蔘','只有一種蔘'],a:0},
+  {q:'本產品的人蔘皂苷含量為?',o:['5mg','50mg','沒有','500mg'],a:1},
+  {q:'哪句話違反合規紅線?',o:['益氣補養、滋補強身','幫助維持體力與精神','這個可以補血、壯陽、治療貧血','幫助維持中氣'],a:2},
+  {q:'這款活人蔘走「溫和滋養」路線的原因是?',o:['只有一種蔘','三蔘合一加丹蔘與益氣草本協同,又是減糖全素','加了咖啡因','完全沒有人蔘'],a:1},
+  {q:'客戶說「我自己會燉人蔘雞湯,還需要喝這個嗎?」正確回應方向?',o:['完全一樣不用買','家裡燉補皂苷含量不固定又非天天有,這款專利萃取含量明確、天天補得穩,可互相搭配','雞湯更有效','叫他別燉了'],a:1}
+ ], passAll:true
+};
+
+/* ---------- 情境銷售課:內外雙軸銷售法 ---------- */
+const DUALAXIS = {
+ icon:'🌉', axis:'c',
+ title:'內外雙軸銷售法', sub:'情境銷售課|平台招牌課',
+ content:[
+  {t:'norm', h:'① 什麼是內外雙軸銷售法', body:`
+   <p><b>核心觀念:同一個需求,同時給「外用保養 + 內在營養」的完整方案。</b></p>
+   <ul><li>客戶的困擾(乾燥、暗沉、疲勞)通常同時有外在表現與內在原因</li>
+   <li>只推外用=治標;只推內服=客戶看不到立即感受</li>
+   <li><b>內外並行 = 效果更完整 + 客單價自然提升 + 專業感加分</b></li></ul>
+   <p>💡 心法:雙軸不是「多賣一件」,而是「把方案給完整」。從需求出發,加購是自然的結果。這是「美容 × 營養」平台最大的差異化優勢。</p>`},
+  {t:'norm', h:'② 內外雙軸對應表(核心工具)', body:`
+   <table><tr><th>客戶需求</th><th>外在保養方向</th><th>內在營養方向</th></tr>
+   <tr><td>肌膚乾燥、細紋</td><td>保濕鎖水</td><td>膠原蛋白、玻尿酸</td></tr>
+   <tr><td>暗沉、氣色差</td><td>亮白代謝</td><td>SOD 抗氧化、維生素 C</td></tr>
+   <tr><td>疲勞沒精神</td><td>基礎保養</td><td>B 群、人蔘、牛樟芝</td></tr>
+   <tr><td>3C 眼周疲勞</td><td>眼周保養</td><td>葉黃素、Omega-3</td></tr>
+   <tr><td>熬夜壓力肌</td><td>穩膚修護</td><td>牛樟芝、GABA(好眠)</td></tr>
+   <tr><td>換季敏感不穩</td><td>精簡修護</td><td>益生菌(調整體質)</td></tr>
+   <tr><td>熟齡保養</td><td>抗老滋養</td><td>膠原蛋白、蜂王乳、大豆異黃酮</td></tr></table>
+   <p>💡 內在建議用「營養素名稱」表述;外在用「保養方向」表述,對應產品查產品指南。</p>`},
+  {t:'norm', h:'③ 雙軸話術三步驟', body:`
+   <p><b>步驟一|外在觀察:</b>「你最近是不是比較累?氣色看起來有點暗沉~」</p>
+   <p><b>步驟二|內在提問:</b>「除了保養品,你平常睡得好嗎?飲食正常嗎?」</p>
+   <p><b>步驟三|雙軸方案:</b>「外面用(保養方向)幫皮膚打底,裡面補(營養素)從根本調理——內外一起,改變才有感而且持久 😊」</p>
+   <p>💡 順序可反過來:客戶先買營養品 → 帶到「由內而外有感後,外在保養加上去效果更完整」。雙軸是雙向道。</p>`},
+  {t:'talk', h:'④ 合規銷售話術(三段情境)', body:`
+   <div class="script"><b>情境:買保濕保養品的客戶(美→營)</b><br>「保濕做起來皮膚會舒服很多!不過偷偷跟你說,皮膚的水潤度有一半是『裡面』決定的——膠原蛋白跟玻尿酸會隨年齡流失,外面擦再多、裡面原料不夠,效果就打折。搭配內服膠原或玻尿酸,外面鎖水、裡面補原料,雙管齊下最有感 😊」</div>
+   <div class="script"><b>情境:買葉黃素的客戶(營→美)</b><br>「葉黃素顧眼睛裡面,很好的選擇!對了,長時間看螢幕,眼周皮膚也很辛苦——乾紋暗沉都先從眼周出現。搭配眼周保養,裡面吃葉黃素、外面顧眼周,整個『眼睛區』一次照顧到位 😊」</div>
+   <div class="script"><b>情境:抱怨疲勞氣色差(需求→雙軸)</b><br>「氣色其實是體力的鏡子~光靠遮瑕蓋不住累。建議兩件事一起:裡面用 B 群或人蔘把體力補起來,外面用亮白代謝保養幫氣色加分。裡面是根本、外面是加速,一到兩個月你會很有感 💪」</div>`},
+  {t:'norm', h:'⑤ 雙軸常見異議處理', body:`
+   <p><b>「擦的就好了吧,幹嘛還要吃?」</b><br>「擦的作用在表層,快但範圍有限;吃的從內在補原料,慢但持久。就像澆花——葉子噴水會亮一下,根部澆水才會真的長得好。兩個一起,又快又持久 😊」</p>
+   <p><b>「我有在吃保健品了,還要擦嗎?」</b><br>「內在打底很棒!但皮膚最外層的屏障要靠外在保養直接照顧——防曬保濕這些,吃的沒辦法取代。裡面顧體質、外面顧屏障,才是完整的保養 😊」</p>
+   <p><b>「一次買兩樣,負擔有點大」</b><br>「完全理解!那分階段:先從最困擾的那一軸開始,一個月有感了,再把另一軸加上去。保養是長期的,節奏舒服最重要 😊」</p>`},
+  {t:'norm', h:'⑥ 練習方法', body:`
+   <ul><li>從對應表挑 3 個你最常遇到的客戶需求</li>
+   <li>用「三步驟」對著鏡子各講一次,60 秒內講完</li>
+   <li>下次客戶只買單軸時,練習自然帶出另一軸(不強推,種下種子即可)</li></ul>`}
+ ],
+ quiz:[
+  {q:'內外雙軸銷售法的核心觀念是?',o:['什麼都推銷','同一需求,同時給「外用保養+內在營養」的完整方案','只賣貴的','只賣保健品'],a:1},
+  {q:'客戶困擾「肌膚乾燥、細紋」,正確雙軸組合是?',o:['保濕保養+膠原蛋白/玻尿酸','防曬+紅麴','眼周保養+益生菌','不用搭配'],a:0},
+  {q:'客戶說「擦的就好了,幹嘛還要吃?」最好的回應方向?',o:['「對,不用吃」','用「澆花」比喻:擦的顧表層快速、吃的補原料持久,兩者互補','「吃的比擦的有效,別擦了」','強迫推銷'],a:1},
+  {q:'客戶只買了葉黃素,雙軸帶法的正確方向?',o:['硬推全系列','自然帶出眼周保養——裡面吃葉黃素、外面顧眼周','說葉黃素沒用','不理客戶'],a:1},
+  {q:'客戶說「一次買兩樣負擔大」,正確處理?',o:['逼客戶全買','分階段:先從最困擾的那一軸開始,有感後再加另一軸','取消訂單','說沒錢就別保養'],a:1}
+ ], passAll:true
+};
+
+/* ---------- 情境銷售課:成組購買引導 ---------- */
+const BUNDLE = {
+ icon:'📦', axis:'c',
+ title:'成組購買引導(買3買6)', sub:'情境銷售課|週期思維 × 全家思維',
+ content:[
+  {t:'norm', h:'① 心法:成組不是推銷,是專業建議', body:`
+   <ul><li>買 3、買 6 的引導理由永遠是<b>真實需求</b>:補充週期、全家共享</li>
+   <li><b>不綁折扣談成組</b>——折扣會變動,需求不會;優惠一律依當月公告,話術不提金額</li>
+   <li>客戶因「懂了為什麼」而加購才會回購;因「折扣」而加購,下次沒折扣就流失</li></ul>
+   <p>💡 一句話心法:<b>「賣週期,不賣數量;賣全家,不賣庫存。」</b></p>`},
+  {t:'norm', h:'② 買 3 的科學:補充週期思維', body:`
+   <table><tr><th>身體機制</th><th>週期</th><th>對客戶的意義</th></tr>
+   <tr><td>皮膚細胞代謝</td><td>約 28 天</td><td>膠原、美妍類至少 1 個月才開始有感</td></tr>
+   <tr><td>腸道好菌定殖</td><td>2–4 週以上</td><td>益生菌吃吃停停=前功盡棄</td></tr>
+   <tr><td>營養素累積</td><td>1–3 個月</td><td>Omega-3、葉黃素等累積型營養,持續才有感</td></tr>
+   <tr><td>體質調整</td><td>1–3 個月</td><td>SOD、滋補類,底子是慢慢養的</td></tr></table>
+   <p><b>買 3 = 一個完整的三個月保養週期。</b>「吃一週沒感覺就停」是客戶最常見的失敗原因,買 3 就是幫客戶把週期走完。</p>
+   <div class="script">💬 <b>買 3 標準話術:</b>「營養補充就像存錢,不是投一枚硬幣就變有錢~身體的改變需要完整週期:皮膚代謝 28 天、好菌定殖要一個月、營養累積要一到三個月。一次備齊三個月的量、走完整個週期,你才會真的有感 😊」</div>`},
+  {t:'norm', h:'③ 買 6 的邏輯:全家共享思維', body:`
+   <table><tr><th>家庭成員</th><th>常見需求</th><th>營養方向</th></tr>
+   <tr><td>長輩</td><td>循環、關節、思緒</td><td>Omega-3、鈣+D3、SOD</td></tr>
+   <tr><td>上班族爸媽</td><td>疲勞、應酬、壓力</td><td>B 群、牛樟芝、人蔘、紅麴</td></tr>
+   <tr><td>3C 孩子/學生</td><td>護眼、腦力</td><td>葉黃素、Omega-3</td></tr>
+   <tr><td>全家共通</td><td>腸道、基礎打底</td><td>益生菌、綜合維生素</td></tr></table>
+   <p><b>兩種配法:</b>①同品項拆分(自己 3 盒+家人 3 盒);②跨品項成組(依成員需求各配所需)。</p>
+   <div class="script">💬 <b>買 6 標準話術:</b>「你在照顧自己的同時,家裡每個人其實都有需求——爸媽的循環、孩子的眼睛、全家的腸道。與其各買各的,不如一次幫全家配好。健康是全家的事,一起保養最容易堅持 😊」</div>`},
+  {t:'norm', h:'④ 引導時機與流程', body:`
+   <p><b>最佳時機(由自然到刻意):</b></p>
+   <ul><li>測評/檢測結果出來時——「你的結果顯示 X 最需要照顧,這類營養需要三個月週期…」</li>
+   <li>客戶問「要吃多久」時——週期話術直接接上</li>
+   <li>客戶提到家人時——「你剛說爸爸也常喊關節不舒服?那正好…」</li>
+   <li>回購時——「上次一個月的量吃完了,這次直接備一個週期吧」</li></ul>
+   <p><b>流程三步:</b>需求確認 → 週期/全家的理由 → 給具體配法(3 盒怎麼吃/6 盒怎麼分)。</p>`},
+  {t:'norm', h:'⑤ 成組常見異議處理', body:`
+   <p><b>「太多了,吃不完吧?」</b><br>「一天一包,一盒剛好一個月,三盒就是三個月——不是吃更多,是吃更久、吃完整,保存期限完全來得及 😊」</p>
+   <p><b>「我先買一盒試試就好」</b><br>「完全可以!先體驗很合理。只是先讓你有心理準備:大部分營養要一個月以上才開始有感,第一盒吃完『還沒感覺』是正常的,別在快有感的時候放棄~到時我再提醒你接上第二盒 😊」<br>💡 尊重決定+預告週期+留下回購伏筆,三件事一次做完。</p>
+   <p><b>「家人不一定想吃」</b><br>「不勉強~先照顧好你自己的三個月。等家人看到你的改變,通常就是他們最好奇的時候,到時再幫他們配 😊」</p>`},
+  {t:'warn', h:'⑥ 合規紅線', body:`
+   <div class="no">❌ 「買越多效果越好」「吃三盒保證有效」「不買 6 盒就來不及了」(誇大/製造焦慮);❌ 話術中提金額與折扣數字</div>
+   <div class="yes">✅ 引導理由只有兩個:<b>補充週期</b>(科學)與<b>全家需求</b>(真實);✅ 優惠一律「依當月公告為準」</div>`}
+ ],
+ quiz:[
+  {q:'成組購買引導的核心心法是?',o:['賣越多越好','賣週期不賣數量、賣全家不賣庫存,聚焦真實需求','用折扣逼單','製造焦慮'],a:1},
+  {q:'「買 3」的科學根據是?',o:['沒有根據','皮膚代謝約28天、好菌定殖2–4週、營養累積1–3個月,3盒=完整週期','買3有折扣','廠商規定'],a:1},
+  {q:'客戶說「先買一盒試試就好」,最好的處理?',o:['強迫買3','尊重決定+預告「一個月以上才有感」+留下接續伏筆','說一盒沒效不要買','不理他'],a:1},
+  {q:'「買 6」的正確引導邏輯?',o:['一個人吃雙倍','依家庭成員需求配置:長輩循環、孩子護眼、全家腸道','囤貨','沒有邏輯'],a:1},
+  {q:'哪句話違反成組引導的合規紅線?',o:['三盒剛好走完一個保養週期','全家一起保養最容易堅持','「吃三盒保證有效,不買六盒就來不及了」','優惠依當月公告為準'],a:2}
+ ], passAll:true
+};
+
+/* ---------- 美容:海洋元素系列(九大區塊・化粧品合規) ---------- */
+const SEAELEMENT = {
+ icon:'🌊', axis:'b',
+ title:'海洋元素系列', sub:'美容系列模組|入門抗老・玻提諾',
+ content:[
+  {t:'norm', h:'① 系列基本資訊', body:`<ul><li><b>軸別:</b>🌸 美容軸・抗老需求(逆齡肌)</li>
+   <li><b>定位:</b>⭐主力系列|入門抗老的基礎款,彈潤+修護</li>
+   <li><b>對應膚況:</b>初老肌、全年齡基礎抗老|<b>代表成分:</b>海洋原生質+PROTINOL 玻提諾</li></ul>
+   <table><tr><th>品項</th><th>步驟</th><th>訴求</th></tr>
+   <tr><td>修護潔容霜</td><td>Step1 清潔</td><td>清新潔淨、細緻修護</td></tr>
+   <tr><td>修護柔膚露</td><td>Step2 化妝水</td><td>潤澤、撫平細紋外觀</td></tr>
+   <tr><td>修護眼霜</td><td>Step3 眼霜</td><td>保濕、淡化眼紋外觀</td></tr>
+   <tr><td>修護乳霜</td><td>Step6 日/晚霜</td><td>8 大防護力</td></tr></table>`},
+  {t:'norm', h:'② 核心成分與作用機轉', body:`
+   <p><b>共通亮點:PROTINOL 玻提諾</b>——雅芳全球獨家專利抗老成分,2021 美國愛迪生獎銀獎,貫穿整個新活抗老系列,幫助維持肌膚彈潤外觀。</p>
+   <table><tr><th>成分</th><th>作用重點(合規)</th></tr>
+   <tr><td>PROTINOL 玻提諾</td><td>專利抗老,幫助維持彈潤緊緻外觀</td></tr>
+   <tr><td>海洋原生質</td><td>系列核心,幫助修護與保濕</td></tr>
+   <tr><td>三角褐指藻、六胜肽</td><td>協同修護、幫助維持緊緻外觀</td></tr>
+   <tr><td>精氨酸、植醇(眼霜)</td><td>增加保水度、維持肌膚活力</td></tr></table>
+   <p>💡 記憶點:<b>玻提諾專利抗老+海洋原生質修護+入門抗老基礎款</b>。四步驟構成完整基礎抗老流程,新手最好上手。</p>`},
+  {t:'norm', h:'③ 產品訴求(合規)+ ④ 適用對象', body:`
+   <ul><li>幫助維持肌膚彈潤與修護力</li><li>潤澤肌膚、幫助撫平細紋外觀</li>
+   <li>保濕補水、維持柔軟細緻膚觸</li><li>幫助維持防禦力、看起來更緊彈</li></ul>
+   <p><b>適用:</b>初老肌/剛開始想抗老者/全年齡基礎抗老打底/眼周乾燥細紋(搭配眼霜)/偏好經典溫和入門款者。</p>`},
+  {t:'norm', h:'⑤ 使用方式(保養順序)', body:`
+   <ul><li><b>Step1 潔容霜:</b>日夜清潔(夜間先卸妝)</li>
+   <li><b>Step2 柔膚露:</b>潤澤角質、提升吸收</li>
+   <li><b>Step3 眼霜:</b>米粒大小,眼下輕點至眼尾,指腹輕壓提拉 5 秒</li>
+   <li><b>Step6 修護乳霜:</b>日/晚霜;可厚敷作為修護面膜(每週 2–3 次)</li></ul>`},
+  {t:'talk', h:'⑥ 合規銷售話術(三段式)', body:`
+   <div class="script"><b>情境:剛想開始抗老的客戶</b><br>「剛開始想抗老又不知從哪入手,海洋元素是很好的入門~有雅芳專利成分玻提諾(得過美國愛迪生獎),幫助維持肌膚彈潤外觀。四步驟完整基礎款,簡單好上手 😊」</div>
+   <div class="script"><b>情境:在意細紋、想修護</b><br>「這款修護乳霜是系列核心,一罐有 8 大防護方向——緊彈、保濕、防禦、撫平細紋外觀都顧到。清爽型乳霜不厚重,累的時候還能厚敷當修護面膜 😊」</div>
+   <div class="script"><b>情境:預算有限想先入門</b><br>「可以先從『清潔+乳霜』兩步驟開始打基礎,之後再慢慢加眼霜、柔膚露補齊。保養循序漸進,不用一次到位 😊」</div>`},
+  {t:'warn', h:'⑦ 合規紅線(化粧品衛生安全管理法)', body:`
+   <div class="no">❌ 「治療」「修復受損細胞」「消炎」「殺菌」;❌「換膚」「醫美級」「等同雷射/水光針」;❌「促進膠原蛋白增生」「重生新皮膚」「改變膚質結構」;❌「永久淡化」「徹底消除」</div>
+   <div class="yes">✅ 「幫助維持彈潤外觀」「看起來更緊緻」「幫助修護」「撫平細紋外觀」</div>
+   <p>⚠️ 客戶有皮膚疾病(濕疹、酒糟、痘痘肌)或正在用藥,一律建議先諮詢皮膚科醫師再選擇合適保養品。</p>`},
+  {t:'norm', h:'⑧ 常見客戶問答', body:`
+   <p><b>Q:玻提諾 PROTINOL 是什麼?</b><br>A:雅芳全球獨家專利抗老成分,得過 2021 美國愛迪生獎銀獎,幫助維持肌膚彈潤外觀,是抗老系列核心。</p>
+   <p><b>Q:適合幾歲用?</b><br>A:定位入門抗老、初老肌基礎款,全年齡想打抗老基礎都適合。</p>
+   <p><b>Q:修護乳霜可以當面膜嗎?</b><br>A:可以!厚敷是很好的修護面膜,一週 2–3 次。</p>
+   <p><b>Q:一定要買整套嗎?</b><br>A:不用,先從「清潔+乳霜」打基礎,再慢慢補齊。</p>`},
+  {t:'norm', h:'⑨ 跨系列搭配與內外雙軸', body:`
+   <table><tr><th>需求</th><th>搭配方向</th></tr>
+   <tr><td>加強保濕</td><td>水動力或超保濕玻尿酸系列</td></tr>
+   <tr><td>進階抗老</td><td>升級超能穩膚(玻提諾 10 倍)</td></tr>
+   <tr><td>敏弱膚況</td><td>換季搭配舒敏調理</td></tr></table>
+   <p><b>內外雙軸:</b>初老抗老外用+內服<b>膠原蛋白、玻尿酸</b>(外面修護、裡面補原料);暗沉+內服 <b>SOD、維生素 C</b>。</p>
+   <p><b>成組:</b>基礎四步驟成套配齊;全家共享各取所需。優惠依當月公告。</p>`}
+ ],
+ quiz:[
+  {q:'海洋元素系列的定位是?',o:['極致美白','入門抗老的基礎款,彈潤+修護','只做防曬','醫美療程'],a:1},
+  {q:'貫穿新活抗老系列的專利成分是?',o:['玻尿酸','水楊酸','PROTINOL 玻提諾(得過美國愛迪生獎)','咖啡因'],a:2},
+  {q:'哪句話違反化粧品合規紅線?',o:['幫助維持肌膚彈潤外觀','撫平細紋外觀','這罐可以換膚、促進膠原蛋白增生、治療細紋','保濕補水'],a:2},
+  {q:'修護乳霜的額外用法是?',o:['不能多用','可厚敷作為修護面膜,每週 2–3 次','只能早上用','拿來卸妝'],a:1},
+  {q:'客戶有酒糟或濕疹等皮膚疾病,詢問保養品,正確做法?',o:['直接推薦','說能治療','建議先諮詢皮膚科醫師再選擇合適保養品','保證有效'],a:2}
+ ], passAll:true
+};
+
+/* ---------- 美容:超能穩膚系列 ---------- */
+const STABILIZE = {
+ icon:'💗', axis:'b',
+ title:'超能穩膚系列', sub:'美容系列模組|玻提諾 10 倍・穩膚抗老',
+ content:[
+  {t:'norm', h:'① 系列基本資訊', body:`<ul><li><b>軸別:</b>🌸 美容軸・抗老需求(逆齡肌)</li>
+   <li><b>定位:</b>⭐主力系列|彈+穩膚,膚況多變時的高規抗老選擇</li>
+   <li><b>最大亮點:</b>玻提諾含量為線上其他新活抗老乳霜系列的 <b>10 倍</b></li></ul>
+   <table><tr><th>品項</th><th>步驟</th><th>訴求</th></tr>
+   <tr><td>安瓶</td><td>Step4 速效安瓶</td><td>彈潤抗老、集中修護</td></tr>
+   <tr><td>精華(#小粉金)</td><td>Step5 精華</td><td>強化防禦、改善 7 大膚況</td></tr>
+   <tr><td>乳霜(#粉金霜)</td><td>Step6 日/晚霜</td><td>7 天緊彈細緻</td></tr>
+   <tr><td>防禦日霜 SPF15</td><td>Step6 日霜</td><td>外防禦×內守護</td></tr></table>`},
+  {t:'norm', h:'② 核心成分與作用機轉', body:`
+   <p><b>最大差異化:10 倍高濃度玻提諾</b>——超能穩膚的玻提諾含量是線上其他新活抗老乳霜系列的 10 倍,是本系列最強的銷售武器。</p>
+   <table><tr><th>成分</th><th>作用重點(合規)</th></tr>
+   <tr><td>10 倍高濃度玻提諾</td><td>集中補充,幫助維持彈潤緊緻外觀</td></tr>
+   <tr><td>菸鹼醯胺(B3)</td><td>幫助強健防禦力、溫和舒緩、安撫不穩膚況</td></tr>
+   <tr><td>雪亞脂(乳霜)</td><td>補充油脂、幫助滋潤保濕</td></tr></table>
+   <p><b>產品分工:</b>安瓶(短期密集急救)/精華#小粉金(日常防禦,2023 國際護膚獎「最佳淡化細紋和皺紋」)/乳霜#粉金霜(系列核心)/防禦日霜(日間 SPF15)。</p>
+   <p>💡 記憶點:<b>10 倍玻提諾、菸鹼醯胺穩膚、膚況不穩的高規選擇</b>。</p>`},
+  {t:'norm', h:'③ 產品訴求(合規)+ ④ 適用對象', body:`
+   <ul><li>幫助維持膚況穩定與防禦力</li><li>幫助維持彈潤緊緻外觀、看起來更緊實</li>
+   <li>溫和舒緩、安撫換季不穩膚況外觀</li><li>防禦日霜依標示 SPF15 陳述,提醒補擦</li></ul>
+   <p><b>適用:</b>一般肌膚況多變/想升級高規抗老(玻提諾 10 倍)/細紋粗糙想加強緊彈/需短期密集(安瓶)/需日間防護(防禦日霜)。</p>`},
+  {t:'norm', h:'⑤ 使用方式(保養順序)', body:`
+   <ul><li><b>Step4 安瓶:</b>一天一次連續 7 天;每月 1–2 盒。間歇保養:第 1、3 週用安瓶,第 2、4 週回精華</li>
+   <li><b>Step5 精華:</b>早晚,乳霜前,快速吸收</li>
+   <li><b>Step6 乳霜:</b>日夜;可厚敷緊緻毛孔外觀、賦活保濕</li>
+   <li><b>Step6 防禦日霜:</b>日間專用,SPF15</li></ul>`},
+  {t:'talk', h:'⑥ 合規銷售話術(三段式)', body:`
+   <div class="script"><b>情境:想升級抗老(主打 10 倍)</b><br>「覺得一般抗老不夠力?超能穩膚是很好的升級——玻提諾濃度是其他新活抗老乳霜系列的 10 倍!玻提諾是得過美國愛迪生獎的專利成分,高濃度集中補充,幫助維持肌膚彈潤緊緻外觀,膚況多變時特別有感 😊」</div>
+   <div class="script"><b>情境:換季膚況不穩</b><br>「換季肌膚容易鬧脾氣~超能穩膚加了菸鹼醯胺,幫助安撫不穩膚況、維持防禦力,奶油乳霜質地不黏膩。粉金霜連續用 7 天就能感受緊彈細緻 😊」</div>
+   <div class="script"><b>情境:想短期密集加強(安瓶)</b><br>「重要場合前想衝一波,用超能穩膚安瓶——10 倍高濃度玻提諾,一天一支連續 7 天集中賦活。平常搭配間歇保養,讓肌膚維持好狀態 😊」</div>`},
+  {t:'warn', h:'⑦ 合規紅線(化粧品衛生安全管理法)', body:`
+   <div class="no">❌ 「治療」「修復受損細胞」「消炎」;❌「換膚」「醫美級」「等同水光針/雷射」;❌「促進膠原蛋白增生」「改變膚質結構」;❌ 防曬「完全阻隔紫外線」「整天不用補擦」</div>
+   <div class="yes">✅ 「幫助維持彈潤緊緻外觀」「幫助維持膚況穩定與防禦力」「溫和舒緩」;防曬「依標示 SPF15 陳述,建議定時補擦」</div>
+   <p>⚠️ 客戶有皮膚疾病或正在用藥,一律建議先諮詢皮膚科醫師。</p>`},
+  {t:'norm', h:'⑧ 常見客戶問答', body:`
+   <p><b>Q:超能穩膚跟海洋元素差在哪?</b><br>A:都含玻提諾,但超能穩膚的玻提諾濃度是其他新活抗老乳霜系列的 10 倍,加了菸鹼醯胺穩膚。海洋元素是入門款,超能穩膚是進階高規款。</p>
+   <p><b>Q:安瓶怎麼用?</b><br>A:一天一支連續 7 天,每月 1–2 盒。可搭配間歇保養:第 1、3 週安瓶,第 2、4 週回精華。</p>
+   <p><b>Q:「10 倍玻提諾」跟什麼比?</b><br>A:跟線上其他新活抗老乳霜系列相比,達到 10 倍,是本系列最大特色。</p>
+   <p><b>Q:防禦日霜 SPF15 夠嗎?</b><br>A:適合日常通勤基礎防護,要記得定時補擦;長時間戶外建議再加高係數防曬。</p>`},
+  {t:'norm', h:'⑨ 跨系列搭配與內外雙軸', body:`
+   <table><tr><th>需求</th><th>搭配方向</th></tr>
+   <tr><td>入門升級</td><td>從海洋元素升級超能穩膚(玻提諾 10 倍)</td></tr>
+   <tr><td>敏弱膚況</td><td>極不穩時搭配舒敏調理</td></tr>
+   <tr><td>保濕加強</td><td>超保濕玻尿酸系列</td></tr></table>
+   <p><b>內外雙軸:</b>進階抗老外用+內服<b>膠原蛋白、玻尿酸</b>;換季不穩+內服<b>益生菌(調整體質)</b>。</p>
+   <p><b>成組:</b>安瓶(密集)+精華(日常)+乳霜(核心)節奏搭配;海洋元素用戶升級加購。優惠依當月公告。</p>`}
+ ],
+ quiz:[
+  {q:'超能穩膚系列最大的差異化亮點是?',o:['最便宜','玻提諾含量是其他新活抗老乳霜系列的 10 倍','只做清潔','沒有專利成分'],a:1},
+  {q:'超能穩膚加入菸鹼醯胺的作用是?',o:['增加香味','幫助強健防禦力、溫和舒緩、安撫不穩膚況','讓產品變色','沒有作用'],a:1},
+  {q:'哪句話違反化粧品合規紅線?',o:['幫助維持彈潤緊緻外觀','溫和舒緩不穩膚況','這罐等同水光針、能促進膠原蛋白增生','依標示 SPF15 陳述'],a:2},
+  {q:'超能穩膚安瓶的正確用法是?',o:['一天十支','一天一支、連續 7 天,可搭配間歇保養','只能用一次','拿來卸妝'],a:1},
+  {q:'防禦日霜 SPF15 的正確合規說法是?',o:['完全阻隔紫外線','整天不用補擦','依標示 SPF15 陳述,建議定時補擦','100% 防曬'],a:2}
+ ], passAll:true
+};
+
+/* ---------- 美容:極耀美白系列 ---------- */
+const WHITENING = {
+ icon:'🤍', axis:'b',
+ title:'極耀美白系列', sub:'美容系列模組|祛黑美白科技',
+ content:[
+  {t:'norm', h:'① 系列基本資訊', body:`<ul><li><b>軸別:</b>🌸 美容軸・功能需求(健康肌)</li>
+   <li><b>定位:</b>⭐主力系列|極耀美白,幫助維持膚色明亮均勻</li>
+   <li><b>對應膚況:</b>暗沉肌、膚色不均、油脂氧化蠟黃|<b>核心科技:</b>Niacin-Pro Bright(菸鹼醯胺+TDPA)</li></ul>
+   <table><tr><th>品項</th><th>步驟</th></tr>
+   <tr><td>潔容霜/柔膚露</td><td>Step1-2 清潔調理</td></tr>
+   <tr><td>精華(系列核心)</td><td>Step5 精華</td></tr>
+   <tr><td>凝乳</td><td>Step6 乳液</td></tr>
+   <tr><td>日霜(素顏霜 SPF12)/晚霜</td><td>Step6 日/夜</td></tr></table>`},
+  {t:'norm', h:'② 核心成分與作用機轉', body:`
+   <p><b>祛黑美白科技 Niacin-Pro Bright Technology:</b></p>
+   <table><tr><th>成分</th><th>作用重點(合規)</th></tr>
+   <tr><td>高濃度菸鹼醯胺(B3)</td><td>調理膚況、細緻毛孔、幫助改善黯沉與膚色不均外觀</td></tr>
+   <tr><td>TDPA</td><td>幫助修護曬後肌膚、淨化膚色外觀</td></tr>
+   <tr><td>紫水光微粒(日霜)</td><td>立即修飾黯沉外觀</td></tr></table>
+   <p><b>亮點:</b>精華是系列核心(數據:AVON 研發中心 50 位評估,實際效果因人而異);日霜兼具 SPF12/PA++;晚霜對應黑色素最活躍時段(晚上 10 點～凌晨 2 點)。</p>
+   <p>💡 記憶點:<b>菸鹼醯胺 B3+TDPA 祛黑、日修飾夜修護、防曬是美白關鍵</b>。</p>`},
+  {t:'norm', h:'③ 產品訴求(合規)', body:`
+   <p>依化粧品衛生安全管理法「通常得使用之詞句」,下列為核可可宣稱用語:</p>
+   <div class="yes">✅ 美白、亮白、嫩白、皙白、改善暗沉;✅ 均勻膚色、呈現透亮光澤;✅ 幫助維持膚色明亮均勻、維持勻淨透亮外觀;✅ 幫助維持肌膚光澤感、看起來更透亮</div>
+   <p>💡 「美白/亮白/改善暗沉」是化粧品核可可宣稱詞句,可正常使用;仍禁止誇大(如瞬間白 X 色階、徹底消除斑點)。</p>`},
+  {t:'norm', h:'④ 適用對象 + ⑤ 使用方式', body:`
+   <p><b>適用:</b>暗沉肌、氣色蠟黃/膚色不均、斑點外觀困擾/常曬太陽想加強亮白/想日夜完整亮白保養者。</p>
+   <ul><li><b>精華:</b>早晚,全臉塗抹、斑點部位局部加強</li>
+   <li><b>日霜:</b>日間(SPF12);<b>晚霜:</b>夜間修護</li>
+   <li><b>關鍵:</b>美白務必搭配防曬,白天防曬做好、晚上修護,亮白才有感</li></ul>`},
+  {t:'talk', h:'⑥ 合規銷售話術(三段式)', body:`
+   <div class="script"><b>情境:氣色暗沉想亮白</b><br>「覺得氣色暗暗、不夠透亮?極耀美白用菸鹼醯胺 B3 加 TDPA 的祛黑科技,幫助調理膚況、改善外觀黯沉感,維持膚色明亮均勻。從清潔到日夜霜,日夜接力最有感 😊」</div>
+   <div class="script"><b>情境:在意膚色不均、斑點外觀</b><br>「膚色不均看起來容易顯累~精華可全臉擦、斑點局部加強。重點是搭配防曬:白天防曬做好、晚上用晚霜修護,因為黑色素在晚上 10 點到凌晨 2 點最活躍,夜間修護正是關鍵 😊」</div>
+   <div class="script"><b>情境:想簡單亮白</b><br>「想簡單一點,先從『精華+日霜』開始——精華幫助淨白,日霜是素顏霜還有 SPF12 基礎防曬。防曬是美白最重要的一步,先把這兩個做好就有基礎 😊」</div>`},
+  {t:'warn', h:'⑦ 合規紅線 ⚠️ 美白最需謹慎', body:`
+   <div class="no">❌ 「美白到底」「白得像換一張臉」「瞬間白 X 個色階」;❌「徹底消除斑點」「永久淡斑」「根除黑色素」;❌「治療斑點」「換膚」「醫美級」;❌ 防曬「完全阻隔紫外線」「整天不用補擦」</div>
+   <div class="yes">✅ 「美白/亮白/嫩白/皙白/改善暗沉」(化粧品核可詞句,可正常使用);✅「幫助維持膚色明亮均勻」「均勻膚色、呈現透亮光澤」;防曬「依標示 SPF12/PA++ 陳述,建議補擦」</div>
+   <p>⚠️ 引用試用數據(如「3 天有感」)務必同步標註研究單位、受測人數與「實際效果因人而異」。客戶有皮膚疾病或用藥,建議先諮詢皮膚科醫師。</p>`},
+  {t:'norm', h:'⑧ 常見客戶問答', body:`
+   <p><b>Q:美白多久有感?</b><br>A:亮白是累積型,建議持續使用並搭配防曬。精華數據來自 AVON 研發中心 50 位評估,實際效果因人而異。</p>
+   <p><b>Q:為什麼美白一定要防曬?</b><br>A:紫外線是膚色加深主因~不防曬則保養事倍功半。日霜有 SPF12 基礎防護,長時間戶外再加高係數。</p>
+   <p><b>Q:精華跟日夜霜要一起用嗎?</b><br>A:精華是核心,日夜霜銜接維持。想簡單先「精華+日霜」;想完整就日夜接力。</p>
+   <p><b>Q:斑點可以完全消除嗎?</b><br>A:保養品是幫助維持勻亮外觀、淡化外觀黯沉,無法宣稱徹底消除。在意的斑點建議搭配防曬長期保養或諮詢皮膚科醫師。</p>`},
+  {t:'norm', h:'⑨ 跨系列搭配與內外雙軸', body:`
+   <table><tr><th>需求</th><th>搭配方向</th></tr>
+   <tr><td>亮白+淡斑加強</td><td>肌淨淡斑或恆白松露系列</td></tr>
+   <tr><td>亮白+光澤</td><td>高效維 C 系列</td></tr>
+   <tr><td>日間防護升級</td><td>美白 UV 防曬乳</td></tr></table>
+   <p><b>內外雙軸:</b>亮白外用+內服 <b>SOD 抗氧化、維生素 C</b>(外面淨白、裡面抗氧化);暗沉疲勞+內服 <b>B 群</b>。</p>
+   <p><b>成組:</b>日夜接力成套(日精華+日霜、夜精華+晚霜);亮白必配防曬。優惠依當月公告。</p>`}
+ ],
+ quiz:[
+  {q:'極耀美白的核心祛黑科技成分是?',o:['玻尿酸','高濃度菸鹼醯胺(維他命 B3)+ TDPA','水楊酸','咖啡因'],a:1},
+  {q:'為什麼美白保養一定要搭配防曬?',o:['不需要防曬','紫外線是膚色加深主因,不防曬則保養事倍功半','防曬會變黑','只是順便'],a:1},
+  {q:'哪句話違反化粧品美白合規紅線?',o:['幫助維持膚色明亮均勻','美白、亮白、改善暗沉(核可詞句)','這罐能瞬間白三個色階、徹底消除斑點','均勻膚色、呈現透亮光澤'],a:2},
+  {q:'極耀美白晚霜強調夜間修護的原因?',o:['沒有原因','黑色素最活躍時段為晚上 10 點～凌晨 2 點,夜間是修護關鍵','只能晚上買','白天不能擦'],a:1},
+  {q:'引用「3 天有感」等試用數據時,正確做法是?',o:['直接說保證有效','同步標註研究單位、受測人數與「實際效果因人而異」','誇大成「人人有效」','不用標註'],a:1}
+ ], passAll:true
+};
+
+/* ---------- 講師培訓 T3-1:講師表達與教案運用 ---------- */
+const T_EXPRESS = {
+ icon:'🎤', axis:'t',
+ title:'講師表達與教案運用', sub:'講師培訓課|把平台模組講給團隊聽',
+ content:[
+  {t:'norm', h:'① 講師的角色轉換', body:`
+   <p><b>從「自己會賣」到「教會別人賣」——這是講師最重要的心態轉變。</b></p>
+   <ul><li>你不用重新準備教材:平台的每個模組(九大區塊)就是現成的講稿</li>
+   <li>你的任務是「翻譯」:把模組內容變成團隊聽得懂、學得會、用得出的一堂課</li>
+   <li>好講師不是講最多,而是讓夥伴「記得住三個重點、現場敢開口」</li></ul>
+   <p>💡 心法:<b>模組是樂譜,你是演奏者。</b>同一份素材,好的表達能讓它活起來。</p>`},
+  {t:'norm', h:'② 用九大區塊當講稿(產品說明會)', body:`
+   <p>任何一個產品模組,都能濃縮成 <b>10 分鐘產品說明</b>,順序照九大區塊走:</p>
+   <table><tr><th>時間</th><th>講什麼(對應區塊)</th></tr>
+   <tr><td>0-1 分</td><td>破冰:用檢測工具或一句痛點開場(「你會不會常覺得…」)</td></tr>
+   <tr><td>1-4 分</td><td>核心成分+主成分功效:講「有什麼、對身體有什麼幫助」</td></tr>
+   <tr><td>4-6 分</td><td>適用對象:讓聽眾對號入座「這說的就是我」</td></tr>
+   <tr><td>6-8 分</td><td>合規話術:示範怎麼對客戶講(照著念就對)</td></tr>
+   <tr><td>8-10 分</td><td>搭配與成組:帶出「還可以搭什麼」</td></tr></table>
+   <p>💡 十分鐘講不完整個模組沒關係——<b>挑主成分功效 + 一句話術</b>,就是最有價值的兩塊。</p>`},
+  {t:'norm', h:'③ 用檢測工具破冰(最自然的開場)', body:`
+   <p>晨會或說明會不知道怎麼開場?<b>先讓大家做一次膚質檢測或健康檢測。</b></p>
+   <ul><li>發問卷 → 得結果 → 「你的結果是 X,這類最需要照顧的是…」自然帶到產品</li>
+   <li>互動感強、不說教,夥伴親身體驗後更記得住</li>
+   <li>這也是教夥伴「怎麼對客戶用檢測破冰」的最佳示範——你怎麼帶,他們就怎麼學</li></ul>`},
+  {t:'norm', h:'④ 表達的三個實用技巧', body:`
+   <p><b>1. 一堂課只留三個記憶點</b>——講十個等於沒講,挑三個反覆強調。</p>
+   <p><b>2. 多用「你」少用「它」</b>——不是「這產品含玻提諾」,而是「你擦上去,肌膚會…」,把功效跟聽眾連起來。</p>
+   <p><b>3. 每段結尾給一個動作</b>——「回去試著跟一個客戶講這句話」,讓學習落地成行動。</p>`}
+ ],
+ quiz:[
+  {q:'講師最重要的角色轉換是?',o:['講最多內容','從「自己會賣」到「教會別人賣」','背最多成分','講最久'],a:1},
+  {q:'用九大區塊做10分鐘產品說明,最有價值的兩塊是?',o:['基本資料+規格','主成分功效+一句話術','價格+贈品','包裝+顏色'],a:1},
+  {q:'晨會最自然的破冰方式是?',o:['直接推銷','先讓大家做膚質或健康檢測,再帶到產品','念說明書','發折價券'],a:1},
+  {q:'表達技巧「一堂課只留幾個記憶點」?',o:['十個以上','三個','越多越好','不用重點'],a:1},
+  {q:'讓學習落地的做法是?',o:['講完就結束','每段結尾給一個可執行的動作','考試','抄筆記'],a:1}
+ ], passAll:true
+};
+
+/* ---------- 講師培訓 T3-2:黃金72小時顧客關懷與跟進 ---------- */
+const T_CARE72 = {
+ icon:'💛', axis:'t',
+ title:'黃金72小時顧客關懷與跟進', sub:'講師培訓課|1-3-7-10 天跟進節奏',
+ content:[
+  {t:'warn', h:'① 核心觀念:售出只是第一步', body:`
+   <p><b>「售出產品只是第一步,顧客不追蹤,萬事一場空。」</b></p>
+   <ul><li>成交的當下,才是關係的開始,不是結束</li>
+   <li>沒有跟進 → 客戶忘了怎麼用 → 沒效果 → 不回購 → 你白忙一場</li>
+   <li>有系統的關懷 → 客戶有感 → 回購 + 轉介紹 + 升等 VIP</li></ul>
+   <p>💡 這堂課教夥伴一套「照著做就會」的跟進節奏:<b>黃金 72 小時 + 1-3-7-10 天行動計劃</b>。</p>`},
+  {t:'norm', h:'② 黃金72小時:3 天內第一次聯絡', body:`
+   <p><b>關鍵原則:成交後 3 天內(72 小時)一定要完成第一次聯絡。</b></p>
+   <p>這是客戶對產品期待最高、記憶最新的時候。錯過黃金 72 小時,熱度就冷了。</p>
+   <p>💡 整套跟進節奏用四個數字記住:<b>1 → 3 → 7 → 10 天</b>。</p>`},
+  {t:'norm', h:'③ 第 1 天:交換聯絡 + 第一則關懷', body:`
+   <p><b>交換聯絡方式(社群媒體優先:LINE、Messenger、IG)</b>,並發送第一則關懷訊息:</p>
+   <ul><li>1. 感謝選擇購買雅芳產品</li>
+   <li>2. 提醒收到貨後開瓶</li>
+   <li>3. 附上個人聯絡資訊</li></ul>
+   <p>💡 社群優先的原因:低壓力、客戶方便回、後續互動自然。</p>`},
+  {t:'norm', h:'④ 第 3 天:鼓勵產品使用', body:`
+   <ul><li>1. 確認產品開瓶(很多人買了放著沒用!)</li>
+   <li>2. 再次說明正確使用方法</li>
+   <li>3. 分享健康、美麗資訊(轉發雅芳官方社群平台連結)</li></ul>
+   <p>💡 這一步是「防止產品被冰起來」的關鍵——沒開瓶就沒效果,沒效果就不回購。</p>`},
+  {t:'norm', h:'⑤ 第 7 天:電訪關懷', body:`
+   <ul><li>1. 詢問使用效果,給予鼓勵和肯定</li>
+   <li>2. 介紹本期目錄重點 & 促銷活動 / VIP 會員好康</li>
+   <li>3. 說明自行訂貨方式(主推團購目錄)</li>
+   <li>4. 邀約活動,並約定第 10 天面訪時間</li></ul>
+   <p>💡 第 7 天從「關懷」自然過渡到「延伸銷售與邀約」,節奏剛好。</p>`},
+  {t:'norm', h:'⑥ 第 10 天:面訪聯絡', body:`
+   <ul><li>1. 關心產品使用與 QA,獲得同意拍攝顧客見證照</li>
+   <li>2. 鼓勵分享目錄並關心揪團合購(輕鬆轉介紹)</li>
+   <li>3. 升等 VIP 會員好康再次說明</li>
+   <li>4. 約定未來互動方式與頻率</li></ul>
+   <p>💡 第 10 天是「把一位客戶變成長期關係 + 轉介紹來源」的收網點。</p>`},
+  {t:'norm', h:'⑦ 鼓勵顧客記錄「產品使用心得」', body:`
+   <p>引導客戶記錄<b>使用前、後的感受</b>——簡單文字 + 搭配照片(Before/After)。</p>
+   <ul><li>對客戶:更有感、更容易堅持</li><li>對你:累積真實見證,是最好的口碑素材</li></ul>
+   <p>⚠️ 合規提醒:見證與心得屬客戶個人主觀感受,分享時不可轉為療效宣稱,也需取得客戶同意才可公開。</p>`},
+  {t:'norm', h:'⑧ 彈性原則:1-3-7-10 不是死規則', body:`
+   <p><b>請依照顧客的反應,決定關懷跟進的深度與速度。</b></p>
+   <ul><li>熱情、回應快的客戶:可加快節奏、加深互動</li>
+   <li>慢熱、少回應的客戶:放慢、給空間,不要造成壓力</li>
+   <li>1-3-7-10 是「建議節奏」,不是機械式打卡——真誠比準時更重要</li></ul>`}
+ ],
+ quiz:[
+  {q:'這堂課的核心觀念是?',o:['賣完就沒事了','售出只是第一步,顧客不追蹤萬事一場空','只追蹤大客戶','不用聯絡'],a:1},
+  {q:'「黃金72小時」指的是?',o:['3小時內','成交後3天(72小時)內完成第一次聯絡','72天','不限時間'],a:1},
+  {q:'第 3 天跟進最關鍵的目的是?',o:['催下一單','確認產品開瓶、說明用法(避免產品被冰起來)','要見證','約面訪'],a:1},
+  {q:'第 10 天面訪的重點「不包含」?',o:['關心使用與QA、取得見證','鼓勵揪團合購轉介紹','升等VIP說明','強迫客戶大量囤貨'],a:3},
+  {q:'關於 1-3-7-10 跟進節奏,正確的是?',o:['一定要準時打卡不能變','依顧客反應決定深度與速度,真誠比準時重要','越快越好','越慢越好'],a:1}
+ ], passAll:true
+};
+
+/* ---------- 講師培訓 T3-3:新人帶訓 SOP ---------- */
+const T_ONBOARD = {
+ icon:'🌱', axis:'t',
+ title:'新人帶訓 SOP', sub:'講師培訓課|標準化帶新人流程',
+ content:[
+  {t:'norm', h:'① 帶新人的核心目標', body:`
+   <p><b>讓新人在最短時間內達到「學得會、說得出、賣得動」。</b></p>
+   <ul><li>不是把所有東西一次塞給新人,而是照順序、分階段帶</li>
+   <li>每個階段確認「真的會了」再往下,避免夾生</li>
+   <li>目標是新人能獨立面對第一位客戶並完成一次完整的產品說明</li></ul>`},
+  {t:'norm', h:'② 用平台帶新人的建議順序', body:`
+   <table><tr><th>階段</th><th>帶什麼</th><th>確認點</th></tr>
+   <tr><td>第一步</td><td>基礎觀念 L1-0 合規紅線(必修 100%)</td><td>知道什麼不能說</td></tr>
+   <tr><td>第二步</td><td>L1-1~L1-5 美容/營養基礎+檢測工具</td><td>會用檢測破冰</td></tr>
+   <tr><td>第三步</td><td>挑 1-2 個主力產品模組(如魚油、SOD)</td><td>能講主成分功效</td></tr>
+   <tr><td>第四步</td><td>情境銷售:內外雙軸 + 成組引導</td><td>會帶第二軸、會引導成組</td></tr>
+   <tr><td>第五步</td><td>黃金72小時顧客關懷</td><td>知道成交後怎麼跟進</td></tr></table>
+   <p>💡 不用一次全帶——先讓新人熟一個產品 + 一套話術,能開口就是成功的第一步。</p>`},
+  {t:'norm', h:'③ 每階段的追蹤重點', body:`
+   <ul><li><b>學得會:</b>請新人用測驗驗收(平台每個模組都有),100% 或高分才算過</li>
+   <li><b>說得出:</b>請新人「講給你聽」——把主成分功效跟一句話術講出來</li>
+   <li><b>賣得動:</b>陪同或角色扮演一次,新人實際對「客戶」講完整流程</li></ul>
+   <p>💡 三個動詞對應三種驗收:測驗(會)、複述(說)、演練(賣)。</p>`},
+  {t:'norm', h:'④ 帶訓者的心態', body:`
+   <ul><li>多鼓勵、少糾正——新人敢開口比講得完美更重要</li>
+   <li>給具體回饋,不只說「很好」,而是「你剛講主成分功效那段很清楚」</li>
+   <li>複製的是「能力」不是「話術背誦」——讓新人理解原理,才能靈活應對</li></ul>`}
+ ],
+ quiz:[
+  {q:'帶新人的核心目標是?',o:['一次教完所有東西','讓新人達到「學得會、說得出、賣得動」','只教話術背誦','越快越好'],a:1},
+  {q:'用平台帶新人,第一步應該帶?',o:['最貴的產品','基礎觀念 L1-0 合規紅線(知道什麼不能說)','情境銷售','講師課'],a:1},
+  {q:'「說得出」的驗收方式是?',o:['考選擇題','請新人把主成分功效與一句話術講給你聽','看他讀完','簽到'],a:1},
+  {q:'帶訓者最好的心態是?',o:['嚴格糾正每個錯','多鼓勵少糾正,新人敢開口比完美更重要','要求背誦','放著自己學'],a:1},
+  {q:'新人帶訓複製的應該是?',o:['話術背誦','能力與原理理解,才能靈活應對','固定劇本','標準答案'],a:1}
+ ], passAll:true
+};
+
+/* ---------- 講師培訓 T3-4:話術演練評核 ---------- */
+const T_ROLEPLAY = {
+ icon:'🎭', axis:'t',
+ title:'話術演練評核', sub:'講師培訓課|角色扮演與評分標準',
+ content:[
+  {t:'norm', h:'① 為什麼要做話術演練', body:`
+   <p><b>看得懂 ≠ 講得出。話術一定要「練」過,現場才不會卡。</b></p>
+   <ul><li>角色扮演讓夥伴在安全環境先犯錯、先熟練</li>
+   <li>有評分標準,演練才有方向,不是各講各的</li>
+   <li>講師的任務:主持演練、給回饋、用標準評分</li></ul>`},
+  {t:'norm', h:'② 演練怎麼進行(三人一組)', body:`
+   <table><tr><th>角色</th><th>任務</th></tr>
+   <tr><td>銷售員</td><td>用學過的話術,對客戶完成一次產品說明</td></tr>
+   <tr><td>客戶</td><td>照情境卡演客戶(可提出異議,如「太貴」「我再想想」)</td></tr>
+   <tr><td>觀察員</td><td>依評分表打分數、記錄優點與可改進處</td></tr></table>
+   <p>💡 三人輪流當每個角色,每人都練到、也都看到別人怎麼講。</p>`},
+  {t:'norm', h:'③ 四大評分面向', body:`
+   <table><tr><th>面向</th><th>看什麼</th></tr>
+   <tr><td><b>開場破冰</b></td><td>有沒有用痛點或檢測自然切入,不是硬推</td></tr>
+   <tr><td><b>三段式結構</b></td><td>成分→功效→適用對象,有沒有講清楚主成分功效</td></tr>
+   <tr><td><b>合規</b></td><td>有沒有踩療效/誇大紅線(這是不能扣分、直接不通過的項目)</td></tr>
+   <tr><td><b>成交引導</b></td><td>有沒有自然帶到搭配、成組或跟進,不是講完就停</td></tr></table>
+   <p>⚠️ <b>合規是「一票否決」項</b>:只要出現療效宣稱或誇大,無論其他項多好,該次演練不通過,必須重來。</p>`},
+  {t:'norm', h:'④ 給回饋的原則', body:`
+   <ul><li><b>先講優點再講建議</b>(三明治回饋):肯定 → 建議 → 鼓勵</li>
+   <li>建議要具體、可執行:「開場可以先問一句痛點」而非「開場不好」</li>
+   <li>合規問題直接、明確指出並示範正確說法——這是底線不能模糊</li></ul>
+   <p>💡 演練的目的是進步,不是評判。氣氛安全,夥伴才敢練。</p>`}
+ ],
+ quiz:[
+  {q:'為什麼要做話術演練?',o:['看得懂就會講','看得懂不等於講得出,話術要練過現場才不卡','浪費時間','考試用'],a:1},
+  {q:'三人一組演練的角色「不包含」?',o:['銷售員','客戶','觀察員(依評分表打分)','裁判長'],a:3},
+  {q:'四大評分面向中,哪一項是「一票否決」?',o:['開場破冰','三段式結構','合規(踩療效/誇大直接不通過)','成交引導'],a:2},
+  {q:'給回饋最好的原則是?',o:['只講缺點','先講優點再講建議(三明治回饋)、具體可執行','只說很好','不給回饋'],a:1},
+  {q:'演練評分時發現有療效宣稱,正確處理是?',o:['其他項好就通過','直接不通過、明確指出並示範正確說法','扣一點分','忽略'],a:1}
+ ], passAll:true
+};
+
+/* ---------- 進階模組對照表 ---------- */
+const ADV_MODULES = {'P-PRO': PROBIOTIC, 'P-FISH': FISHOIL, 'P-SOD': SOD, 'P-LUT': LUTEIN, 'P-RED': REDYEAST, 'P-ANT': ANTRODIA, 'P-GIN': GINSENG, 'S2-3': DUALAXIS, 'S2-4': BUNDLE, 'B-SEA': SEAELEMENT, 'B-CRM': STABILIZE, 'B-WHT': WHITENING, 'T3-1': T_EXPRESS, 'T3-2': T_CARE72, 'T3-3': T_ONBOARD, 'T3-4': T_ROLEPLAY};
+
+/* ---------- 膚質檢測 ---------- */
+const SKIN_Q = [
+ {q:'洗完臉後(未擦保養品)30 分鐘,你的臉感覺?', o:[
+  {t:'非常緊繃甚至脫屑',s:{dry:2}},{t:'微微緊繃',s:{dry:1}},{t:'剛剛好,舒服',s:{normal:2}},{t:'開始出油、有光澤感',s:{oily:2}}]},
+ {q:'到了下午,你的 T 字部位(額頭鼻子)?', o:[
+  {t:'明顯出油、泛油光',s:{oily:2,combo:1}},{t:'微微出油',s:{combo:1,normal:1}},{t:'幾乎不出油',s:{dry:1,normal:1}},{t:'乾燥甚至緊繃',s:{dry:2}}]},
+ {q:'你的兩頰通常?', o:[
+  {t:'偏乾、有時脫屑',s:{dry:1,combo:1}},{t:'狀態穩定',s:{normal:2}},{t:'也會出油',s:{oily:2}},{t:'容易泛紅刺癢',s:{sens:2}}]},
+ {q:'換季或環境變化時,你的皮膚?', o:[
+  {t:'容易泛紅、癢、刺痛',s:{sens:2}},{t:'偶爾小狀況',s:{sens:1}},{t:'幾乎沒感覺',s:{normal:1}},{t:'出油更嚴重',s:{oily:1}}]},
+ {q:'毛孔狀況?', o:[
+  {t:'鼻翼兩頰毛孔明顯、易粉刺',s:{oily:2}},{t:'只有 T 字稍明顯',s:{combo:2}},{t:'細緻不明顯',s:{normal:1,dry:1}},{t:'沒特別注意',s:{normal:1}}]},
+ {q:'上妝後的持妝狀況?', o:[
+  {t:'容易脫妝、浮油',s:{oily:2}},{t:'T 字脫、兩頰卡粉',s:{combo:2}},{t:'兩頰起屑卡紋',s:{dry:2}},{t:'大致服貼',s:{normal:2}}]},
+ {q:'使用新保養品時?', o:[
+  {t:'常常刺癢或泛紅',s:{sens:2}},{t:'偶爾不適',s:{sens:1}},{t:'幾乎都適應良好',s:{normal:1}},{t:'沒在怕,什麼都能用',s:{normal:1,oily:1}}]},
+ {q:'細紋/乾紋出現的情況?', o:[
+  {t:'眼周嘴角已有明顯乾紋',s:{dry:2,aging:1}},{t:'笑起來有淡淡紋路',s:{aging:1}},{t:'幾乎沒有',s:{normal:1}},{t:'沒注意過',s:{}}]},
+ {q:'日常防曬習慣?', o:[
+  {t:'幾乎不防曬',s:{aging:2}},{t:'出遊才防曬',s:{aging:1}},{t:'每天基礎防曬',s:{}},{t:'防曬+遮陽全套',s:{}}]},
+ {q:'最近膚色與光澤?', o:[
+  {t:'暗沉、氣色差',s:{dull:2}},{t:'偶爾疲憊時暗沉',s:{dull:1}},{t:'還算透亮',s:{}},{t:'常被稱讚好氣色',s:{}}]}
+];
+const SKIN_TYPES = {
+ dry:{em:'🏜️',name:'乾性肌膚',desc:'肌膚含水量與油脂偏低,容易緊繃、乾紋、脫屑。',
+  care:['溫和清潔,避免過熱的水與過度洗淨','化妝水+精華+乳霜完整鎖水,秋冬可加強油脂類保養','防曬不可少——乾肌更容易顯紋路'],
+  inner:'內在搭配方向:膠原蛋白、玻尿酸類營養補充,由內補足肌膚水潤原料;搭配充足飲水。'},
+ oily:{em:'✨',name:'油性肌膚',desc:'皮脂分泌旺盛,易出油、毛孔明顯、粉刺困擾。',
+  care:['溫和清潔(早晚各一次即可),過度清潔反而刺激出油','油肌也要保濕!選清爽型保濕維持水油平衡','定期溫和代謝角質,避免粉刺堆積'],
+  inner:'內在搭配方向:B 群支持代謝、益生菌維持消化道機能;飲食減少精緻糖與油炸。'},
+ combo:{em:'🌗',name:'混合性肌膚',desc:'T 字出油、兩頰偏乾,是台灣最常見的膚質。',
+  care:['分區保養:T 字清爽、兩頰滋潤','化妝水全臉,乳霜重點加強兩頰','持妝困擾可從「兩頰保濕」先著手'],
+  inner:'內在搭配方向:膠原蛋白/玻尿酸顧兩頰乾燥,B 群支持代謝平衡。'},
+ sens:{em:'🌷',name:'敏感性肌膚',desc:'屏障較脆弱,換季或新品容易泛紅、刺癢。',
+  care:['精簡保養:清潔+保濕+防曬三步驟就好','新品先在耳後/手臂內側試用 48 小時','⚠️ 若持續泛紅、刺痛、濕疹樣變化,請先諮詢皮膚科醫師,再規劃日常保養'],
+  inner:'內在搭配方向:以調整體質、維持防護力的營養素(如益生菌)溫和打底;重大不適先就醫。'},
+ normal:{em:'🌿',name:'中性肌膚',desc:'水油平衡良好,是最理想的膚質狀態——重點是「維持」。',
+  care:['維持現有清潔保濕習慣,不需過度疊加','防曬持續做好,預防光老化','季節交替時微調保養品質地即可'],
+  inner:'內在搭配方向:均衡營養打底(綜合維生素)、抗氧化保養(SOD 類),讓好狀態更持久。'}
+};
+
+/* ---------- 健康檢測(10 面向) ---------- */
+const HEALTH_Q = [
+ {em:'🌙', area:'睡眠品質', q:'最近一個月,你的睡眠狀況?', 
+  desc:'入睡困難、淺眠易醒會影響修復力與白天精神。',
+  nut:'建議營養素方向:GABA+茶胺酸(幫助入睡放鬆)、鈣(舒緩情緒與肌肉)。',
+  prod:'對應產品方向:睡美人胺基酸粉、海藻鈣錠'},
+ {em:'🌿', area:'腸胃消化', q:'腸胃狀況(脹氣、排便、消化)?',
+  desc:'外食、壓力與年齡都會讓體內好菌變少,影響順暢與吸收。',
+  nut:'建議營養素方向:益生菌(維持消化道機能)、酵素與膳食纖維(幫助消化與順暢)。',
+  prod:'對應產品方向:五合一高機能益生菌、124 YES酵素飲、蔬果高纖果凍飲'},
+ {em:'🛡️', area:'免疫防禦', q:'換季或流行期,你容易出狀況嗎?',
+  desc:'作息不正常、壓力大會讓防護力下降,容易反覆小狀況不斷。',
+  nut:'建議營養素方向:SOD(抗氧化、調整體質)、綜合維生素礦物質(基礎打底)。',
+  prod:'對應產品方向:極緻青春飲系列、超級綜合維他命錠'},
+ {em:'🦴', area:'骨骼關節', q:'上下樓梯、久站久走後的關節與骨骼感受?',
+  desc:'鈣質與關節膠原會隨年齡流失,及早存骨本、顧行動力。',
+  nut:'建議營養素方向:鈣+維生素D3(骨本)、UC-II 非變性二型膠原(關節靈活)。',
+  prod:'對應產品方向:液態檸檬高鈣飲、海藻鈣錠、海藻D3錠、優捷強化錠'},
+ {em:'👀', area:'眼睛視力', q:'長時間看螢幕後,眼睛的乾澀疲勞感?',
+  desc:'3C 使用時間長,晶亮營養消耗快,需要每日持續補充。',
+  nut:'建議營養素方向:游離型葉黃素+玉米黃素(5:1 黃金比例)、花青素、蝦紅素。',
+  prod:'對應產品方向:金盞花葉黃素玻潤飲、金盞花萃取葉黃素膠囊'},
+ {em:'❤️', area:'心血管循環', q:'循環代謝狀況(手腳冰冷、應酬飲食多)?',
+  desc:'精緻飲食與應酬會增加循環代謝負擔,需要日常保養。',
+  nut:'建議營養素方向:Omega-3 魚油(循環順暢)、紅麴(調節生理機能)、納豆激酶。',
+  prod:'對應產品方向:高濃度魚油沙棘Plus、紅麴膠囊、日本納豆膠囊 ⚠️服用抗凝血劑者先諮詢醫師'},
+ {em:'🧠', area:'腦力專注', q:'記憶力與專注度的狀況?',
+  desc:'壓力、睡眠不足與年齡都會影響思緒靈光度。',
+  nut:'建議營養素方向:核桃肽+PS(理解力與效率)、B 群(神經傳遞)、Omega-3。',
+  prod:'對應產品方向:好好記核桃肽錠、超級B群錠、高濃度魚油沙棘Plus'},
+ {em:'🌸', area:'皮膚頭髮', q:'皮膚光澤與頭髮豐盈度?',
+  desc:'膠原蛋白隨年齡流失,肌膚與髮根的「原料」需要持續補充。',
+  nut:'建議營養素方向:膠原蛋白+維生素C(膠原合成輔因子)、玻尿酸、生物素。',
+  prod:'對應產品方向:膠原10000美妍飲、玻潤雪姬飲、黑魔法愛心口含錠'},
+ {em:'⚡', area:'體力活力', q:'白天的體力與精神狀態?',
+  desc:'長期疲勞是能量代謝與氣力透支的訊號,需打底調理。',
+  nut:'建議營養素方向:B 群(能量代謝)、人蔘(補氣)、牛樟芝(滋補強身)。',
+  prod:'對應產品方向:超級B群錠、頂級活人蔘精華飲、頂級牛樟芝精華飲'},
+ {em:'⚖️', area:'體重管理', q:'體態與代謝的狀況?',
+  desc:'代謝隨年齡下降,體態管理要靠飲食結構與代謝支持雙管齊下。',
+  nut:'建議營養素方向:優質蛋白質(增肌護代謝)、膳食纖維、代謝機能配方。',
+  prod:'對應產品方向:營養蛋白飲、纖盈黑咖啡、紅茶拿鐵'}
+];
+const HEALTH_OPTS = [
+ {t:'😊 狀況很好', s:0},{t:'🙂 普通還行', s:1},{t:'😕 不太理想', s:2},{t:'😩 明顯困擾', s:3}
+];
+
+/* ---------- 產品指南資料 ---------- */
+const GUIDE_N = [
+ {em:"🛡️",name:"SOD 防禦系列",main:true,desc:"抗氧化打底・調整體質",items:[
+   {n:"極緻青春飲 200萬活性EX",t:"⭐主力|50ml×30瓶・全素・早晨空腹1瓶",ing:["200萬 SODlike 活性(九種菌菇:白樺、繡球、靈芝、冬蟲夏草、姬松茸、雲芝、猴頭菇、舞茸、桑黃)", "專利双營技術(微米級分子)", "沙棘萃取物"],eff:["SODlike 活性:補充類 SOD 抗氧化力,幫助對抗自由基、調整體質,支持防禦力", "九種菌菇:溫和調理、平衡機能"],appeal:"業界最高 SOD 活性,幫助抗氧化、調整體質、加強防禦",who:"需快速回復活力者/壓力大、作息不正常/環境污染嚴重/體質虛弱者",how:"早晨空腹飲用 1 瓶",mix:"魚油 Omega-3(循環)、益生菌(體質)、膠原蛋白(美容)"},
+   {n:"極緻青春飲 150萬活性EX(御守版)",t:"⭐主力|25ml×15包/2盒・全素・早晨空腹1包",ing:["150萬 SODlike 活性(九種菌菇)", "接骨木莓萃取", "刺梨+沙棘萃取物"],eff:["SODlike 活性:幫助抗氧化、調整體質、加強防禦", "接骨木莓:幫助維持防禦力,支持好體質"],appeal:"調整體質、加強防禦,接骨木莓強化守護",who:"三明治族群/忙碌作息不正常/常接觸人群希望強化防禦/壓力大者",how:"早晨空腹飲用 1 包",mix:"魚油、益生菌、膠原蛋白"},
+   {n:"極緻青春飲 100萬活性",t:"⭐主力|20ml×30包・全素・早晨空腹1包",ing:["100萬活性 SOD(白樺、雲芝菌菇)", "獨特破壁與萃取技術", "紅石榴苷萃取(西班牙專利水萃)"],eff:["SODlike 活性:百萬活性打底,幫助抗氧化、調整體質", "紅石榴苷:幫助舒緩緊繃、維持精神"],appeal:"百萬活性打底、守護青春、奠定根基",who:"希望精神旺盛者/日常調理體質/拚課業事業、高競爭環境者",how:"早晨空腹飲用 1 包",mix:"魚油、益生菌、膠原蛋白"}
+ ]},
+ {em:"👀",name:"晶采明亮系列",main:true,desc:"3C 護眼・水潤晶亮",items:[
+   {n:"金盞花葉黃素玻潤飲",t:"⭐主力|30包/盒・全素・每日1包飯後",ing:["游離型葉黃素 20mg+玉米黃素 4mg(NIH 5:1 黃金比例)", "蝦紅素 6mg(紅藻萃取日本專利)", "高純度玻尿酸 10mg+黑醋栗+黑豆皮萃取"],eff:["葉黃素+玉米黃素:黃斑部核心營養,幫助維持晶亮、用眼舒適", "玻尿酸+蝦紅素:幫助潤澤補水、維持用眼舒適,3C 族有感"],appeal:"水亮潤澤+飲品好入口,3C 重度用眼首選",who:"長時間電腦手機、近距離讀書的 3C 族/愛飲品不愛吞膠囊者/在意水潤感者",how:"每日 1 包,飯後,撕開直接飲用",mix:"Omega-3 魚油(護眼經典)、B 群(提神)"},
+   {n:"金盞花萃取葉黃素膠囊",t:"⭐主力|60顆/瓶・全素・每日2顆飯後",ing:["游離型葉黃素 30mg(2顆達衛福部最高劑量,吸收率+23%)", "黑醋栗萃取(珍稀花青素)", "7 大複方:山桑子、小米草、枸杞、Vit.C、Vit.E、硒、鋅"],eff:["葉黃素:達最高劑量,幫助維持晶亮、加強保養", "7 大複方:全方位護眼保養"],appeal:"最高劑量+配方完整,加強保養首選",who:"想加強保養、要求最高劑量者/銀髮族/長期 K 書學生",how:"每日 2 顆,飯後",mix:"Omega-3 魚油、B 群"}
+ ]},
+ {em:"🔄",name:"循環保健系列",main:true,desc:"循環代謝・順暢保養",items:[
+   {n:"紅麴膠囊",t:"⭐主力|60顆/瓶・葷食・每日1顆午/晚餐後",ing:["Monacolin-K 5.25mg/顆(天然發酵紅麴菌種)", "台灣本土優質紅麴(不含麴毒素)", "國家健康食品認證(衛署健食規字第000010號)+SNQ國品字第B00691號"],eff:["Monacolin-K:紅麴調節血脂的關鍵活性,核可敘述「本產品可能有助於降低血中總膽固醇,其功效由學理得知,非由實驗確認」", "雙認證:安全與保健功效經國家審核"],appeal:"國家健康食品認證,血脂日常保養(核可敘述可正常引用,不可簡化誇大)",who:"喜愛精緻美食者/經常應酬大吃大喝者/想提升循環代謝者",how:"每日 1 顆,午餐或晚餐後",mix:"Omega-3 魚油、納豆激酶(循環)"},
+   {n:"日本納豆膠囊",t:"60顆/瓶・植物五辛素・每日1顆餐後或睡前",ing:["日本納豆激酶 5000FU(業界最高量,不含普林)", "日本青森黑大蒜萃取(活性蒜素是白蒜10倍,專利破壁去臭)", "具檢驗報告優質菌種"],eff:["納豆激酶:幫助循環代謝、體內淨化、維持順暢", "黑大蒜:高活性,支持循環保養"],appeal:"5000FU 業界最高量,淨化堆積、體內清淨",who:"外食族/作息不正常者/代謝不良者/中年以上者",how:"每日 1 顆,餐後或睡前",mix:"紅麴、Omega-3 魚油"},
+   {n:"高濃度魚油沙棘Plus",t:"⭐主力|60顆/瓶・葷食・每日2顆飯後",ing:["高濃度 85% 魚油(每日2顆 Omega-3 969mg,EPA:DHA=3:2)", "rTG 型(SPD 短程蒸餾,穩定活性、幾乎無腥味)", "沙棘果油+IFOS 最高五星認證"],eff:["魚油 Omega-3:細胞膜與腦部重要原料,幫助維持循環順暢、思緒清晰與情緒平穩", "沙棘:富含植物性 Omega-7,幫助維持滋潤與代謝"],appeal:"85% 高濃度 rTG 型,循環順暢、暢通護航",who:"外食重口味族/銀髮族/3C 族/壓力大的職業媽媽",how:"每日 2 顆飯後,搭配食物油脂吸收更好",mix:"葉黃素(晶亮)、鈣+D3(骨骼)、B 群(腦力)"}
+ ]},
+ {em:"🌿",name:"消化・腸道系列",main:true,desc:"順暢・防護・代謝",items:[
+   {n:"五合一高機能益生菌(莓果)",t:"⭐主力|3g×30包・奶素・每日1包",ing:["2000億益生菌(15種優質菌種,含母乳益生菌)", "3大專利技術(微粒三層包覆、PBA益生方舟、Pro6X,6倍定殖率)", "減糖低熱量(5大機能:順暢、美型、精力、防禦、好眠)"],eff:["益生菌:幫助改善腸道菌相、維持消化道機能與順暢", "專利定殖技術:提升好菌定殖率,支持體內環保"],appeal:"高菌數多元菌種,腸道機能調整、體內環保",who:"忙碌壓力大需改善消化道機能者/環境季節變化需調整體質者",how:"每日 1 包,飯前飯後均可",mix:"SOD(體質)、Omega-3(全面保養)"},
+   {n:"124 YES酵素飲",t:"30ml×30包・奶素・每日1包",ing:["124種7大類蔬果發酵精華", "美國專利 AES 消化酵素+紐西蘭黃金奇異果粉", "日本專利水溶性膳食纖維 1.8g(≈2盤青菜)"],eff:["蔬果發酵酵素:幫助消化、促進代謝", "膳食纖維:幫助腸道蠕動、維持順暢"],appeal:"124種蔬果發酵,有酵代謝、維持運轉",who:"外食族/飲食不規律/蔬果攝取不足/久坐上班族/排便不順者",how:"每日 1 包,即開即飲",mix:"益生菌、蔬果高纖"},
+   {n:"蔬果高纖果凍飲",t:"65g×10包・全素・每日1包",ing:["專利膳食纖維 4.5g(≈4盤青菜,83%試用者3天有感)", "80種蔬果發酵物+黃金奇異果粉+菊糖", "每包20大卡(低糖果凍飲)"],eff:["膳食纖維:幫助腸道蠕動、維持排便順暢、增加飽足感", "蔬果發酵物:維持消化道機能"],appeal:"4.5g 膳食纖維,排便順暢、高纖低卡",who:"蔬果攝取太少者/希望促進腸道蠕動、增加飽足感者",how:"每日 1 包",mix:"益生菌、124 YES 酵素飲"}
+ ]},
+ {em:"🍄",name:"滋補強身・草本系列",main:true,desc:"滋補強身・抗勞累",items:[
+   {n:"頂級牛樟芝精華飲EX",t:"⭐主力|30ml×30包・全素・早餐後1包",ing:["頂級牛樟芝(多醣體25% 104.7mg+三萜類12% 50.2mg,雙相萃取)", "蛹蟲草萃取(含蟲草素)+五味子", "多重複方:牛磺酸、D-核糖、枸杞、黃耆"],eff:["牛樟芝多醣體+三萜類:台灣特有珍稀滋補素材,幫助滋補強身、維持體力精神", "雙相萃取:子實體+菌絲體完整精粹,強化代謝調理"],appeal:"業界飲品最高量牛樟芝,滋補強身、抗勞累",who:"工作家庭兩頭燒的上班族/過度勞累、常熬夜/勞累指數過高族",how:"一般早餐後1包;加強早、午餐後各1包",mix:"人蔘(補氣)、B 群(能量代謝)"},
+   {n:"樟芝靈芝王菌絲體膠囊",t:"120顆/瓶・全素・早餐後2顆",ing:["高含量樟芝菌絲體 300mg/顆(多醣體、三萜類)", "嚴選赤芝靈芝菌絲體(低溫凍乾,10%多醣體)", "五味子+複合 B 群(B1、B2、B6)"],eff:["樟芝+靈芝雙芝:幫助滋補強身、調理體質", "B 群:幫助能量代謝,從根本維持體力"],appeal:"雙芝合璧+B群,不愛飲品者的滋補選擇",who:"勞力密集一線人員/常感勞累/加班熬夜壓力大者",how:"一般早餐後2顆;加強早、午餐後各2顆",mix:"人蔘、B 群"},
+   {n:"頂級活人蔘精華飲EX",t:"⭐主力|50ml×30包・全素・早餐後1包",ing:["人蔘皂苷 50mg(韓國高麗紅蔘+長白山6年鮮人蔘,專利萃取)", "丹蔘(真空減壓萃取)+5大益氣草本", "三蔘合一:紅蔘、白蔘、丹蔘"],eff:["人蔘皂苷:人蔘核心活性,益氣補養,幫助維持體力與精神", "三蔘合一:溫和滋養、調養體質"],appeal:"三蔘合一、益氣強身、氣順舒心",who:"體質不佳氣虛不順/易疲累/想滋補強身維持健康者",how:"一般早餐後1包;加強早、午餐後各1包",mix:"牛樟芝(滋補)、B 群(能量)"},
+   {n:"巔峰戰力馬卡飲",t:"20ml×30包・全素・每日1包餐後",ing:["黑紅馬卡 1000mg(祕魯人蔘)", "L-精胺酸 1000mg+專利透納葉萃取", "專利薑黃+牛磺酸+葡萄糖酸鋅+菸鹼酸"],eff:["馬卡+精胺酸:幫助維持精力旺盛、活絡循環", "鋅+菸鹼酸:幫助維持機能、延長續航力"],appeal:"精力旺盛、活絡循環、勇往直前",who:"力不從心中壯年/無精打采上班族/體力流失重度勞動者",how:"每日 1 包,餐後",mix:"人蔘、B 群、牛樟芝"}
+ ]},
+ {em:"🌙",name:"幫助入睡系列",main:false,desc:"好眠修復",items:[
+   {n:"睡美人胺基酸粉",t:"5g×30包・全素・晚餐後或睡前1包",ing:["23種優質胺基酸 1200mg", "GABA 50mg(糙米發酵物)+茶胺酸+百香果萃取", "低糖柑橘口味"],eff:["GABA+茶胺酸:幫助放鬆安定、支持深度休息與睡眠", "23種胺基酸:維持生理機能、啟動夜間代謝"],appeal:"GABA 助放鬆、沉穩入睡、啟動夜間代謝",who:"希望有良好睡眠品質者/希望氣色佳者",how:"一般每日1包;加強每日2包,晚餐後或睡前",mix:"鈣(夜間修復)、大豆異黃酮(熟齡)"}
+ ]},
+ {em:"🦿",name:"骨質保養・關節系列",main:false,desc:"補鈣顧骨・關節靈活",items:[
+   {n:"液態檸檬高鈣飲",t:"15ml×30包・奶素・晚餐後或睡前1包",ing:["德國檸檬酸鈣 800mg(業界液態鈣最高量)", "CPP 酪蛋白磷酸鈣+維生素D3、K、鎂", "專利微米液態型式"],eff:["檸檬酸鈣:幫助維持骨骼與牙齒健康", "D3+K+Mg:協同幫助鈣吸收"],appeal:"液態鈣最高量 800mg,快速吸收、顧本勇健",who:"不愛粉錠者/發育青少年/孕婦/預防流失成年人/長輩",how:"每日 1 包,晚餐後或睡前",mix:"D3、海藻鈣、魚油"},
+   {n:"海藻鈣錠",t:"60錠/瓶・全素・晚餐後或睡前2顆",ing:["天然紅藻鈣 500mg/2顆(≈500ml牛奶鈣,含鎂銅鋅硒)", "維生素D3+K", "速崩劑型(3分鐘溶解)"],eff:["海藻鈣:幫助維持骨骼健康、支持骨質鈣化", "D3+K:協同促進鈣吸收"],appeal:"天然海藻鈣、速崩劑型、好吸收",who:"成長期兒童/青少年/孕婦/預防流失成年人/長輩",how:"一般2顆;加強4顆,晚餐後或睡前",mix:"D3、液態鈣、魚油"},
+   {n:"優捷強化錠",t:"30錠/瓶・葷食・每日1錠飯後",ing:["專利UCII 40mg(非變性第二型膠原蛋白,效果是葡萄糖胺+軟骨素3.4倍)", "第二型水解膠原蛋白 50mg(含軟骨素、玻尿酸)", "維生素C"],eff:["UCII:幫助維持關節靈活、行動舒適", "維生素C:幫助膠原蛋白生成"],appeal:"UCII 效果3.4倍,靈活軟Q、穩健自在",who:"中老年銀髮族/運動量大者/常穿高跟鞋女性/常背重物者",how:"每日 1 錠,飯後",mix:"鈣+D3、魚油"}
+ ]},
+ {em:"🔬",name:"基礎營養・維生素礦物質",main:false,desc:"均衡打底",items:[
+   {n:"超級綜合維他命錠",t:"120錠/瓶・奶素・每日2錠早餐後",ing:["13種維生素+10種礦物質", "4種營養素達100%(維C、鐵、鋅、硒)", "小顆好吞"],eff:["綜合維生素礦物質:全面補充日常所需,幫助維持生理機能", "關鍵營養素達100%:補足飲食缺口"],appeal:"23種維生素礦物質,均衡營養、保護全面",who:"素食者/青少年/上班族/健身族/外食偏食者",how:"每日 2 錠,早餐後",mix:"B 群、D3、Omega-3"},
+   {n:"海藻D3錠",t:"120錠/瓶・全素・每日1錠飯後",ing:["海藻維生素D3 400IU(100%藻類萃取,植物來源)", "滿足衛福部每日建議量", "小錠劑(約0.8cm)"],eff:["維生素D3:幫助鈣吸收、支持骨骼與牙齒健康、維持免疫力", "植物來源:純素可食"],appeal:"植物來源 D3,陽光營養、提升保護力",who:"維生素D攝取不足/常外食營養不均/希望增進鈣吸收者",how:"每日 1 錠,飯後",mix:"鈣、綜合維他命"},
+   {n:"超級B群錠",t:"60錠/瓶・全素・每日2錠飯後",ing:["TTFD(長效高濃度脂溶性B1)", "完整8種B群+牛磺酸(B1、B2、B6、B12達最高劑量)", "緩釋配方(作用一整天)"],eff:["B群+TTFD:幫助能量代謝、打擊虛累、維持活力", "緩釋配方:整天持續補給"],appeal:"TTFD 長效打擊虛累、全面活絡",who:"忙碌壓力大工時長/久坐上班族/常外食營養不均者",how:"每日 2 錠,飯後",mix:"牛樟芝、人蔘、綜合維他命"},
+   {n:"活力B群緩釋錠",t:"50錠/瓶・全素・每日1錠飯後",ing:["完整8種B群(B12高達1000mcg)", "泛酸+牛磺酸100mg、菸鹼醯胺、葉酸、生物素", "長效緩釋型"],eff:["B群(高B12):幫助能量代謝、補充素食者最欠缺的B12", "長效緩釋:整天好精神"],appeal:"B12 高達1000mcg,長效續航、持續補給",who:"上班族/熬夜族/K書族/常外食營養不均者",how:"每日 1 錠,飯後",mix:"牛樟芝、人蔘"}
+ ]},
+ {em:"🌰",name:"私密養護系列",main:false,desc:"順暢・私密防禦",items:[
+   {n:"南瓜籽茄紅素膠囊",t:"90顆/瓶・葷食・飯後1-3顆",ing:["南瓜籽萃取物 417mg/3顆(含植物固醇)", "茄紅素(青春元素)", "鋅+硒+精胺酸"],eff:["南瓜籽+鋅:幫助維持流暢、支持機能自信", "茄紅素:青春保健"],appeal:"足量南瓜籽,開關自如、暢快有勁",who:"中年以上男女保健/上廁所頻率高者/半夜起床超過2次者",how:"一般飯後1顆;加強飯後2-3顆",mix:"綜合維他命、鋅"},
+   {n:"A+多莓萃飲輕孅版",t:"60ml×30包・全素・每日1包",ing:["蔓越莓萃取前花青素 100mg", "啤酒酵母萃取", "智利酒果+石榴+綜合莓果(每包17大卡)"],eff:["蔓越莓前花青素:幫助維持私密舒爽自在", "啤酒酵母:維持私密處菌叢生態"],appeal:"100mg 前花青素,私密護理、莓好自在",who:"工作常需久站者/熟齡女性",how:"每日 1 包,撕開直接飲用",mix:"益生菌、玻尿酸"}
+ ]},
+ {em:"🌸",name:"美妍好氣色系列",main:false,desc:"水潤透亮・維持青春",items:[
+   {n:"膠原10000美妍飲輕纖版",t:"65ml×30包・葷食・每日1包",ing:["法國膠原蛋白 10000mg(2000道爾頓小分子)", "西班牙橄欖葉萃取(專利高濃度多酚)+AC-11貓爪藤", "德國牛奶萃取(含賽洛美)+維生素C"],eff:["小分子膠原蛋白:肌膚的重要原料,幫助維持 Q 彈、水潤透亮的外觀", "橄欖葉多酚+賽洛美:幫助維持亮澤與水潤"],appeal:"10000mg 小分子膠原,亮麗青春、Q彈水潤",who:"想維持健康者/希望美容營養高效有感者/注重保養者",how:"每日 1 包,撕開直接飲用",mix:"玻尿酸(保濕)、維生素C、SOD"},
+   {n:"玻潤雪姬飲",t:"25ml×15包・全素・每日1包",ing:["小分子玻尿酸 80mg(10萬道爾頓,達衛福部建議高劑量)", "專利山葵葉萃取液(腺苷成分)", "櫻花萃取液(多酚)"],eff:["小分子玻尿酸:幫助由內維持保濕潤澤、水亮外觀", "山葵葉腺苷+櫻花多酚:幫助維持光透亮澤"],appeal:"80mg 玻尿酸,喝的保濕液、雪潤光亮",who:"想維持青春光采者/希望水潤淨亮者",how:"每日 1 包,撕開直接飲用",mix:"膠原蛋白、維生素C"},
+   {n:"蜂王乳升級版",t:"120錠/瓶・葷食・每日2次每次2錠飯後",ing:["生蜂王乳 1800mg/4錠(葵烯酸達6%,純度最高)", "芝麻素萃取"],eff:["蜂王乳葵烯酸:幫助維持活力與青春風采、支持代謝", "芝麻素:幫助維持體質、提升睡眠品質"],appeal:"最高純度蜂王乳,維持青春、魅力風采",who:"希望促進代謝維持活力/提升光澤維持青春/想睡得好的女性",how:"每日 2 次,每次 2 錠,飯後",mix:"大豆異黃酮、膠原蛋白"},
+   {n:"大豆異黃酮膠囊",t:"60顆/袋・全素・30-40歲每日1顆/40歲以上2顆",ing:["大豆異黃酮 48mg/顆(去醣基高活性,非基改大豆胚芽)", "專利波羅蜜萃取", "芝麻素萃取"],eff:["去醣基大豆異黃酮:高活性好吸收,幫助熟齡期調節生理機能", "芝麻素:幫助入睡、調節生理機能"],appeal:"去醣基高活性,舒緩熟齡、順暢轉期",who:"協助熟齡期調節生理機能的女性",how:"一般(30-40歲)每日1顆;加強(40歲以上)每日2顆",mix:"蜂王乳、睡美人胺基酸"}
+ ]},
+ {em:"🧠",name:"思緒靈光系列",main:false,desc:"思緒靈敏・活絡益智",items:[
+   {n:"好好記核桃肽錠",t:"30錠/袋・全素・每日2錠飯後",ing:["小分子核桃肽 200mg(專利智成)", "磷脂醯絲胺酸PS 100mg", "管花肉蓯蓉100mg+B6、B12、葉酸"],eff:["核桃肽+PS:幫助維持思緒靈光、提升理解力與效率", "B群:協同維持神經系統健康"],appeal:"核桃肽+PS,靈敏益智、活絡思緒",who:"想維持思考力/提高學習效率/加強靈光反應的族群",how:"每日 2 錠,飯後",mix:"魚油DHA、B 群"}
+ ]},
+ {em:"✨",name:"頭髮豐盈系列",main:false,desc:"滋養根源・烏黑豐盈",items:[
+   {n:"黑魔法愛心口含錠",t:"30錠/袋・全素・每日2錠飯後",ing:["生物素 10080mcg/2錠", "白首烏+黑芝麻+蕁麻(漢方草本)", "維生素C、E、B6、B12、葉酸、銅"],eff:["生物素:幫助強化根源、維持烏黑豐盈", "漢方草本+多種維生素:滋養根源"],appeal:"高含量生物素,滋養根源、蓬鬆豐盈",who:"想維持烏黑亮麗/頂上茂密/重視外在形象的族群",how:"每日 2 錠,飯後",mix:"綜合維他命、B 群"}
+ ]},
+ {em:"🥤",name:"蛋白質・體重管理系列",main:false,desc:"優質蛋白・窈窕代謝",items:[
+   {n:"營養蛋白飲(巧克力)",t:"30g×15包・奶素・每日1包加300ml水",ing:["三大優質蛋白 13.5g(大豆+豌豆+乳清)", "13種維生素+11種礦物質(達建議量50%)", "專利白腎豆+苦瓜萃取(每包106大卡)"],eff:["三大優質蛋白:幫助補充蛋白質、維持體力", "白腎豆+苦瓜:窈窕代謝配方"],appeal:"三大優質蛋白13.5g,體力滿分、生活加分",who:"想補充蛋白質/飲食不均衡/想維持窈窕者",how:"每日 1 包,加入300ml常溫水或飲品",mix:"綜合維他命、B 群"},
+   {n:"營養蛋白飲(香草)",t:"30g×15包・奶素・每日1包加300ml水",ing:["三大優質蛋白 13.5g(大豆+豌豆+乳清)", "13種維生素+11種礦物質", "專利白腎豆+苦瓜萃取(與巧克力口味成分相同,口味不同)"],eff:["三大優質蛋白:幫助補充蛋白質、維持體力", "白腎豆+苦瓜:窈窕代謝配方"],appeal:"三大優質蛋白13.5g,香草口味",who:"想補充蛋白質/飲食不均衡/想維持窈窕者",how:"每日 1 包,加入300ml常溫水或飲品",mix:"綜合維他命、B 群"}
+ ]},
+ {em:"☕",name:"美味機能飲品系列",main:false,desc:"順暢窈窕・美味輕負擔",items:[
+   {n:"紅茶拿鐵",t:"13g×20包・蛋奶素・每日1包150ml溫水沖泡",ing:["益生菌 60億(芽孢乳酸菌,耐熱耐酸鹼)", "膳食纖維 1800mg", "紐西蘭奶粉+紅茶(每包55大卡)"],eff:["耐熱益生菌:有效到達消化道,幫助維持順暢", "膳食纖維:促進腸道蠕動"],appeal:"60億耐熱益生菌,順暢窈窕、美味醇香",who:"有美型需求者/希望順暢窈窕/喜愛喝飲品者",how:"每日 1 包,150ml溫熱水沖泡",mix:"益生菌、蔬果高纖"},
+   {n:"纖盈黑咖啡",t:"5g×20包・每日1包150ml熱水沖泡",ing:["3大專利美型因子(北歐甲殼素、法國仙人掌葉、日本栗子皮萃取)", "嚴選羅姆斯達咖啡豆(10道工法)", "咖啡因68.8mg(每包17.6大卡)"],eff:["3大美型因子:幫助維持代謝、支持窈窕", "低咖啡因:香醇無壓"],appeal:"3大專利美型,享受窈窕、香醇無壓",who:"喜愛咖啡者/想維持窈窕美型者",how:"每日 1 包,150ml熱開水沖泡",mix:"營養蛋白飲、蔬果高纖"}
+ ]},
+];
+const GUIDE_B = [
+ {em:"🌊",name:"海洋元素系列",main:true,desc:"抗老軸・入門抗老基礎款",items:[
+   {n:"海洋元素修護潔容霜",t:"Step1 清潔・日夜(夜間先卸妝)",ing:["玻提諾 PROTINOL", "海洋原生質", "三角褐指藻、六胜肽"],eff:["玻提諾 PROTINOL:雅芳專利抗老成分(美國愛迪生獎),幫助維持肌膚彈潤外觀", "海洋原生質:清潔同時提供修護,為後續保養打開吸收通道"],appeal:"清新潔淨、細緻修護",who:"初老肌/需修護與防護者",how:"日夜清潔,夜間先卸妝",mix:"搭配同系柔膚露、乳霜;內服膠原蛋白"},
+   {n:"海洋元素修護柔膚露",t:"Step2 化妝水・日夜",ing:["玻提諾 PROTINOL", "海洋原生質", "三角褐指藻、六胜肽"],eff:["玻提諾 PROTINOL:幫助維持肌膚彈潤外觀", "海洋原生質:潤澤角質、提升後續保養吸收"],appeal:"潤澤肌膚、幫助撫平細紋外觀",who:"初老肌/乾燥細紋",how:"潔面後使用,潤澤角質",mix:"搭配同系眼霜、乳霜"},
+   {n:"海洋元素修護眼霜",t:"Step3 眼霜・20g・早晚化妝水後",ing:["玻提諾 PROTINOL、海洋原生質、六胜肽、三角褐指藻", "精氨酸", "植醇"],eff:["精氨酸:增加肌膚保水度,幫助眼周保濕", "植醇:幫助維持肌膚活力,協同修護"],appeal:"保濕、修護、淡化眼紋外觀",who:"眼周乾燥、細紋",how:"取米粒大小,眼下輕點至眼尾,指腹輕壓提拉5秒",mix:"搭配同系乳霜;內服葉黃素(3C用眼)"},
+   {n:"海洋元素修護乳霜",t:"⭐系列核心|Step6 日/晚霜・清爽型乳霜",ing:["玻提諾 PROTINOL", "海洋原生質", "三角褐指藻、六胜肽"],eff:["玻提諾 PROTINOL:專利抗老,幫助維持彈潤緊緻外觀", "四大成分協同:幫助緊彈、修護、保濕、防禦"],appeal:"提升肌膚8大防護力(延緩老化外觀、撫平細紋外觀、豐潤緊彈、舒緩、提升防禦、保濕補水、抵抗環境侵害、改善暗沉外觀)",who:"初老肌/全年齡基礎抗老",how:"日夜使用;可厚敷作為修護面膜(每週2-3次)",mix:"搭配同系清潔、化妝水、眼霜;內服膠原蛋白、玻尿酸"}
+ ]},
+ {em:"💗",name:"超能穩膚系列",main:true,desc:"抗老軸・玻提諾10倍高規",items:[
+   {n:"超能穩膚安瓶",t:"Step4 速效安瓶・一天一次連續7天",ing:["10倍高濃度玻提諾 PROTINOL"],eff:["10倍高濃度玻提諾:集中補充,幫助短期密集賦活、維持彈潤緊緻外觀"],appeal:"彈潤抗老、集中修護",who:"一般肌/膚況不穩、需短期加強",how:"一天一次連續7天;每月1-2盒;間歇保養(第1、3週安瓶,第2、4週回精華)",mix:"搭配同系精華、乳霜"},
+   {n:"超能穩膚精華(#小粉金)",t:"Step5 精華・早晚乳霜前・快速吸收",ing:["10倍高濃度玻提諾 PROTINOL", "菸鹼醯胺"],eff:["玻提諾:幫助恢復彈性、維持彈潤外觀", "菸鹼醯胺:幫助強健角蛋白防禦力、溫和舒緩"],appeal:"強化肌膚防禦力、改善7大膚況外觀(2023國際護膚獎「最佳淡化細紋和皺紋」)",who:"一般肌/膚況多、細紋、粗糙",how:"早晚,乳霜前",mix:"搭配同系安瓶、乳霜"},
+   {n:"超能穩膚乳霜(#粉金霜)",t:"⭐系列核心|Step6 日/晚霜・奶油乳霜",ing:["10倍高濃度玻提諾 PROTINOL", "菸鹼醯胺", "雪亞脂"],eff:["10倍玻提諾:幫助維持超緊彈外觀", "菸鹼醯胺+雪亞脂:安撫不穩膚況、補充油脂滋潤保濕"],appeal:"7天感受緊彈細緻(撫平細紋外觀、緊實外觀、賦活保濕、平滑膚觸、加強防禦、肌亮淨透外觀)",who:"一般肌/換季膚況不穩",how:"日夜使用;可厚敷用於緊緻毛孔外觀、賦活保濕",mix:"搭配同系精華、安瓶;內服膠原蛋白"},
+   {n:"超能穩膚防禦日霜 SPF15",t:"Step6 日霜・日間・SPF15",ing:["高濃度玻提諾 PROTINOL", "菸鹼醯胺"],eff:["玻提諾+菸鹼醯胺:外防禦(抗藍光、UVA/UVB、抗附著)+內守護(守護彈力、緊緻毛孔外觀、穩定膚況)"],appeal:"盾級阻隔、外防禦×內守護(依標示SPF15,建議定時補擦)",who:"一般肌/需日間防護",how:"日間專用",mix:"搭配同系精華、乳霜"}
+ ]},
+ {em:"🌱",name:"舒敏調理系列",main:false,desc:"抗老軸・敏弱肌適用",items:[
+   {n:"舒敏調理眼霜",t:"Step3 眼霜・15ml・早晚・清爽不黏",ing:["玻提諾 PROTINOL、小分子菸鹼醯胺", "四氫薑黃素", "植醇+高濃度燕麥膠"],eff:["植醇+燕麥膠:溫和修護、補水鎖水,適合敏弱膚況", "菸鹼醯胺+四氫薑黃素:幫助提升防禦、淡化細紋外觀"],appeal:"舒敏、舒緩、穩膚調理、賦活眼周(無酒精/色素/香料,經皮膚科學測試)",who:"肌膚敏弱、狀況多;眼周脆弱",how:"早晚使用",mix:"搭配同系乳霜"},
+   {n:"舒敏調理乳霜",t:"Step6 日/晚霜・溫和乳霜",ing:["玻提諾 PROTINOL、小分子菸鹼醯胺", "四氫薑黃素", "植醇+高濃度燕麥膠"],eff:["雅芳獨特舒緩穩膚配方:持續早晚使用幫助穩定肌膚狀態、舒緩因乾燥引起的泛紅外觀", "玻提諾:先舒緩再抗老,雙效合一"],appeal:"雙效合一:溫和舒敏+積極抗老(雅芳首款可宣稱敏弱肌適用之抗老保養品)",who:"敏弱肌/換季膚況不穩者",how:"日夜使用,先舒緩再抗老",mix:"搭配同系眼霜;內服益生菌(調整體質)"}
+ ]},
+ {em:"👑",name:"奇肌之鑰/奇肌賦活系列",main:false,desc:"抗老軸・熟齡深度抗老",items:[
+   {n:"奇肌之鑰超導精露",t:"Step2 化妝水・日夜",ing:["玻提諾 PROTINOL", "皇家根皮素精萃 Phloretin"],eff:["皇家根皮素:幫助保護彈力因子、高保濕力", "玻提諾:深度抗老打底,幫助維持彈潤外觀"],appeal:"青春化妝水、深度抗老打底",who:"熟齡肌/明顯紋路、毛孔粗大、乾燥粗糙",how:"日夜化妝水步驟使用",mix:"與奇肌賦活日/晚霜組成奇肌賦活組"},
+   {n:"奇肌賦活日霜",t:"Step7 日霜・日間",ing:["玻提諾 PROTINOL", "皇家根皮素精萃 Phloretin"],eff:["玻提諾+根皮素:四大方向——滑(撫平皺紋外觀)、緊(幫助維持彈力)、亮(膚色勻亮外觀)、嫩(深度保濕)"],appeal:"逆齡抗皺、細緻光滑外觀(數據:AVON美國研發,效果因人而異)",who:"熟齡肌/深度抗老需求",how:"日間使用",mix:"搭配超導精露、晚霜"},
+   {n:"奇肌賦活晚霜",t:"⭐系列核心|Step7 晚霜・50ml・保養最後一步",ing:["玻提諾 PROTINOL™", "皇家根皮素精萃 Phloretin"],eff:["玻提諾:平衡彈力因子 I 與 III,幫助維持澎潤緊彈外觀", "根皮素:保護彈力因子、可吸收自身重量4-5倍水分,協同幫助維持勻亮外觀"],appeal:"極致逆齡、如絲緞般緊滑嫩(幫助維持緊實、撫平皺紋外觀、均勻膚色、改善暗沉外觀)",who:"熟齡肌/45歲以上深度抗老",how:"夜間保養最後一步;可加強穴位按摩(攢竹、巨髎、聽會穴各按3秒5回)",mix:"搭配超導精露、日霜"}
+ ]},
+ {em:"✨",name:"新生煥顏系列",main:false,desc:"抗老軸・輕熟肌日夜接力",items:[
+   {n:"新生煥顏日霜",t:"Step7 日霜・日間・SPF20",ing:["玻提諾 PROTINOL™", "植醇"],eff:["玻提諾:平衡彈力因子,幫助維持澎潤緊彈外觀", "植醇:強化屏障鎖水、溫和調理膚質,協同淡化細紋外觀、改善暗沉外觀"],appeal:"獨特逆時科技,日夜接力鎖住肌齡(重現水亮澎彈、撫平細紋外觀;SPF20)",who:"輕熟肌/彈+細緻、乾燥暗沉",how:"日間使用",mix:"搭配新生煥顏晚霜(日夜接力)"},
+   {n:"新生煥顏晚霜",t:"Step7 晚霜・夜間",ing:["玻提諾 PROTINOL™", "植醇"],eff:["玻提諾+植醇:夜間接力補充彈力,雙向作用於彈力因子網絡,幫助養出健康彈潤外觀"],appeal:"彈潤抗老、細緻透亮外觀(與日霜組成日夜接力)",who:"輕熟肌/彈+細緻、乾燥暗沉",how:"夜間使用",mix:"搭配新生煥顏日霜"}
+ ]},
+ {em:"💧",name:"水動力系列(保濕三步驟)",main:false,desc:"功能軸・基礎保濕",items:[
+   {n:"水動力特潤賦活露",t:"保濕Step1|Step2 化妝水・日夜",ing:["活水成分", "特潤水光"],eff:["活水成分:如同水磁鐵大量儲水、強化表皮防護", "特潤水光:協同保水,幫助維持彈力與光澤外觀"],appeal:"肌膚就像喝了八杯水,爆水動力、澎派保濕",who:"乾性肌/膚觸粗糙、失去彈性、膚色暗沉",how:"日夜化妝水步驟(保濕三步驟第1步)",mix:"搭配同系凝乳、凝霜"},
+   {n:"水動力調理凝乳",t:"保濕Step2|Step5 乳液・凝乳質地",ing:["活水成分", "特潤水光"],eff:["活水成分+特潤水光:補水、鎖水、聚水三效,幫助維持水潤"],appeal:"澎派保濕",who:"乾性肌/基礎保濕",how:"日夜使用(保濕三步驟第2步)",mix:"搭配同系賦活露、凝霜"},
+   {n:"水動力凝霜",t:"保濕Step3|Step6 日/晚霜・凝凍質地",ing:["活水成分、特潤水光", "玉米葡糖"],eff:["特潤科技+活水成分:如同水磁鐵大量儲水,超細微高分子直達基底加強吸水力", "凝凍質地:清透不粘膩,協同保水使肌膚水潤有光澤外觀"],appeal:"8小時長效浸潤、如隱形水面膜,清爽凝凍長效水膜",who:"乾性肌/基礎保濕",how:"日夜使用(保濕三步驟第3步)",mix:"搭配同系賦活露、凝乳;內服玻尿酸"}
+ ]},
+ {em:"💦",name:"超保濕玻尿酸系列",main:false,desc:"功能軸・進階保濕",items:[
+   {n:"玻尿酸水光精華",t:"Step5 精華・30ml・早晚",ing:["小分子玻尿酸", "紅石榴萃取"],eff:["小分子玻尿酸:打開肌膚通道、迅速為深層注入水份", "紅石榴萃取:幫助提亮膚色外觀"],appeal:"補水+提亮,輕盈純淨零負擔(無酒精/色素/香料)",who:"缺水肌/需進階保濕與提亮",how:"每日早晚",mix:"搭配水潤霜;內服玻尿酸飲"},
+   {n:"超保濕玻尿酸水潤霜",t:"⭐系列核心|Step6 乳霜・50ml・早晚",ing:["小分子玻尿酸", "雪亞脂", "獨特 Pro Vita-D 科技"],eff:["小分子玻尿酸:幫助提升肌膚含水量", "雪亞脂+Pro Vita-D:避免水分流失、幫助成分吸收,為肌膚維生素D創造最佳環境"],appeal:"72小時長效補水(經皮膚科學測試、敏弱肌適用)",who:"缺水肌/敏弱肌亦適用",how:"每日早晚",mix:"搭配水光精華;內服玻尿酸飲、膠原蛋白"}
+ ]},
+ {em:"🤍",name:"極耀美白系列(第六代)",main:true,desc:"功能軸・祛黑美白科技",items:[
+   {n:"極耀美白潔容霜",t:"Step1 清潔・125g・超綿密泡沫",ing:["祛黑美白科技 Niacin-Pro Bright:高濃度菸鹼醯胺(B3)+TDPA"],eff:["菸鹼醯胺+TDPA:溫和清潔毛孔髒汙油脂,預防油脂氧化造成蠟黃,為後續美白成分打開吸收通道"],appeal:"洗去暗沉、淨白滋潤",who:"暗沉肌/油脂氧化造成蠟黃",how:"日夜清潔",mix:"搭配同系柔膚露、精華"},
+   {n:"極耀美白柔膚露",t:"Step2 化妝水・日夜",ing:["祛黑美白科技:高濃度菸鹼醯胺(B3)+TDPA"],eff:["菸鹼醯胺+TDPA:調理角質、提升後續美白成分吸收"],appeal:"調理淨白肌底",who:"暗沉肌",how:"日夜化妝水步驟",mix:"搭配同系精華、日夜霜"},
+   {n:"極耀美白精華",t:"⭐系列核心|Step5 精華・30ml・早晚",ing:["祛黑美白科技:高濃度菸鹼醯胺(B3)+TDPA"],eff:["菸鹼醯胺:調理膚況、細緻毛孔、幫助改善黯沉與膚色不均外觀", "TDPA:幫助修護曬後肌膚、淨化膚色外觀"],appeal:"3天有感,勻淨白皙(美白、亮白、改善暗沉為核可詞句;數據:AVON研發50位評估,效果因人而異)",who:"暗沉肌/膚色不均、斑點",how:"早晚全臉塗抹、斑點部位局部加強",mix:"搭配日霜(SPF12)、晚霜;內服SOD、維生素C"},
+   {n:"極耀美白凝乳",t:"Step6 乳液・凝乳質地・日夜",ing:["祛黑美白科技:高濃度菸鹼醯胺(B3)+TDPA"],eff:["菸鹼醯胺+TDPA:日夜保養銜接,幫助維持透亮光感外觀"],appeal:"淨白調理",who:"暗沉肌",how:"日夜使用",mix:"搭配同系精華、日夜霜"},
+   {n:"極耀美白日霜(素顏霜)",t:"Step6 日霜・50g・SPF12/PA++",ing:["祛黑美白科技:菸鹼醯胺(B3)+TDPA", "紫水光微粒"],eff:["菸鹼醯胺+TDPA:幫助淨化透白外觀", "紫水光微粒:立即修飾黯沉外觀;兼具SPF12/PA++基礎防曬"],appeal:"日不停歇,淨化透白+基礎防曬(依標示SPF12/PA++,建議補擦)",who:"暗沉肌/日間防護+修飾",how:"日間使用",mix:"搭配精華、晚霜"},
+   {n:"極耀美白晚霜",t:"Step6 晚霜・50g・夜間",ing:["祛黑美白科技:高濃度菸鹼醯胺(B3)+TDPA"],eff:["菸鹼醯胺+TDPA:夜間為修護最佳時機,幫助修護肌膚疲勞、提供鎮定舒緩、滲透白皙能量"],appeal:"夜不停歇,淨化透白(黑色素最活躍為晚10-凌晨2點,夜間是修護關鍵)",who:"暗沉肌/夜間修護",how:"夜間使用",mix:"搭配精華、日霜"},
+   {n:"新活恆白松露極耀凝乳",t:"進階亮白|Step6 乳液・凝乳質地",ing:["晶耀鑽白科技","頂級白松露萃取"],eff:["晶耀鑽白科技:幫助維持膚色晶耀透亮外觀","白松露萃取:協同滋潤,改善黯沉不均外觀"],appeal:"頂級亮白凝乳,晶耀透亮、改善黯沉不均外觀",who:"暗沉不均膚況/想進階亮白者",how:"日夜乳液步驟使用",mix:"搭配極耀美白精華、晚霜"},
+   {n:"恆白3D纖維安瓶面膜",t:"加強護理・20ml・每週2-3次",ing:["雙重亮白核心:TDPA獨特亮白成分+穀胱甘肽(Glutathione)三胜肽","專利八爪3D微纖維技術"],eff:["TDPA:幫助肌膚雜質代謝、淨白膚色外觀","穀胱甘肽三胜肽:專注改善黯沉外觀;八爪3D微纖維更輕薄服貼、幫助精華滲透"],appeal:"一片改善黯沉的急救首選,亮白躍進、水光服貼(限量話術依當期公告)",who:"暗沉肌/需集中亮白急救",how:"眼霜後使用,每週2-3次,每次10-15分鐘",mix:"搭配極耀美白系列"}
+ ]},
+ {em:"☀️",name:"極耀美白・日間防護系列",main:false,desc:"功能軸・防曬修飾",items:[
+   {n:"極耀美白UV防曬乳",t:"Step7 日間防護・30g・SPF50/UVA・UVB",ing:["祛黑美白科技:TDPA+高濃度菸鹼醯胺(B3)","SPF50/UVA・UVB 廣效防曬"],eff:["TDPA+菸鹼醯胺:防曬同時幫助淨白、調理膚況","SPF50 廣效防護:幫助阻隔紫外線(依標示,建議定時補擦)"],appeal:"高係數美白防曬,淨白防護一次到位(依標示SPF50/PA,建議補擦)",who:"暗沉肌/需高係數日間防曬",how:"日間保養最後一步,外出前塗抹",mix:"搭配極耀美白精華、日霜"},
+   {n:"極耀美白亮顏乳",t:"Step7 日間防護・30g・SPF15/PA++・潤色CC",ing:["祛黑美白科技:高濃度菸鹼醯胺(B3)+TDPA","Vitamin E","SPF15/PA++"],eff:["菸鹼醯胺+TDPA:潤色同時幫助淨白、光感勻白外觀","Vitamin E:保濕潤澤、減少脫妝;SPF15/PA++ 潤色遮瑕、光感勻白"],appeal:"不只潤色更提亮膚質,潤色遮瑕、光感勻白(依標示SPF15/PA++,建議補擦)",who:"暗沉肌/想要潤色修飾+基礎防護",how:"日間使用,可作為妝前潤色",mix:"搭配極耀美白精華、UV防曬乳"},
+   {n:"光燦亮白防曬隔離霜",t:"Step7 日間防護・30g・SPF36/PA+++・8效合1",ing:["維他命C醣苷(AAG)+角鯊烷","粉橘色系潤色飾底","SPF36/PA+++ 防水防曬"],eff:["維他命C醣苷+角鯊烷:保養升級,幫助膚質年輕水亮外觀","粉橘飾底:提亮潤色、自然修飾瑕疵不顯死白;SPF36/PA+++ 抗紫外線、防水不易脫妝"],appeal:"一抹妝上美肌濾鏡・8效合1光感氣色(亮白/抗老修飾細紋外觀/防水/遮瑕/潤色/隔離/保濕/防曬,依標示SPF36/PA+++補擦)",who:"想一瓶搞定潤色防曬修飾者/追求光感氣色者",how:"日間妝前或單擦使用",mix:"搭配極耀美白精華、亮顏乳"}
+ ]},
+];
+
+/* ============ 視圖渲染 ============ */
+const $ = s=>document.querySelector(s);
+const M = $('#main');
+let quizState = {};
+
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
+function axisName(a){ return a==='b'?'<span class="badge-b">美容軸</span>':a==='n'?'<span class="badge-n">營養軸</span>':a==='t'?'<span class="badge-b">講師培訓</span>':'<span class="badge-b" style="background:var(--orange-100);color:var(--orange-deep)">情境銷售</span>'; }
+function calcAxis(){
+  const b = COURSES.filter(c=>c.axis==='b'), n = COURSES.filter(c=>c.axis==='n'), c = COURSES.filter(c=>c.axis==='c');
+  const done = arr => arr.filter(x=>progress[x.id]).length;
+  const bPct = Math.round((done(b)+done(c)*.5)/(b.length+c.length*.5)*100);
+  const nPct = Math.round((done(n)+done(c)*.5)/(n.length+c.length*.5)*100);
+  return {bPct,nPct, allDone: COURSES.every(x=>progress[x.id])};
+}
+function updateBadge(){
+  const {allDone} = calcAxis();
+  const badge = $('#certBadge');
+  if(allDone){ badge.textContent='🏅 基礎銷售資格'; badge.classList.add('gold'); }
+  else { const d = COURSES.filter(c=>progress[c.id]).length; badge.textContent=`基礎 ${d}/${COURSES.length}`; badge.classList.remove('gold'); }
+}
+function footer(){ return `<div class="footer-compliance">雅芳學院<br>本平台為內部教育訓練用途</div>`; }
+
+/* ---- 首頁 ---- */
+function vHome(){
+  const {bPct,nPct,allDone} = calcAxis();
+  const doneCount = COURSES.filter(c=>progress[c.id]).length;
+  return `
+  <div class="card hero">
+    <h3>學得會・說得出・賣得動</h3>
+    <p>雅芳學院銷售賦能平台|美容 × 營養 雙軸並重</p>
+    <div class="dualbar">
+      <div class="row"><span class="lbl">🌸 美容軸</span><div class="bar b"><i style="width:${bPct}%"></i></div><span class="pct">${bPct}%</span></div>
+      <div class="row"><span class="lbl">🥗 營養軸</span><div class="bar n"><i style="width:${nPct}%"></i></div><span class="pct">${nPct}%</span></div>
+    </div>
+  </div>
+  <h2 class="sec">🎓 學習地圖<span style="font-size:12px;font-weight:400;color:var(--ink-soft);margin-left:8px">自由選讀・依需求學習</span></h2>
+  <div class="card tier t1 tap" onclick="go('courses')">
+    <div class="ico">📗</div>
+    <div><h4>基礎觀念</h4><p>合規紅線・美容觀念・膚質檢測・營養基礎・銷售對話</p>
+    <div class="meta">${allDone?'✅ 全部完成!已取得基礎銷售資格':'進度 '+doneCount+'/'+COURSES.length+' 堂 · 點擊進入'}</div></div>
+  </div>
+  <div class="card tier t2 tap" onclick="go('courses')">
+    <div class="ico">📘</div>
+    <div><h4>產品專區</h4><p>10 大主力產品深度模組(九大區塊)・美容 × 營養雙軸</p>
+    <div class="meta">${advDoneCount()>0?'已完成 '+advDoneCount()+' 個模組 · 點擊進入':'12 個模組開放中 · 點擊進入'}</div></div>
+  </div>
+  <div class="card tier t2b tap" onclick="go('courses')">
+    <div class="ico">📙</div>
+    <div><h4>情境銷售</h4><p>內外雙軸銷售法・成組購買引導(買3買6)</p>
+    <div class="meta">2 堂實戰課 · 點擊進入</div></div>
+  </div>
+  <div class="card tier t3 tap" onclick="go('courses')">
+    <div class="ico">📕</div>
+    <div><h4>講師培訓</h4><p>講師表達・黃金72小時顧客關懷・新人帶訓 SOP・話術演練評核</p>
+    <div class="meta">4 堂帶團隊必備課 · 點擊進入</div></div>
+  </div>
+  <h2 class="sec">⚡ 快速工具</h2>
+  <div class="card courseItem tap" onclick="go('assess','skin')">
+    <div class="dot" style="background:var(--beauty-100)">🧖‍♀️</div>
+    <div class="tt"><b>膚質檢測</b><span>1 分鐘測出膚質類型與保養方向——美容破冰神器</span></div><span style="color:var(--beauty)">›</span>
+  </div>
+  <div class="card courseItem tap" onclick="go('assess','health')">
+    <div class="dot" style="background:var(--health-100)">🩺</div>
+    <div class="tt"><b>健康檢測</b><span>10 大面向自評,找出最需要照顧的前三名</span></div><span style="color:var(--health)">›</span>
+  </div>
+  <div class="card courseItem tap" onclick="go('guide')">
+    <div class="dot" style="background:var(--olive-100)">📋</div>
+    <div class="tt"><b>產品指南</b><span>58 品項完整講解卡・沒有資源也能對客戶說明</span></div><span style="color:var(--green-700)">›</span>
+  </div>
+  ${footer()}`;
+}
+
+/* ---- 課程列表 ---- */
+function advDoneCount(){ return ADV.filter(m=>progress[m.id]).length; }
+function vCourses(){
+  let h = `<h2 class="sec" style="margin-top:4px">📗 基礎觀念<span style="font-size:11px;font-weight:400;color:var(--ink-soft);margin-left:6px">建議先讀,但可自由選讀</span></h2>
+  <div class="note">📌 合規紅線必修課(L1-0)測驗需 <b>100% 答對</b>。完成基礎六堂可取得「基礎銷售資格」徽章。</div>`;
+  COURSES.forEach(c=>{
+    const done = progress[c.id];
+    h += `<div class="card courseItem tap axis-${c.axis}" onclick="openCourse('${c.id}')">
+      <div class="dot">${c.icon}</div>
+      <div class="tt"><b>${c.id} ${c.title}</b><span>${c.sub}</span></div>
+      ${c.must&&!done?'<span class="chip must">必修</span>':''}
+      <span class="chip ${done?'done':'todo'}">${done?'✅ 通過':'未完成'}</span>
+    </div>`;
+  });
+  // 產品專區(排除情境課 S2-*)
+  h += `<h2 class="sec">📘 產品專區<span style="font-size:11px;font-weight:400;color:var(--ink-soft);margin-left:6px">10 大主力產品・美容 × 營養</span></h2>`;
+  ADV.filter(m=>m.axis!=='c').forEach(m=>{
+    const done = progress[m.id];
+    h += `<div class="card courseItem ${m.ready?'tap':''} axis-${m.axis}" ${m.ready?`onclick="openAdv('${m.id}')"`:''} style="${m.ready?'':'opacity:.55'}">
+      <div class="dot">${m.icon}</div>
+      <div class="tt"><b>${m.title}</b><span>${m.sub}${m.note&&!m.ready?'|'+m.note:''}</span></div>
+      <span class="chip ${m.ready?(done?'done':'todo'):'lock'}">${m.ready?(done?'✅ 通過':'開放中'):'建置中'}</span>
+    </div>`;
+  });
+  // 情境銷售(axis-c)
+  h += `<h2 class="sec">📙 情境銷售<span style="font-size:11px;font-weight:400;color:var(--ink-soft);margin-left:6px">實戰技巧</span></h2>`;
+  ADV.filter(m=>m.axis==='c').forEach(m=>{
+    const done = progress[m.id];
+    h += `<div class="card courseItem ${m.ready?'tap':''} axis-${m.axis}" ${m.ready?`onclick="openAdv('${m.id}')"`:''} style="${m.ready?'':'opacity:.55'}">
+      <div class="dot">${m.icon}</div>
+      <div class="tt"><b>${m.title}</b><span>${m.sub}</span></div>
+      <span class="chip ${m.ready?(done?'done':'todo'):'lock'}">${m.ready?(done?'✅ 通過':'開放中'):'建置中'}</span>
+    </div>`;
+  });
+  // 講師培訓(axis-t)
+  h += `<h2 class="sec">📕 講師培訓<span style="font-size:11px;font-weight:400;color:var(--ink-soft);margin-left:6px">帶團隊必備</span></h2>`;
+  ADV.filter(m=>m.axis==='t').forEach(m=>{
+    const done = progress[m.id];
+    h += `<div class="card courseItem ${m.ready?'tap':''} axis-t" ${m.ready?`onclick="openAdv('${m.id}')"`:''} style="${m.ready?'':'opacity:.55'}">
+      <div class="dot">${m.icon}</div>
+      <div class="tt"><b>${m.title}</b><span>${m.sub}</span></div>
+      <span class="chip ${m.ready?(done?'done':'todo'):'lock'}">${m.ready?(done?'✅ 通過':'開放中'):'建置中'}</span>
+    </div>`;
+  });
+  return h + footer();
+}
+
+/* ---- 課程內頁 ---- */
+function blockHTML(b){ return `<div class="blk ${b.t==='warn'?'warn':b.t==='talk'?'talk':''}"><h5>${b.h}</h5>${b.body}</div>`; }
+
+function openCourse(id){
+  const c = COURSES.find(x=>x.id===id);
+  quizState = {cid:id, answers:{}, submitted:false, isAdv:false};
+  M.innerHTML = `<div class="view active lesson">
+    <button class="back" onclick="go('courses')">‹ 返回課程列表</button>
+    <h3>${c.icon} ${c.title} ${axisName(c.axis)}</h3>
+    <div class="sub">${c.sub}</div>
+    <div class="blk" style="border-left:4px solid var(--green-500)"><h5>🎯 學習目標</h5><p>${c.goal}</p></div>
+    ${c.content.map(blockHTML).join('')}
+    <h2 class="sec">✅ 學習測驗${c.passAll?'(需 100% 通過)':''}</h2>
+    <div id="quizArea">${renderQuiz(c.quiz)}</div>
+    <button class="btn primary" id="submitQuiz" onclick="submitQuiz()">送出答案</button>
+  </div>`;
+  window.scrollTo(0,0);
+}
+function openAdv(id){
+  const c = ADV_MODULES[id];
+  if(!c) return;
+  quizState = {cid:id, answers:{}, submitted:false, isAdv:true};
+  M.innerHTML = `<div class="view active lesson">
+    <button class="back" onclick="go('courses')">‹ 返回課程列表</button>
+    <h3>${c.icon} ${c.title} ${axisName(c.axis)}</h3>
+    <div class="sub">${c.sub}</div>
+    ${c.content.map(blockHTML).join('')}
+    <h2 class="sec">✅ 學習測驗(需 100% 通過)</h2>
+    <div id="quizArea">${renderQuiz(c.quiz)}</div>
+    <button class="btn primary" id="submitQuiz" onclick="submitQuiz()">送出答案</button>
+  </div>`;
+  window.scrollTo(0,0);
+}
+function renderQuiz(quiz){
+  return quiz.map((q,i)=>`<div class="qz"><div class="qt">Q${i+1}. ${q.q}</div>
+    ${q.o.map((o,j)=>`<button class="opt" id="q${i}o${j}" onclick="pick(${i},${j})">${'ABCD'[j]}. ${o}</button>`).join('')}
+  </div>`).join('');
+}
+function pick(qi,oi){
+  if(quizState.submitted) return;
+  quizState.answers[qi]=oi;
+  const quiz = quizState.isAdv?ADV_MODULES[quizState.cid].quiz:COURSES.find(x=>x.id===quizState.cid).quiz;
+  quiz[qi].o.forEach((_,j)=>{ $(`#q${qi}o${j}`).classList.toggle('sel', j===oi); });
+}
+function submitQuiz(){
+  const c = quizState.isAdv?ADV_MODULES[quizState.cid]:COURSES.find(x=>x.id===quizState.cid);
+  const quiz = c.quiz;
+  if(Object.keys(quizState.answers).length < quiz.length){ toast('還有題目沒作答喔!'); return; }
+  quizState.submitted = true;
+  let correct = 0;
+  quiz.forEach((q,i)=>{
+    const my = quizState.answers[i];
+    q.o.forEach((_,j)=>{
+      const el = $(`#q${i}o${j}`);
+      if(j===q.a) el.classList.add('right');
+      else if(j===my) el.classList.add('wrong');
+    });
+    if(my===q.a) correct++;
+  });
+  const need = c.passAll ? quiz.length : Math.ceil(quiz.length*0.75);
+  const pass = correct >= need;
+  if(pass){ progress[quizState.cid]=true; saveProgress(); updateBadge(); }
+  const {allDone} = calcAxis();
+  const r = document.createElement('div');
+  r.className = `result ${pass?'pass':'fail'}`;
+  r.innerHTML = `<div class="big">${pass?'🎉':'💪'}</div>
+    <h4>${pass?'恭喜通過!':'再挑戰一次'}</h4>
+    <p>答對 ${correct}/${quiz.length} 題(通過標準:${need} 題)</p>
+    ${pass&&allDone&&!quizState.isAdv?'<p style="margin-top:6px;font-weight:900">🏅 入門六堂全數通過,取得「基礎銷售資格」,進階層已解鎖!</p>':''}`;
+  const area = $('#quizArea');
+  area.parentNode.insertBefore(r, area);
+  $('#submitQuiz').outerHTML = pass
+    ? `<button class="btn primary" onclick="go('courses')">返回課程列表 ›</button>`
+    : `<button class="btn orange" onclick="${quizState.isAdv?`openAdv('${quizState.cid}')`:`openCourse('${quizState.cid}')`}">重新閱讀並再測一次</button>`;
+  r.scrollIntoView({behavior:'smooth'});
+}
+
+/* ---- 檢測工具首頁 ---- */
+function vAssess(sub){
+  if(sub==='skin'){ setTimeout(startSkin,0); }
+  if(sub==='health'){ setTimeout(startHealth,0); }
+  return `
+  <h2 class="sec" style="margin-top:4px">🩺 檢測工具</h2>
+  <div class="note">💡 應用心法:「我幫你做個一分鐘小檢測好嗎?」——把工具遞出去,就是最自然的開場。<b>先測評、後推薦</b>。</div>
+  <div class="card toolCard tap" onclick="startSkin()">
+    <div class="ico" style="background:var(--beauty-100)">🧖‍♀️</div>
+    <div style="flex:1"><b>膚質檢測</b><p>10 題測出五大膚質類型+保養方向,美容話題破冰工具</p></div>
+    <span style="color:var(--beauty);font-weight:900">開始 ›</span>
+  </div>
+  <div class="card toolCard tap" onclick="startHealth()">
+    <div class="ico" style="background:var(--health-100)">🩺</div>
+    <div style="flex:1"><b>個人健康檢測</b><p>10 大面向自評,排出最需要照顧的前三名+營養方向</p></div>
+    <span style="color:var(--health);font-weight:900">開始 ›</span>
+  </div>
+  <div id="assessArea"></div>
+  ${footer()}`;
+}
+
+/* ---- 膚質檢測 ---- */
+let skinIdx = 0, skinScore = {};
+function startSkin(){
+  skinIdx=0; skinScore={dry:0,oily:0,combo:0,sens:0,normal:0,aging:0,dull:0};
+  renderSkinQ();
+}
+function renderSkinQ(){
+  const q = SKIN_Q[skinIdx];
+  $('#assessArea').innerHTML = `<div class="stq">
+    <div class="prog" style="color:var(--beauty)">🧖‍♀️ 膚質檢測|QUESTION ${skinIdx+1} / ${SKIN_Q.length}</div>
+    <div class="bar" style="height:6px;background:var(--beauty-100);margin-bottom:14px"><i style="width:${(skinIdx)/SKIN_Q.length*100}%;background:var(--beauty)"></i></div>
+    <h4>${q.q}</h4>
+    ${q.o.map((o,j)=>`<button class="stOpt pink" onclick="answerSkin(${j})">${o.t}</button>`).join('')}
+  </div>`;
+  $('#assessArea').scrollIntoView({behavior:'smooth'});
+}
+function answerSkin(j){
+  const s = SKIN_Q[skinIdx].o[j].s;
+  Object.keys(s).forEach(k=>skinScore[k]+=s[k]);
+  skinIdx++;
+  if(skinIdx < SKIN_Q.length) renderSkinQ(); else showSkinResult();
+}
+function showSkinResult(){
+  let type;
+  if(skinScore.sens >= 3) type = 'sens';
+  else {
+    const main = ['dry','oily','combo','normal'];
+    type = main.reduce((a,b)=> skinScore[b]>skinScore[a]?b:a, 'normal');
+    if(skinScore.dry>0 && skinScore.oily>0 && Math.abs(skinScore.dry-skinScore.oily)<=1 && skinScore.combo>=2) type='combo';
+  }
+  const T = SKIN_TYPES[type];
+  const tags = [];
+  if(skinScore.aging>=2) tags.push('🕰️ 光老化/初老守護');
+  if(skinScore.dull>=2) tags.push('💫 暗沉・透亮需求');
+  if(skinScore.sens>0 && type!=='sens') tags.push('🌷 偶發性敏感');
+  $('#assessArea').innerHTML = `
+  <div class="bigResult pink">
+    <div class="em">${T.em}</div>
+    <h3>${T.name}</h3>
+    <p>${T.desc}</p>
+    ${tags.length?`<div class="tagRow">${tags.map(t=>`<span>${t}</span>`).join('')}</div>`:''}
+  </div>
+  <div class="blk"><h5>🧴 外在保養方向</h5><ul>${T.care.map(c=>`<li>${c}</li>`).join('')}</ul></div>
+  <div class="blk"><h5>🥗 由內而外・營養搭配</h5><p>${T.inner}</p>
+  <button class="btn ghost" style="margin-top:10px" onclick="go('guide')">📋 查看產品指南 ›</button></div>
+  <div class="note">⚠️ 本結果為日常保養建議參考,非醫療診斷。若有持續泛紅、刺痛、濕疹或其他明顯皮膚異常,請諮詢皮膚科醫師。</div>
+  <button class="btn orange" onclick="startSkin()">🔄 重新檢測</button>`;
+  window.scrollTo(0,0);
+}
+
+/* ---- 健康檢測 ---- */
+let hIdx = 0, hScores = [];
+function startHealth(){
+  hIdx=0; hScores=[];
+  renderHealthQ();
+}
+function renderHealthQ(){
+  const q = HEALTH_Q[hIdx];
+  $('#assessArea').innerHTML = `<div class="stq">
+    <div class="prog" style="color:var(--health)">🩺 健康檢測|QUESTION ${hIdx+1} / ${HEALTH_Q.length}</div>
+    <div class="bar" style="height:6px;background:var(--health-100);margin-bottom:14px"><i style="width:${(hIdx)/HEALTH_Q.length*100}%;background:var(--health)"></i></div>
+    <h4>${q.em} ${q.area}|${q.q}</h4>
+    ${HEALTH_OPTS.map((o,j)=>`<button class="stOpt blue" onclick="answerHealth(${j})">${o.t}</button>`).join('')}
+  </div>`;
+  $('#assessArea').scrollIntoView({behavior:'smooth'});
+}
+function answerHealth(j){
+  hScores.push(HEALTH_OPTS[j].s);
+  hIdx++;
+  if(hIdx < HEALTH_Q.length) renderHealthQ(); else showHealthResult();
+}
+function showHealthResult(){
+  const total = hScores.reduce((a,b)=>a+b,0);
+  const max = HEALTH_Q.length*3;
+  const pct = Math.round((max-total)/max*100);
+  let em,label,msg;
+  if(pct>=85){em='🌟';label='狀態很棒';msg='整體維持得很好!持續均衡飲食與規律作息,用基礎營養打底讓好狀態更持久。';}
+  else if(pct>=65){em='🙂';label='大致良好';msg='整體不錯,但有幾個面向開始出現訊號,及早保養最省力。';}
+  else if(pct>=45){em='😕';label='需要留意';msg='身體正在發出訊號,建議針對下方重點面向開始日常調理。';}
+  else {em='😩';label='建議積極調整';msg='多個面向明顯困擾,建議調整作息並針對重點面向保養;若有持續不適,請先諮詢醫師。';}
+  const ranked = HEALTH_Q.map((q,i)=>({...q, score:hScores[i]}))
+    .filter(x=>x.score>=2).sort((a,b)=>b.score-a.score).slice(0,3);
+  $('#assessArea').innerHTML = `
+  <div class="bigResult blue">
+    <div class="em">${em}</div>
+    <h3>整體健康分數 ${pct} 分|${label}</h3>
+    <p>${msg}</p>
+  </div>
+  ${ranked.length ? `<h2 class="sec">🎯 最需要關注的面向</h2>` + ranked.map(a=>`
+    <div class="areaCard">
+      <h5>${a.em} ${a.area}<span class="lv ${a.score===3?'hi':'md'}">${a.score===3?'明顯困擾':'需留意'}</span></h5>
+      <p>${a.desc}</p>
+      <div class="nut">💊 ${a.nut}<br>🛒 ${a.prod}</div>
+    </div>`).join('')
+    : `<div class="blk"><h5>👏 沒有明顯困擾面向</h5><p>維持目前的好習慣,以基礎營養(綜合維生素、益生菌)日常打底即可。</p></div>`}
+  <button class="btn ghost" onclick="go('guide')">📋 查看產品指南 ›</button>
+  <div class="note" style="margin-top:10px">⚠️ 本結果為保健方向參考,非醫療診斷。正在服藥(尤其抗凝血劑)、有重大疾病或孕哺期,補充前請先諮詢醫師。</div>
+  <button class="btn blue" onclick="startHealth()">🔄 重新檢測</button>`;
+  window.scrollTo(0,0);
+}
+
+/* ---- 產品指南(兩層展開:系列 → 品項簡介 → 完整卡) ---- */
+let openSerie = null;
+let openProd = null;
+function prodCard(p){
+  const li = a => a.map(x=>`<li>${x}</li>`).join('');
+  return `<div class="pcard">
+    <div class="pcard-sec"><h6>📋 基本資料</h6><p>${p.t}</p></div>
+    <div class="pcard-sec"><h6>🧬 核心成分</h6><ul>${li(p.ing)}</ul></div>
+    <div class="pcard-sec hl"><h6>💡 主成分功效</h6><ul>${li(p.eff)}</ul></div>
+    <div class="pcard-sec"><h6>🎯 產品訴求</h6><p>${p.appeal}</p></div>
+    <div class="pcard-sec"><h6>👥 適用對象</h6><p>${p.who}</p></div>
+    <div class="pcard-sec"><h6>🕐 使用方式</h6><p>${p.how}</p></div>
+    <div class="pcard-sec"><h6>🔗 搭配組合</h6><p>${p.mix}</p></div>
+  </div>`;
+}
+function serieHTML(g,i,key){
+  const sid = key+i;
+  const isOpen = openSerie===sid;
+  let inner='';
+  if(isOpen){
+    if(g.pending){
+      inner = `<div class="note" style="margin:6px 0">🧴 本系列資料建置中——待官方素材到位後完整上線。</div>`;
+    } else {
+      // 營養品與美容品皆用兩層——品項簡介 → 點開完整卡
+      inner = g.items.map((p,j)=>{
+        const pid = sid+'_'+j;
+        const pOpen = openProd===pid;
+        return `<div class="prodRow2" id="prod_${pid}">
+          <div class="prodHead tap" onclick="event.stopPropagation();toggleProd('${pid}')">
+            <div style="flex:1"><b>${p.n}</b>${p.pendingItem?' <span class="chip lock" style="font-size:10px">待補</span>':''}<br><span class="tg">${p.t.split('・').slice(0,2).join('・')}</span></div>
+            <span style="color:var(--ink-soft);font-size:13px">${pOpen?'收合 ▾':'完整資料 ›'}</span>
+          </div>
+          ${pOpen?prodCard(p):''}
+        </div>`;
+      }).join('');
+    }
+  }
+  return `<div class="card" id="serie_${sid}" style="padding:0;overflow:hidden">
+    <div class="serieCard tap" onclick="toggleSerie('${key}',${i})">
+      <div class="em">${g.em}</div>
+      <div style="flex:1"><b>${g.name} ${key==='b'?'<span class="badge-b">美容</span>':'<span class="badge-n">營養</span>'}${g.main?'<span class="badge-m">⭐主力</span>':''}</b><span>${g.desc}</span></div>
+      <span style="color:var(--ink-soft)">${isOpen?'▾':'›'}</span>
+    </div>
+    ${isOpen?`<div style="padding:2px 13px 13px">${inner}</div>`:''}
+  </div>`;
+}
+function vGuide(){
+  let h = `<div class="note" style="margin-top:2px">📖 <b>雙軸產品指南</b>|點系列展開品項,再點品項看完整講解卡(基本資料、核心成分、主成分功效、產品訴求、適用對象、使用方式、搭配組合)。⭐ 為主力系列。</div>`;
+  h += `<h2 class="sec">🥗 營養品<span style="font-size:11px;font-weight:400;color:var(--ink-soft);margin-left:6px">點品項看完整資料</span></h2>`;
+  GUIDE_N.forEach((g,i)=>{ h += serieHTML(g,i,'n'); });
+  h += `<h2 class="sec">🌸 美容品</h2>`;
+  GUIDE_B.forEach((g,i)=>{ h += serieHTML(g,i,'b'); });
+  h += `<div class="footer-compliance">產品功效說明均為合規功能訴求用語<br>優惠與方案依當月公告為準<br>本平台為內部教育訓練用途</div>`;
+  return h;
+}
+function toggleSerie(key,i){
+  const sid=key+i;
+  const wasOpen = openSerie===sid;
+  openSerie = wasOpen?null:sid; openProd=null;
+  M.innerHTML = `<div class="view active">${vGuide()}</div>`;
+  // 展開時捲動到剛點的系列(用錨點),不跳回頂端
+  if(!wasOpen){
+    requestAnimationFrame(()=>{
+      const el = document.getElementById('serie_'+sid);
+      if(el) el.scrollIntoView({behavior:'auto', block:'start'});
+    });
+  }
+}
+function toggleProd(pid){
+  openProd = openProd===pid?null:pid;
+  M.innerHTML = `<div class="view active">${vGuide()}</div>`;
+  requestAnimationFrame(()=>{
+    const el = document.getElementById('prod_'+pid);
+    if(el) el.scrollIntoView({behavior:'auto', block:'nearest'});
+  });
+}
+
+/* ---- 工具箱 ---- */
+function vTools(){
+  return `<h2 class="sec" style="margin-top:4px">🧰 銷售工具箱</h2>
+  <div class="card toolCard tap" onclick="go('assess','skin')">
+    <div class="ico" style="background:var(--beauty-100)">🧖‍♀️</div>
+    <div style="flex:1"><b>膚質檢測工具</b><p>1 分鐘測出膚質與保養方向,可直接給客戶操作</p></div>
+    <span style="color:var(--beauty);font-weight:900">開啟 ›</span>
+  </div>
+  <div class="card toolCard tap" onclick="go('assess','health')">
+    <div class="ico" style="background:var(--health-100)">🩺</div>
+    <div style="flex:1"><b>個人健康檢測工具</b><p>10 大面向自評+營養建議,可直接給客戶操作</p></div>
+    <span style="color:var(--health);font-weight:900">開啟 ›</span>
+  </div>
+  <div class="card toolCard tap" onclick="go('guide')">
+    <div class="ico" style="background:var(--green-100)">📋</div>
+    <div style="flex:1"><b>雙軸產品指南</b><p>營養品 × 美容品速查,合規功效與適用情境</p></div>
+    <span style="color:var(--green-700);font-weight:900">開啟 ›</span>
+  </div>
+  <h2 class="sec">📖 使用心法</h2>
+  <div class="blk talk"><h5>💬 工具即話術</h5>
+  <p>「我幫你做個一分鐘小檢測好嗎?」——把工具遞出去,就是最自然的開場。<b>先測評、後推薦</b>,讓推薦回應需求而不是推銷。</p></div>
+  <div class="blk warn"><h5>⚠️ 隨時回到紅線</h5>
+  <p>不確定能不能說的時候:「維持、幫助、調整、支持」可以說;「治療、根治、預防疾病」不能說。服藥與重大疾病客戶,一律建議諮詢醫師。</p></div>
+  ${footer()}`;
+}
+
+/* ---- 導覽 ---- */
+function go(v,sub){
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on', b.dataset.v===v));
+  const views = {home:vHome, courses:vCourses, assess:vAssess, guide:vGuide, tools:vTools};
+  openSerie = null;
+  M.innerHTML = `<div class="view active">${(views[v]||vHome)(sub)}</div>`;
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.v)));
+updateBadge();
+go('home');
+</script>
+</body>
+</html>
