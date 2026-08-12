@@ -53,8 +53,7 @@ h2.sec::after{content:'';flex:1;height:1px;background:var(--line)}
 /* 首頁 hero */
 .hero{background:var(--card);color:var(--ink);border:1px solid var(--line);border-top:4px solid var(--green-700);
   position:relative;overflow:hidden;padding:20px 18px}
-.hero::before{content:'學 · 說 · 賣';position:absolute;right:-8px;top:-14px;font-family:var(--serif);
-  font-size:64px;font-weight:900;opacity:.05;letter-spacing:6px;white-space:nowrap;color:var(--green-700)}
+.hero::before{content:'';display:none}
   .hero h3{font-family:var(--serif);font-size:20px;font-weight:900;margin-bottom:4px;color:var(--green-700)}
 .hero p{font-size:14px;color:var(--ink-soft)}
 .dualbar{margin-top:14px}
@@ -107,6 +106,7 @@ h2.sec::after{content:'';flex:1;height:1px;background:var(--line)}
 .blk table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
 .blk th{background:var(--green-50);color:var(--green-900);padding:6px;border:1px solid var(--line);text-align:left}
 .blk td{padding:6px;border:1px solid var(--line);vertical-align:top}
+.blk td.stepcell{text-align:center;white-space:nowrap;line-height:1.3;font-weight:700}
 .script{background:var(--orange-100);border-radius:12px;padding:12px 14px;font-size:15px;margin:8px 0;line-height:1.75}
 .script b{color:var(--orange-deep)}
 .no{background:var(--danger-100);border-radius:10px;padding:8px 12px;margin:6px 0;font-size:14.5px}
@@ -128,8 +128,10 @@ h2.sec::after{content:'';flex:1;height:1px;background:var(--line)}
 .opt{display:block;width:100%;text-align:left;background:var(--green-50);border:2px solid transparent;
   border-radius:12px;padding:11px 13px;margin-bottom:8px;font-size:15.5px;cursor:pointer;font-family:var(--sans);transition:.15s}
 .opt.sel{border-color:var(--green-700);background:var(--green-100);font-weight:700}
-.opt.right{border-color:var(--green-700);background:var(--green-100)}
-.opt.wrong{border-color:var(--danger);background:var(--danger-100)}
+.opt.right{border-color:#2E9E4F;background:#E6F5EC;color:#1B6E36;font-weight:900;position:relative;padding-right:76px}
+.opt.right::after{content:'✓ 正確';position:absolute;right:12px;top:50%;transform:translateY(-50%);background:#2E9E4F;color:#fff;font-size:12px;font-weight:900;border-radius:99px;padding:2px 10px}
+.opt.wrong{border-color:var(--danger);background:var(--danger-100);color:var(--danger);font-weight:700;position:relative;padding-right:88px}
+.opt.wrong::after{content:'✗ 你的選擇';position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--danger);color:#fff;font-size:12px;font-weight:900;border-radius:99px;padding:2px 10px}
 .result{border-radius:var(--r);padding:20px;text-align:center;margin-bottom:14px;color:#fff}
 .result.pass{background:linear-gradient(135deg,var(--green-700),var(--green-500))}
 .result.fail{background:linear-gradient(135deg,#8D6E63,#A1887F)}
@@ -399,10 +401,10 @@ const COURSES = [
  content:[
   {t:'norm', h:'🪜 銷售對話四步驟', body:`
    <table><tr><th>步驟</th><th>做什麼</th><th>例句</th></tr>
-   <tr><td>1 傾聽</td><td>讓客戶先說,不急著介紹</td><td>「最近身體或皮膚有什麼讓你困擾的嗎?」</td></tr>
-   <tr><td>2 提問</td><td>用檢測/測評工具聚焦需求</td><td>「我幫你做個一分鐘小檢測好嗎?」</td></tr>
-   <tr><td>3 確認</td><td>複述需求,讓客戶點頭</td><td>「所以你最想改善的是容易累跟皮膚乾,對嗎?」</td></tr>
-   <tr><td>4 推薦</td><td>用三段式話術帶一個明確方案</td><td>(見下方)</td></tr></table>`},
+   <tr><td class="stepcell"><b style="font-size:17px;color:var(--green-700)">1</b><br>傾聽</td><td>讓客戶先說,不急著介紹</td><td>「最近身體或皮膚有什麼讓你困擾的嗎?」</td></tr>
+   <tr><td class="stepcell"><b style="font-size:17px;color:var(--green-700)">2</b><br>提問</td><td>用檢測/測評工具聚焦需求</td><td>「我幫你做個一分鐘小檢測好嗎?」</td></tr>
+   <tr><td class="stepcell"><b style="font-size:17px;color:var(--green-700)">3</b><br>確認</td><td>複述需求,讓客戶點頭</td><td>「所以你最想改善的是容易累跟皮膚乾,對嗎?」</td></tr>
+   <tr><td class="stepcell"><b style="font-size:17px;color:var(--green-700)">4</b><br>推薦</td><td>用三段式話術帶一個明確方案</td><td>(見下方)</td></tr></table>`},
   {t:'talk', h:'🎯 三段式話術結構(全平台通用)', body:`
    <p><b>開場引入 → 產品亮點 → 結語推薦</b>,每個產品模組的話術都是這個結構。</p>
    <div class="script"><b>①開場引入:</b>「我很懂這種感覺~其實(說出原因機制)…」<br>
@@ -477,7 +479,7 @@ const PROBIOTIC = {
   {q:'一包的菌數與菌種數為?',o:['100億/3種','1000億/10種','2000億/15種','500億/5種'],a:2},
   {q:'負責提升消化道定殖率的技術是?',o:['三層包覆','益生方舟運送','Pro 6X 益生質','低溫萃取'],a:2},
   {q:'哪句話違反合規紅線?',o:['幫助排便順暢','調整體質','補充益生菌可降血壓、預防失智','促進新陳代謝'],a:2},
-  {q:'客戶服用抗凝血劑詢問補充,正確做法?',o:['直接推薦','建議先諮詢醫師再評估','保證安全','自行決定'],a:1},
+  {q:'這款五合一益生菌主打的「五大機能」是?',o:['只有一種功能','順暢、美型、精力、防禦、好眠','只能助眠','沒有特別機能'],a:1},
   {q:'買 3 盒的核心引導理由是?',o:['折扣最多','完整補充週期讓好菌穩定定殖','庫存壓力','沒有理由'],a:1}
  ], passAll:true
 };
