@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>雅芳學院｜線上教育平台</title>
+<title>雅芳隨身寶典｜美容 × 營養</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -210,7 +210,7 @@ nav button.on .i{transform:translateY(-2px) scale(1.12)}
 <div id="app">
   <header>
     <div class="brand">
-      <h1>雅芳學院<small>AVON ACADEMY</small></h1>
+      <h1>雅芳隨身寶典<small>AVON HANDBOOK</small></h1>
       <div id="certBadge">未認證</div>
     </div>
   </header>
@@ -226,7 +226,7 @@ nav button.on .i{transform:translateY(-2px) scale(1.12)}
 </div>
 <script>
 /* ============================================================
-   雅芳學院|線上教育平台
+   雅芳隨身寶典|美容 × 營養
    單一 HTML 檔|手機優先|可部署 GitHub Pages
    ============================================================ */
 
@@ -1516,7 +1516,7 @@ function updateBadge(){
   if(allDone){ badge.textContent='🏅 基礎銷售資格'; badge.classList.add('gold'); }
   else { const d = COURSES.filter(c=>progress[c.id]).length; badge.textContent=`基礎 ${d}/${COURSES.length}`; badge.classList.remove('gold'); }
 }
-function footer(){ return `<div class="footer-compliance">雅芳學院<br>本平台為內部教育訓練用途</div>`; }
+function footer(){ return `<div class="footer-compliance">雅芳隨身寶典<br>本工具為內部教育訓練用途</div>`; }
 
 /* ---- 首頁 ---- */
 function vHome(){
@@ -1525,7 +1525,7 @@ function vHome(){
   return `
   <div class="card hero">
     <h3>學得會・說得出・賣得動</h3>
-    <p>雅芳學院銷售賦能平台|美容 × 營養 雙軸並重</p>
+    <p>你的美容 × 營養 隨身好幫手</p>
     <div class="dualbar">
       <div class="row"><span class="lbl">🌸 美容軸</span><div class="bar b"><i style="width:${bPct}%"></i></div><span class="pct">${bPct}%</span></div>
       <div class="row"><span class="lbl">🥗 營養軸</span><div class="bar n"><i style="width:${nPct}%"></i></div><span class="pct">${nPct}%</span></div>
